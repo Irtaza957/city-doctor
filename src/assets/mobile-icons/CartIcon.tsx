@@ -1,0 +1,69 @@
+const CartIcon: React.FC<IconProps> = ({
+  borderColor = "currentColor",
+  fillColor = "none",
+  width = 14.061,
+  height = 16.17,
+  className = "",
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox="0 0 25.529 23.977"
+      className={className}
+    >
+      <g
+        id="Group_3436"
+        data-name="Group 3436"
+        transform="translate(0.75 0.75)"
+      >
+        <path
+          id="Path_2882"
+          data-name="Path 2882"
+          d="M5.5,5.5H22.717a1.774,1.774,0,0,1,1.716,2.226l-1.4,5.324a1.774,1.774,0,0,1-1.716,1.323H8.162"
+          transform="translate(-0.472 -1.359)"
+          fill={fillColor}
+          stroke={borderColor}
+          strokeWidth="1.5"
+        />
+        <path
+          id="Path_2883"
+          data-name="Path 2883"
+          d="M1.25,2H3.769a1.775,1.775,0,0,1,1.7,1.272L8.643,14.01a3.549,3.549,0,0,1,0,2.006l-1.1,3.729H20.474"
+          transform="translate(-1.25 -2)"
+          fill={fillColor}
+          stroke={borderColor}
+          strokeLinecap="round"
+          strokeWidth="1.5"
+        />
+        <ellipse
+          id="Ellipse_453"
+          data-name="Ellipse 453"
+          cx="2.366"
+          cy="2.366"
+          rx="2.366"
+          ry="2.366"
+          transform="translate(3.845 17.745)"
+          fill={fillColor}
+          stroke={borderColor}
+          strokeWidth="1.5"
+        />
+        <ellipse
+          id="Ellipse_454"
+          data-name="Ellipse 454"
+          cx="2.366"
+          cy="2.366"
+          rx="2.366"
+          ry="2.366"
+          transform="translate(16.858 17.745)"
+          fill={fillColor}
+          stroke={borderColor}
+          strokeWidth="1.5"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export default CartIcon;

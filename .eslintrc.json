@@ -1,0 +1,10 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "react-hooks/exhaustive-deps": 0,
+    "no-unused-vars": "error"
+  },
+  "ignorePatterns": [
+    "src/types/index.d.ts"
+  ]
+}

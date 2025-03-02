@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="302.705" height="171.681" viewBox="0 0 302.705 171.681">
+  <g id="Group_4211" data-name="Group 4211" transform="translate(-758 -392.809)">
+    <g id="Layer_54" data-name="Layer 54" transform="translate(862.316 395.81)">
+      <path id="Path_1536" data-name="Path 1536" d="M98.455,168.97a19.545,19.545,0,0,1-13.877-5.733L17.472,96.132A56.811,56.811,0,0,1,1.054,55.413,52.511,52.511,0,0,1,54.087,3.292,52.511,52.511,0,0,1,91.94,18.863l6.515,6.515,5.342-5.342h0a54.661,54.661,0,0,1,71.666-5.8,53.749,53.749,0,0,1,5.277,80.526l-68.408,68.473A19.545,19.545,0,0,1,98.455,168.97Z" transform="translate(-1.049 -3.29)" fill="none" stroke="#dedede" stroke-width="6"/>
+    </g>
+    <line id="Line_581" data-name="Line 581" x2="55.956" transform="translate(782.544 435.5)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="8"/>
+    <g id="Group_4209" data-name="Group 4209" transform="translate(632.634 -389.398) rotate(45)">
+      <line id="Line_584" data-name="Line 584" x2="20" transform="translate(782.5 386.81)" fill="none" stroke="#f7a015" stroke-linecap="round" stroke-width="8"/>
+      <line id="Line_585" data-name="Line 585" y2="20.619" transform="translate(792.5 376.5)" fill="none" stroke="#f7a015" stroke-linecap="round" stroke-width="8"/>
+    </g>
+    <g id="Group_4210" data-name="Group 4210" transform="translate(718.634 -389.398) rotate(45)">
+      <line id="Line_584-2" data-name="Line 584" x2="20" transform="translate(782.5 386.81)" fill="none" stroke="#f7a015" stroke-linecap="round" stroke-width="8"/>
+      <line id="Line_585-2" data-name="Line 585" y2="20.619" transform="translate(792.5 376.5)" fill="none" stroke="#f7a015" stroke-linecap="round" stroke-width="8"/>
+    </g>
+    <line id="Line_582" data-name="Line 582" x2="73.5" transform="translate(762 463.5)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="8"/>
+    <line id="Line_583" data-name="Line 583" x2="55.956" transform="translate(793.544 491.5)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-width="8"/>
+    <path id="Path_3727" data-name="Path 3727" d="M1027.821,3359.051l-10.653,9.014-10.653-9.014-10.653,9.014-10.653-9.014-10.653,9.014-9.014-9.014" transform="translate(-36.682 -2865.83)" fill="none" stroke="#dedede" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+  </g>
+</svg>
