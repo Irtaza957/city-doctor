@@ -4,7 +4,7 @@ export const homeApi = api.injectEndpoints({
   endpoints: (build) => ({
     fetchHomeData: build.query({
       query: () => ({
-        url: "/home?company_id=1&business_id=1",
+        url: `/home?company_id=${process.env.NEXT_PUBLIC_COMPANY_ID!}&business_id=${process.env.NEXT_PUBLIC_BUSINESS_ID!}`,
         method: "GET",
       }),
       transformResponse: (response: {
