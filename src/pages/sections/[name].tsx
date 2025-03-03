@@ -17,6 +17,7 @@ import { setSelectedCategory } from "@/store/global";
 import { useFetchCategoriesQuery } from "@/store/services/category";
 import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
 import BestSellingListingCard from "@/components/cards/BestSellingListingCard";
+import he from "he";
 
 const sortingOptions = [
   {
@@ -119,9 +120,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-left font-bold text-xs">
-                      {category.category_name}
-                    </span>
+                    <span className="text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -148,9 +147,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-left font-bold text-xs">
-                      {category.category_name}
-                    </span>
+                    <span className="text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -194,7 +191,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             height={1000}
             alt="cover-image"
             className="w-full h-full object-cover rounded-xl"
-            src="https://crm.fandcproperties.ae/ci/uploads/categories/cover_images/sample_category_cover.png"
+            src="https://crm.fandcproperties.ru/ci/uploads/categories/cover_images/sample_category_cover.png"
           />
         </div>
         <div className="w-full flex flex-col items-start justify-start gap-4">

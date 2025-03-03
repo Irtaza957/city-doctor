@@ -287,17 +287,18 @@ export const sort = (sortType: string, array: DRIP_CARD[] | undefined) => {
 };
 
 export const imageBase = (image: string) => {
-  const domain1 = "https://crm.fandcproperties.ae";
+  const domain1 = "https://crm.fandcproperties.ru/ci";
 
   if (image === "") {
     return "https://images.pexels.com/photos/5726796/pexels-photo-5726796.jpeg";
   }
+  return domain1 + image;
 
-  if (!image?.includes(domain1)) {
-    return "https://images.pexels.com/photos/5726796/pexels-photo-5726796.jpeg";
-  } else {
-    return image;
-  }
+  // if (!image?.includes(domain1)) {
+  //   return "https://images.pexels.com/photos/5726796/pexels-photo-5726796.jpeg";
+  // } else {
+  //   return image;
+  // }
 };
 
 export function truncateString(str: string, maxLength: number): string {

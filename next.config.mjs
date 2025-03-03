@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "crm.fandcproperties.ae",
+        hostname: "crm.fandcproperties.ru",
         protocol: "https",
       },
       {

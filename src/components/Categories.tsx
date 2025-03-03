@@ -13,6 +13,7 @@ import { imageBase } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import CategorySkeletion from "./cards/skeleton/CategorySkeletion";
 import { useFetchCategoriesQuery } from "@/store/services/category";
+import he from "he";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -108,9 +109,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-center font-semibold text-[10px]">
-                      {category.category_name}
-                    </span>
+                    <span className="text-center font-semibold text-[10px]" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -137,9 +136,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-left font-bold text-xs">
-                      {category.category_name}
-                    </span>
+                    <span className="text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -166,9 +163,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-left font-bold text-xs">
-                      {category.category_name}
-                    </span>
+                    <span className="text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -195,9 +190,7 @@ const Categories = () => {
                       height={56}
                       className="size-7 lg:size-9 3xl:size-9"
                     />
-                    <span className="text-left font-bold text-sm">
-                      {category.category_name}
-                    </span>
+                    <span className="text-left font-bold text-sm" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -226,9 +219,7 @@ const Categories = () => {
                     alt="category"
                     className="size-16 lg:size-20"
                   />
-                  <span className="w-full text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold">
-                    {category.category_name}
-                  </span>
+                  <span className="w-full text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                 </Link>
               ))}
         </div>
@@ -255,9 +246,7 @@ const Categories = () => {
                     alt="category"
                     className="w-12 h-14"
                   />
-                  <span className="w-full text-center font-bold text-xs">
-                    {category.category_name}
-                  </span>
+                  <span className="w-full text-center font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                 </Link>
               ))}
         </div>
