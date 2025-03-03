@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { Libraries } from "@react-google-maps/api";
 
 export const libraries: Libraries = ["places"];
@@ -19,7 +19,7 @@ export function removeSpaces(str: string): string {
 export const calculateTotalCost = (cart: CART[]) => {
   let totalCost = 0;
   for (const item of cart) {
-    totalCost += item.price * item.quantity;
+    totalCost += (item.price || item.price_without_vat) * item.quantity;
   }
   return totalCost;
 };
@@ -136,10 +136,10 @@ export const fetchCountryFromIP = async (setter: (code: string) => void) => {
     if (countryCode) {
       setter(countryCode);
     } else {
-      toast.error("Error Fetching Location");
+      // toast.error("Error Fetching Location");
     }
   } else {
-    toast.error("Error Fetching Location");
+    // toast.error("Error Fetching Location");
   }
 };
 

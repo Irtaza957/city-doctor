@@ -53,6 +53,7 @@ const Checkout = () => {
           price: selectedItem?.price,
           discount: selectedItem?.discount,
           quantity: 1,
+          price_without_vat: selectedItem?.price_without_vat,
         })
       );
     }
@@ -260,6 +261,20 @@ const Checkout = () => {
                   </button>
                 </div>
                 <div className="w-full flex flex-col items-center justify-center gap-2.5 text-[#555555]">
+                  <div className="w-full flex items-center justify-between font-medium">
+                    <span className="text-sm">Price Without VAT</span>
+                    <span className="text-sm">
+                      AED&nbsp;
+                      {cart?.reduce((acc, item) => acc + (item.price_without_vat || 0), 0)}
+                    </span>
+                  </div>
+                  <div className="w-full flex items-center justify-between font-medium">
+                    <span className="text-sm">Price With VAT</span>
+                    <span className="text-sm">
+                      AED&nbsp;
+                      {cart?.reduce((acc, item) => acc + (item.price || 0), 0)}
+                    </span>
+                  </div>
                   <div className="w-full flex items-center justify-between font-medium">
                     <span className="text-sm">Sub Total</span>
                     <span className="text-sm">

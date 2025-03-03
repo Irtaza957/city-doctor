@@ -715,6 +715,20 @@ const CheckoutDetails = () => {
               </div>
               <div className="w-full h-full flex flex-col items-start justify-start gap-2.5 text-[#555555]">
                 <div className="w-full flex items-center justify-between text-sm font-medium">
+                  <span>Price Without VAT</span>
+                  <span>
+                    AED&nbsp;
+                    {cart?.reduce((acc, item) => acc + (item.price_without_vat || 0), 0)}
+                  </span>
+                </div>
+                <div className="w-full flex items-center justify-between text-sm font-medium">
+                  <span>Price With VAT</span>
+                  <span>
+                    AED&nbsp;
+                    {cart?.reduce((acc, item) => acc + (item.price || 0), 0)}
+                  </span>
+                </div>
+                <div className="w-full flex items-center justify-between text-sm font-medium">
                   <span>Sub Total</span>
                   <span>
                     AED&nbsp;

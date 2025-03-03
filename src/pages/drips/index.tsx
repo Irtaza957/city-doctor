@@ -24,6 +24,7 @@ import BestSellingListingCard from "@/components/cards/BestSellingListingCard";
 import ServiceCardSkeleton from "@/components/cards/skeleton/ServiceCardSkeleton";
 import DoctorVisitSkeleton from "@/components/cards/skeleton/DoctorVisitSkeleton";
 import CategorySliderSkeleton from "@/components/cards/skeleton/CategorySliderSkeleton";
+import he from "he";
 
 const sortingOptions = [
   {
@@ -291,9 +292,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-left font-bold text-xs">
-                        {category.category_name}
-                      </span>
+                      <span className="text-left font-bold text-xs line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                     </div>
                   </SwiperSlide>
                 ))}

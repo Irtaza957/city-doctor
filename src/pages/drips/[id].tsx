@@ -377,10 +377,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               className="w-full text-left text-[#535763] text-sm font-medium my-6"
             />
             <div className="w-full flex items-center justify-start space-x-10 mb-4">
-              <p className="text-left text-lg text-[#A3A3A3] line-through font-medium">
-                AED {data.price}
-              </p>
-              <p className="text-left text-xl font-semibold">
+              <p className="text-left text-lg text-[#A3A3A3] font-medium line-through">
                 AED&nbsp;
                 {isNaN(
                   Math.round(
@@ -400,6 +397,9 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                       )
                     )}
                 .00
+              </p>
+              <p className="text-left text-xl font-semibold">
+                AED {data.price}
               </p>
             </div>
             <div className="w-full md:w-3/6 xl:w-3/6 gap-2.5 flex items-center justify-center">

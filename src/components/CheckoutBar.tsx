@@ -42,6 +42,7 @@ const CheckoutBar = () => {
           price: selectedItem?.price,
           discount: selectedItem?.discount,
           quantity: 1,
+          price_without_vat: selectedItem?.price_without_vat,
         })
       );
     }

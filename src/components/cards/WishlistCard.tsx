@@ -33,7 +33,7 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
     }
   };
 
-  const add = (id: number, name: string, price: number, discount: number) => {
+  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number) => {
     dispatch(
       addToCart({
         id,
@@ -41,6 +41,7 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
         price,
         discount,
         quantity: 1,
+        price_without_vat,
       })
     );
   };
@@ -182,7 +183,8 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
                     ),
                     service.service_name!,
                     parseInt(service.price),
-                    0
+                    0,
+                    parseInt(service.price_without_vat)
                   );
                   handleSidebar();
                 }}
@@ -201,7 +203,8 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
                     ),
                     service.service_name!,
                     parseInt(service.price),
-                    0
+                    0,
+                    parseInt(service.price_without_vat)
                   );
                 }}
                 className="w-[95px] text-center block md:hidden h-[36px] py-2 bg-primary rounded-md text-white font-semibold text-sm place-self-end"
@@ -232,7 +235,8 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
                     ),
                     service.service_name!,
                     parseInt(service.price),
-                    0
+                    0,
+                    parseInt(service.price_without_vat)
                   );
                 }}
                 className="bg-primary text-white p-1 rounded-lg size-[36px] flex items-center justify-center cursor-pointer"

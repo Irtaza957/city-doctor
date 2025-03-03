@@ -136,7 +136,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-left font-bold text-xs line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}

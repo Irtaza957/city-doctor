@@ -33,13 +33,14 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
     }
   };
 
-  const add = (id: number, name: string, price: number, discount: number) => {
+  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number) => {
     dispatch(
       addToCart({
         id,
         name,
         price,
         discount,
+        price_without_vat,
         quantity: 1,
       })
     );
@@ -148,7 +149,7 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
               </span>
             </div>
             <span className="w-full text-left text-base font-semibold xl:font-bold">
-              AED {drip.price_with_vat}
+              AED {drip.price_without_vat}
             </span>
           </Link>
           <div
@@ -169,7 +170,8 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       ),
                       drip.name!,
                       parseInt(drip.price_with_vat),
-                      parseInt(drip.discount_value ? drip.discount_value : "0")
+                      parseInt(drip.discount_value ? drip.discount_value : "0"),
+                      parseInt(drip.price_without_vat)
                     );
                     handleSidebar();
                   }}
@@ -186,7 +188,8 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       ),
                       drip.name!,
                       parseInt(drip.price_with_vat),
-                      parseInt(drip.discount_value ? drip.discount_value : "0")
+                      parseInt(drip.discount_value ? drip.discount_value : "0"),
+                      parseInt(drip.price_without_vat)
                     );
                   }}
                   className="w-full block md:hidden h-[36px] py-2 bg-primary rounded-md text-white font-semibold text-sm"
@@ -215,7 +218,8 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       ),
                       drip.name!,
                       parseInt(drip.price_with_vat),
-                      parseInt(drip.discount_value ? drip.discount_value : "0")
+                      parseInt(drip.discount_value ? drip.discount_value : "0"),
+                      parseInt(drip.price_without_vat)
                     );
                   }}
                   className="size-[36px] rounded-lg p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"

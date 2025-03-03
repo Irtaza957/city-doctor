@@ -31,7 +31,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
     }
   };
 
-  const add = (id: number, name: string, price: number, discount: number) => {
+  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number) => {
     dispatch(
       addToCart({
         id,
@@ -39,6 +39,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
         price,
         discount,
         quantity: 1,
+        price_without_vat,
       })
     );
   };
@@ -171,7 +172,8 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
                     ),
                     drip.name!,
                     parseInt(drip.price_with_vat),
-                    parseInt(drip.discount_value ? drip.discount_value : "0")
+                    parseInt(drip.discount_value ? drip.discount_value : "0"),
+                    parseInt(drip.price_without_vat)
                   );
                   handleSidebar();
                 }}
@@ -188,7 +190,8 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
                     ),
                     drip.name!,
                     parseInt(drip.price_with_vat),
-                    parseInt(drip.discount_value ? drip.discount_value : "0")
+                    parseInt(drip.discount_value ? drip.discount_value : "0"),
+                    parseInt(drip.price_without_vat)
                   );
                 }}
                 className="w-[95px] block md:hidden h-[36px] py-2 px-4 md:px-9 bg-primary rounded-md text-white font-semibold text-sm place-self-end"
@@ -217,7 +220,8 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
                     ),
                     drip.name!,
                     parseInt(drip.price_with_vat),
-                    parseInt(drip.discount_value ? drip.discount_value : "0")
+                    parseInt(drip.discount_value ? drip.discount_value : "0"),
+                    parseInt(drip.price_without_vat)
                   );
                 }}
                 className="bg-primary text-white p-1 rounded-lg size-[36px] flex items-center justify-center cursor-pointer"

@@ -31,6 +31,7 @@ const CartBar = () => {
           price: selectedItem?.price,
           discount: selectedItem?.discount,
           quantity: 1,
+          price_without_vat: selectedItem?.price_without_vat,
         })
       );
     }
@@ -143,6 +144,20 @@ const CartBar = () => {
         </div>
         {cart.length > 0 && (
           <div className="w-full flex flex-col items-center justify-center pb-24 px-5 space-y-1">
+            <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
+              <span>Price Without VAT</span>
+              <span>
+                AED&nbsp;
+                {cart?.reduce((acc, item) => acc + (item.price_without_vat || 0), 0)}
+              </span>
+            </div>
+            <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
+              <span>Price With VAT</span>
+              <span>
+                AED&nbsp;
+                {cart?.reduce((acc, item) => acc + (item.price || 0), 0)}
+              </span>
+            </div>
             <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
               <span>Sub Total</span>
               <span>
