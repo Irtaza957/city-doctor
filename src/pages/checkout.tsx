@@ -6,6 +6,9 @@ import {
   generateTimeSlots,
   calculateTotalCost,
   convertToDateString,
+  calculateWithoutVAT,
+  calculateDiscountValue,
+  calculateVAT,
 } from "@/utils/helpers";
 import { RootState } from "@/store";
 import Modal from "@/components/Modal";
@@ -715,35 +718,25 @@ const CheckoutDetails = () => {
               </div>
               <div className="w-full h-full flex flex-col items-start justify-start gap-2.5 text-[#555555]">
                 <div className="w-full flex items-center justify-between text-sm font-medium">
-                  <span>Price Without VAT</span>
-                  <span>
-                    AED&nbsp;
-                    {cart?.reduce((acc, item) => acc + (item.price_without_vat || 0), 0)}
-                  </span>
-                </div>
-                <div className="w-full flex items-center justify-between text-sm font-medium">
-                  <span>Price With VAT</span>
-                  <span>
-                    AED&nbsp;
-                    {cart?.reduce((acc, item) => acc + (item.price || 0), 0)}
-                  </span>
-                </div>
-                <div className="w-full flex items-center justify-between text-sm font-medium">
                   <span>Sub Total</span>
                   <span>
                     AED&nbsp;
-                    {new Intl.NumberFormat().format(calculateTotalCost(cart))}
+                    {new Intl.NumberFormat().format(calculateWithoutVAT(cart))}
                   </span>
                 </div>
                 <div className="w-full flex items-center text-sm justify-between font-medium">
                   <span>Discount</span>
-                  <span>AED 0.00</span>
+                  <span>AED {calculateDiscountValue(cart)}</span>
+                </div>
+                <div className="w-full flex items-center text-sm justify-between font-medium">
+                  <span>VAT</span>
+                  <span>AED {calculateVAT(cart)}</span>
                 </div>
                 <div className="w-full flex items-center justify-between font-bold">
                   <span>Grand Total</span>
                   <span>
                     AED&nbsp;
-                    {new Intl.NumberFormat().format(calculateTotalCost(cart))}
+                    {calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart))}
                   </span>
                 </div>
                 <button

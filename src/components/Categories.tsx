@@ -190,7 +190,7 @@ const Categories = () => {
                       height={56}
                       className="size-7 lg:size-9 3xl:size-9"
                     />
-                    <span className="text-left font-bold text-sm" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-left font-bold text-sm line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -202,7 +202,7 @@ const Categories = () => {
         ref={categoryDRef}
         className="w-full hidden md:flex items-center justify-center"
       >
-        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid py-10 lg:py-5 xl:py-10 mb-5 xl:mb-0 grid-cols-6 gap-3">
+        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid py-10 lg:py-5 xl:py-10 mb-5 xl:mb-0 grid-cols-5 gap-3">
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
@@ -219,7 +219,7 @@ const Categories = () => {
                     alt="category"
                     className="size-16 lg:size-20"
                   />
-                  <span className="w-full text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                  <span className="w-full line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                 </Link>
               ))}
         </div>

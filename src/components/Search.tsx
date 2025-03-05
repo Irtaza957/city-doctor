@@ -187,7 +187,7 @@ const Search = () => {
                               {service.description}
                             </span>
                             <span className="w-full text-left font-semibold text-xs xl:text-sm overflow-hidden truncate">
-                              AED&nbsp;{service.price_with_vat}
+                              AED&nbsp;{service.price_without_vat}
                             </span>
                           </div>
                         </Link>

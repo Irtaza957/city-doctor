@@ -242,7 +242,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                   <div className="w-full flex items-center justify-start space-x-10">
                     <p className="font-bold text-xs">{review.customer}</p>
                     <div className="flex items-center justify-center space-x-1.5">
-                      {[...Array(parseInt(review.review))].map((_, idx) => (
+                      {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
                         <FaStar key={idx} className="text-accent" />
                       ))}
                     </div>
@@ -257,7 +257,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               </p>
             </div>
           ))}
-          <div className="w-full px-5">
+          {/* <div className="w-full px-5">
             <Image
               src={`${imageBase(data.cover_image)}`}
               alt="cover-image"
@@ -265,7 +265,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               height={1000}
               className="rounded-lg w-full"
             />
-          </div>
+          </div> */}
           <div className="w-full mt-5 lg:mt-10">
             <h1 className="w-full text-left text-xl font-bold mb-5 px-5">
               Customers Also Viewed
@@ -295,6 +295,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               </Swiper>
             </div>
           </div>
+          {data.faqs.length ?
           <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
             <h1 className="w-full text-left text-xl font-bold">FAQs</h1>
             <div className="w-full flex flex-col items-center justify-center space-y-2.5">
@@ -302,7 +303,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 <Accordion section={section} key={idx} />
               ))}
             </div>
-          </div>
+          </div>: null}
           <div className="fixed w-full z-20 bottom-[68px] left-0 p-3 bg-white border-t">
             {quantity === 0 ? (
               <button
@@ -551,10 +552,10 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                     <div className="w-full flex items-center justify-start space-x-10">
                       <p className="font-bold">{review.customer}</p>
                       <div className="flex items-center justify-center gap-0.5">
-                        {[...Array(parseInt(review.review))].map((id, idx) => (
+                        {[...Array(parseInt(review.review || "0"))].map((id, idx) => (
                           <FaStar key={idx} className="text-accent" />
                         ))}
-                        {[...Array(5 - parseInt(review.review))].map(
+                        {[...Array(5 - parseInt(review.review || "0"))].map(
                           (id, idx) => (
                             <FaStar key={idx} className="text-gray-300" />
                           )
@@ -573,13 +574,13 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             ))}
           </div>
         </div>
-        <Image
+        {/* <Image
           src={`${imageBase(data.cover_image)}`}
           alt="cover-image"
           width={1000}
           height={1000}
           className="rounded-lg w-full"
-        />
+        /> */}
         {data.similar_services.length !== 0 && (
           <div className="w-full mt-5 lg:mt-10">
             <h1 className="w-full text-left text-xl font-bold mb-5">
@@ -707,6 +708,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>
           </div>
         )}
+        {data.faqs.length ?
         <div className="w-full flex flex-col items-center space-y-5 mt-5 lg:mt-10">
           <h1 className="col-span-2 w-full text-left text-xl font-bold">
             FAQs
@@ -716,7 +718,7 @@ const DripDetail = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               <Accordion section={section} key={idx} />
             ))}
           </div>
-        </div>
+        </div>: null}
       </div>
     </>
   );

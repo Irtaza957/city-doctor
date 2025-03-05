@@ -114,7 +114,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
             {wishlist ? (
               <HeartIcon fillColor="#38ADA0" className="text-secondary" />
             ) : (
-              <HeartIcon className="text-black" />
+              <HeartIcon className="text-secondary" />
             )}
           </div>
         )}

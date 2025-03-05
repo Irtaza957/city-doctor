@@ -46,7 +46,7 @@ const Accordion = ({
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <DisclosurePanel className="w-full p-3 rounded-b-lg bg-gray-100 text-gray-400 flex flex-col items-center justify-center space-y-3">
+            <DisclosurePanel className="w-full p-3 rounded-b-lg bg-gray-100 text-gray-400 flex flex-col space-y-3">
               <p className="text-xs md:text-sm text-gray-500">
                 {section?.description ? section?.description : section?.answer}
               </p>

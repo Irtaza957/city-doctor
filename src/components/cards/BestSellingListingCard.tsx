@@ -130,7 +130,7 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
           className="w-full flex flex-col items-center justify-center space-y-1.5"
         >
           <h1 className="w-full text-left text-base overflow-hidden truncate font-semibold xl:font-bold">
-            {drip.name}
+            {drip.name || drip.service_name}
           </h1>
           <p className="w-full text-left overflow-hidden font-medium truncate text-xs text-[#555555]">
             {drip.description}
@@ -149,7 +149,7 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
               </span>
             </div>
             <span className="w-full text-left text-base font-semibold xl:font-bold">
-              AED {drip.price_without_vat}
+              AED {drip.price_without_vat || drip.price}
             </span>
           </Link>
           <div

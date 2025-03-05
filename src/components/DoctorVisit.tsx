@@ -9,7 +9,7 @@ import DoctorVisitCard from "./cards/DoctorVisitCard";
 import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
 
 import Link from "next/link";
-import { useState } from "react";
+// import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 // @ts-ignore
@@ -17,11 +17,11 @@ import { Grid, Navigation, FreeMode } from "swiper/modules";
 
 const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
   const dispatch = useDispatch();
-  const [startSlide, setStartSlide] = useState(true);
-  const checkID =
-    (section?.section_data.length / 2) % 4 === 0
-      ? section?.section_data.length / 2
-      : (section?.section_data.length / 2) + 1;
+  // const [startSlide, setStartSlide] = useState(true);
+  // const checkID =
+  //   (section?.section_data.length / 2) % 4 === 0
+  //     ? section?.section_data.length / 2
+  //     : (section?.section_data.length / 2) + 1;
 
   const clearCategory = () => {
     dispatch(setSelectedCategory(null));
@@ -48,7 +48,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
             View All
           </Link>
         </div>
-        <div className="w-full block sm:hidden">
+        <div className="w-full block sm:hidden px-5">
           <Swiper
             modules={[Grid, FreeMode]}
             slidesPerView={1.05}
@@ -58,22 +58,18 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
             }}
             freeMode={true}
             style={{ boxShadow: "5px 0 5px -5px lightgray" }}
-            onSlideChange={(swiper) => {
-              if (swiper.activeIndex === 0) {
-                setStartSlide(true);
-              } else {
-                setStartSlide(false);
-              }
-            }}
+            // onSlideChange={(swiper) => {
+            //   if (swiper.activeIndex === 0) {
+            //     setStartSlide(true);
+            //   } else {
+            //     setStartSlide(false);
+            //   }
+            // }}
+            className="mx-5 px-5"
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide
                 key={idx}
-                className={`${
-                  startSlide && (idx === 0 || idx === Math.floor(checkID))
-                    ? "pl-5"
-                    : ""
-                }`}
               >
                 <DoctorVisitCard drip={drip} />
               </SwiperSlide>

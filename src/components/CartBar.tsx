@@ -2,7 +2,6 @@ import { RootState } from "@/store";
 import Card from "@/assets/img/card.png";
 import LoginModal from "./modals/LoginModal";
 import EmptyCart from "@/assets/img/empty-cart.svg";
-import { calculateTotalCost } from "@/utils/helpers";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { addToCart, toggleSidebar, removeFromCart } from "@/store/global";
 
@@ -12,6 +11,8 @@ import { useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+import { calculateVAT } from "@/utils/helpers";
+import { calculateDiscountValue, calculateWithoutVAT } from "@/utils/helpers";
 
 const CartBar = () => {
   const cartRef = useRef(null);
@@ -55,15 +56,13 @@ const CartBar = () => {
     <>
       <LoginModal open={open} setOpen={setOpen} />
       <div
-        className={`w-full h-full transition-[width] fixed top-0 left-0 z-50 bg-black/30 ${
-          !sidebarToggle && "hidden"
-        }`}
+        className={`w-full h-full transition-[width] fixed top-0 left-0 z-50 bg-black/30 ${!sidebarToggle && "hidden"
+          }`}
       />
       <div
         ref={cartRef}
-        className={`${
-          sidebarToggle ? "w-[350px] xl:w-[400px]" : "w-0"
-        } transition-all duration-150 ease-linear h-full overflow-auto custom-scrollbar fixed top-0 right-0 z-50 flex flex-col items-start justify-start bg-white shadow-2xl`}
+        className={`${sidebarToggle ? "w-[350px] xl:w-[400px]" : "w-0"
+          } transition-all duration-150 ease-linear h-full overflow-auto custom-scrollbar fixed top-0 right-0 z-50 flex flex-col items-start justify-start bg-white shadow-2xl`}
       >
         <div className="w-full flex items-center justify-center bg-primary text-white py-5 px-5">
           <h1 className="w-full text-left text-xl font-semibold">
@@ -145,35 +144,25 @@ const CartBar = () => {
         {cart.length > 0 && (
           <div className="w-full flex flex-col items-center justify-center pb-24 px-5 space-y-1">
             <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
-              <span>Price Without VAT</span>
-              <span>
-                AED&nbsp;
-                {cart?.reduce((acc, item) => acc + (item.price_without_vat || 0), 0)}
-              </span>
-            </div>
-            <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
-              <span>Price With VAT</span>
-              <span>
-                AED&nbsp;
-                {cart?.reduce((acc, item) => acc + (item.price || 0), 0)}
-              </span>
-            </div>
-            <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
               <span>Sub Total</span>
               <span>
                 AED&nbsp;
-                {new Intl.NumberFormat().format(calculateTotalCost(cart))}
+                {calculateWithoutVAT(cart)}
               </span>
             </div>
             <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
               <span>Discount</span>
-              <span>AED 0.00</span>
+              <span>AED {calculateDiscountValue(cart)}</span>
+            </div>
+            <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
+              <span>VAT</span>
+              <span>AED {calculateVAT(cart)}</span>
             </div>
             <div className="w-full text-sm flex items-center justify-between font-bold">
               <span>Grand Total</span>
               <span>
                 AED&nbsp;
-                {new Intl.NumberFormat().format(calculateTotalCost(cart))}
+                {calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart))}
               </span>
             </div>
           </div>
@@ -181,9 +170,8 @@ const CartBar = () => {
         <div className="absolute bottom-2.5 left-0 z-10 w-full grid grid-cols-2 gap-1.5 px-5 pb-3 pt-4 bg-white border-t border-[#DEDEDE]">
           <button
             onClick={closeBar}
-            className={`${
-              cart.length === 0 ? "col-span-2" : "col-span-1"
-            } w-full bg-[#DEDEDE] text-[#0A314A] rounded-lg text-xs font-bold py-3 place-self-end`}
+            className={`${cart.length === 0 ? "col-span-2" : "col-span-1"
+              } w-full bg-[#DEDEDE] text-[#0A314A] rounded-lg text-xs font-bold py-3 place-self-end`}
           >
             Continue Shopping
           </button>

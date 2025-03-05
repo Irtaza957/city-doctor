@@ -144,7 +144,10 @@ const LocationModal = ({
     }
 
     const formData = new URLSearchParams();
-    formData.append("area_id", area);
+    const selectedArea = areaList?.find((a) => String(a.name) == String(area));
+    const emirateId = emirates.find((e) => e.name === emirate)?.id;
+    formData.append("area_id", selectedArea?.id?.toString()!);
+    formData.append("emirate_id", emirateId!.toString());
     formData.append("street", street);
     formData.append("is_default", "0");
     formData.append("map_link", "FFF");
@@ -179,14 +182,14 @@ const LocationModal = ({
       cn="flex items-center justify-center"
       toggle={open}
       setToggle={setOpen}
-      width={`w-[50%] ${
+      width={`${
         !showForm
           ? "w-[85%] md:w-[65%] lg:w-[45%] 3xl:w-[25%]"
-          : "w-[55%] md:w-[45%] lg:w-[30%] xl:w-[25%] 3xl:w-[17.5%]"
+          : "w-[55%]"
       }`}
     >
       <div className="w-full h-full bg-white rounded-xl overflow-hidden flex flex-col items-center justify-center">
-        <div className="w-full flex items-center justify-between px-5 py-2.5 border-b">
+        <div className="w-full flex items-center justify-between px-5 py-3 border-b">
           <h1 className="text-left text-lg font-bold">Add Address</h1>
           <IoClose
             onClick={() => {

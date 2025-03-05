@@ -158,7 +158,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
               </span>
             </div>
             <span className="text-left text-sm md:text-base font-semibold xl:font-bold">
-              AED {drip.price_with_vat}
+              AED {drip.price_without_vat}
             </span>
           </Link>
           {quantity === 0 ? (

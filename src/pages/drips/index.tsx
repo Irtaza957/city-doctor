@@ -26,7 +26,7 @@ import DoctorVisitSkeleton from "@/components/cards/skeleton/DoctorVisitSkeleton
 import CategorySliderSkeleton from "@/components/cards/skeleton/CategorySliderSkeleton";
 import he from "he";
 
-const sortingOptions = [
+export const sortingOptions = [
   {
     id: 1,
     name: "Price (Low to High)",
@@ -384,9 +384,7 @@ const DripListing = () => {
                         height={56}
                         className="size-7 lg:size-9 3xl:size-9"
                       />
-                      <span className="text-left font-bold text-sm">
-                        {category.category_name}
-                      </span>
+                      <span className="text-left font-bold text-sm line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                     </div>
                   </SwiperSlide>
                 ))}
@@ -451,7 +449,7 @@ const DripListing = () => {
                 </div>
               ))}
             </div>
-            <div className="relative w-[70%] md:w-[75%] max-h-full overflow-auto custom-scrollbar flex flex-col gap-4">
+            <div className="relative w-[70%] md:w-[75%] max-h-full flex flex-col gap-4">
               {/* <div className="w-full flex flex-col items-center gap-4">
                 {subCategories?.[parseInt(selectedSubCategory)]
                   ?.cover_image && (
@@ -467,7 +465,7 @@ const DripListing = () => {
                   />
                 )}
               </div> */}
-              <div className="sticky top-5 z-10 md:mr-5 flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
+              <div className="sticky top-5 mt-5 z-10 md:mr-5 flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
                 <div className="flex items-center justify-start gap-2">
                   <button type="button" onClick={() => setViewType(false)}>
                     <FaThList
@@ -534,7 +532,7 @@ const DripListing = () => {
                 </div>
               </div>
               <div
-                className={`w-full grid pb-5 md:pr-5 ${
+                className={`w-full grid pb-5 md:pr-5 overflow-auto custom-scrollbar -mt-2 ${
                   viewType
                     ? "grid-cols-2 md:grid-cols-3 gap-2"
                     : "grid-cols-1 md:grid-cols-2 gap-2"

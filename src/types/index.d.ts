@@ -73,6 +73,7 @@ declare type DRIP_CARD = {
   discount_value: string | null;
   quantity: string;
   price?: string;
+  service_name?: string;
 };
 
 declare type DRIP = {

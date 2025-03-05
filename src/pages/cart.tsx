@@ -25,7 +25,7 @@ import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
 import { useApplyPromoMutation } from "@/store/services/booking";
 import BestSellingCard from "@/components/cards/BestSellingCard";
 import { addToCart, removeFromCart, setPromo } from "@/store/global";
-import { calculateDiscount, calculateTotalCost } from "@/utils/helpers";
+import { calculateDiscount, calculateDiscountValue, calculateVAT, calculateWithoutVAT } from "@/utils/helpers";
 
 const Checkout = () => {
   const router = useRouter();
@@ -145,7 +145,7 @@ const Checkout = () => {
                       />
                       <div className="w-full flex items-center justify-center">
                         <div className="w-[60%] flex flex-col items-center justify-center gap-1 pl-3">
-                          <span className="w-full text-left text-sm font-semibold overflow-hidden truncate">
+                          <span className="w-full text-left text-sm font-semibold break-words">
                             {item.name}
                           </span>
                           <span className="w-full text-left text-xs font-medium">
@@ -262,32 +262,22 @@ const Checkout = () => {
                 </div>
                 <div className="w-full flex flex-col items-center justify-center gap-2.5 text-[#555555]">
                   <div className="w-full flex items-center justify-between font-medium">
-                    <span className="text-sm">Price Without VAT</span>
-                    <span className="text-sm">
-                      AED&nbsp;
-                      {cart?.reduce((acc, item) => acc + (item.price_without_vat || 0), 0)}
-                    </span>
-                  </div>
-                  <div className="w-full flex items-center justify-between font-medium">
-                    <span className="text-sm">Price With VAT</span>
-                    <span className="text-sm">
-                      AED&nbsp;
-                      {cart?.reduce((acc, item) => acc + (item.price || 0), 0)}
-                    </span>
-                  </div>
-                  <div className="w-full flex items-center justify-between font-medium">
                     <span className="text-sm">Sub Total</span>
                     <span className="text-sm">
                       AED&nbsp;
-                      {prices.subtotal !== 0
-                        ? new Intl.NumberFormat().format(prices.subtotal)
-                        : calculateTotalCost(cart)}
+                      {calculateWithoutVAT(cart)}
                     </span>
                   </div>
                   <div className="w-full flex items-center justify-between font-medium">
                     <span className="text-sm">Discount</span>
                     <span className="text-sm">
-                      AED&nbsp;{prices.discounted_amount}
+                      AED&nbsp;{calculateDiscountValue(cart)}
+                    </span>
+                  </div>
+                  <div className="w-full flex items-center justify-between font-medium">
+                    <span className="text-sm">VAT</span>
+                    <span className="text-sm">
+                      AED&nbsp;{calculateVAT(cart)}
                     </span>
                   </div>
                   <div className="w-full flex items-center justify-between font-bold">
@@ -298,7 +288,7 @@ const Checkout = () => {
                         ? new Intl.NumberFormat().format(
                             prices.discounted_total
                           )
-                        : calculateTotalCost(cart)}
+                        : calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart))}
                     </span>
                   </div>
                   <div

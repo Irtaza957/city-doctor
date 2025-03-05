@@ -174,9 +174,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                       height={56}
                       className="size-7 lg:size-9 3xl:size-9"
                     />
-                    <span className="text-left font-bold text-sm">
-                      {category.category_name}
-                    </span>
+                    <span className="text-left font-bold text-sm line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
