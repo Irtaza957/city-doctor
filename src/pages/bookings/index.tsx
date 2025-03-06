@@ -19,6 +19,7 @@ import { addToCart, setAccountTab } from "@/store/global";
 import ReviewDrawer from "@/components/drawers/ReviewDrawer";
 import TrackBookingDrawer from "@/components/drawers/TrackBookingDrawer";
 import BookingCardSkeleton from "@/components/cards/skeleton/BookingCardSkeleton";
+import GoogleAnalytics from "../../components/GoogleAnalytics";
 
 const Upcoming = ({ booking }: { booking: BOOKING }) => {
   const [selected, setSelected] = useState("0");
@@ -243,6 +244,7 @@ const Cancelled = ({ booking }: { booking: BOOKING }) => {
             ),
             discount: parseFloat(service?.discount_value!),
             quantity: parseInt(service?.quantity!),
+            thumbnail: service.thumbnail,
           };
         });
 
@@ -338,6 +340,7 @@ const Bookings = () => {
 
   return (
     <>
+    <GoogleAnalytics />
       <div className="w-full fixed top-[69px] z-40 left-0 py-3 px-5 flex md:hidden flex-col items-center justify-center border-y space-y-3 bg-white">
         <div className="w-full flex items-center justify-start gap-5 sm:gap-0">
           <Link

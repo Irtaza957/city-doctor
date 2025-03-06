@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { FaChevronRight } from "react-icons/fa6";
 import { MdOutlineLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const sidebar = [
   {
@@ -81,6 +82,7 @@ const AccountSettings = () => {
 
   return (
     <>
+    <GoogleAnalytics />
       <div className="w-full h-full hidden sm:flex items-center justify-center px-5 md:px-0 sm:pt-[95px] md:pt-[130px] lg:pt-[135px]">
         <div className="w-full md:w-[90%] lg:max-w-[1440px] p-5 grid grid-cols-12 gap-5 mb-10 border border-gray-200 rounded-xl">
           <div className="col-span-3 w-full h-full flex flex-col items-start justify-start space-y-3 border-r border-gray-200 pr-5">

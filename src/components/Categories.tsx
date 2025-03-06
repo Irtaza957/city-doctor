@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useRef, useState } from "react";
 
 import "swiper/css";
-import { imageBase } from "@/utils/helpers";
+import { getCategoryLink, imageBase } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import CategorySkeletion from "./cards/skeleton/CategorySkeletion";
 import { useFetchCategoriesQuery } from "@/store/services/category";
@@ -73,9 +73,8 @@ const Categories = () => {
   return (
     <>
       <div
-        className={`fixed ${
-          showSlider ? "flex" : "hidden"
-        } w-full shadow-md z-40 top-[69px] sm:top-[71.75px] md:top-[116px] 3xl:top-[115px] left-0 bg-white md:border-b xl:border-none`}
+        className={`fixed ${showSlider ? "flex" : "hidden"
+          } w-full shadow-md z-40 top-[69px] sm:top-[71.75px] md:top-[116px] 3xl:top-[115px] left-0 bg-white md:border-b xl:border-none`}
       >
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto sm:px-5 md:px-0">
           <div className="block sm:hidden py-2.5">
@@ -98,7 +97,7 @@ const Categories = () => {
                   className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                 >
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full bg-[#F0F0F0] text-black flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-4 rounded-lg"
                   >
@@ -125,7 +124,7 @@ const Categories = () => {
               {data?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -152,7 +151,7 @@ const Categories = () => {
               {data?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -179,7 +178,7 @@ const Categories = () => {
               {data?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full bg-[#F0F0F0] text-black flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-lg"
                   >
@@ -202,53 +201,52 @@ const Categories = () => {
         ref={categoryDRef}
         className="w-full hidden md:flex items-center justify-center"
       >
-        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid py-10 lg:py-5 xl:py-10 mb-5 xl:mb-0 grid-cols-5 gap-3">
+        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid py-10 lg:py-5 xl:py-10 mb-5 xl:mb-0 grid-cols-6 gap-3">
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
-                <Link
-                  href="/drips"
-                  key={category.category_id}
-                  onClick={() => selectCategory(category)}
-                  className="w-full h-full flex flex-col items-center justify-between space-y-3 bg-[#F5F5F5] text-black py-5 px-6 lg:px-12 xl:px-14 3xl:px-12 rounded-lg"
-                >
-                  <Image
-                    src={`${imageBase(category.icon)}`}
-                    width={50}
-                    height={50}
-                    alt="category"
-                    className="size-16 lg:size-20"
-                  />
-                  <span className="w-full line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
-                </Link>
-              ))}
+              <Link
+                href={getCategoryLink(category.category_name)}
+                key={category.category_id}
+                onClick={() => selectCategory(category)}
+                className="w-full h-full flex flex-col items-center justify-between space-y-3 bg-[#F5F5F5] text-black py-5 px-6 lg:px-12 xl:px-14 3xl:px-12 rounded-lg"
+              >
+                <Image
+                  src={`${imageBase(category.icon)}`}
+                  width={50}
+                  height={50}
+                  alt="category"
+                  className="size-16 lg:size-20"
+                />
+                <span className="w-full line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+              </Link>
+            ))}
         </div>
       </div>
       <div ref={categoryRef} className="flex md:hidden w-full px-5 pb-5">
         <div
-          className={`w-full h-full ${
-            showSlider && "invisible"
-          } grid grid-cols-3 items-center justify-center gap-3`}
+          className={`w-full h-full ${showSlider && "invisible"
+            } grid grid-cols-3 items-center justify-center gap-3`}
         >
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
-                <Link
-                  href="/drips"
-                  key={category.category_id}
-                  onClick={() => selectCategory(category)}
-                  className="col-span-1 w-full h-full flex flex-col items-center justify-center space-y-2 rounded-2xl bg-gray-100 text-black p-3"
-                >
-                  <Image
-                    src={`${imageBase(category.icon)}`}
-                    width={50}
-                    height={96}
-                    alt="category"
-                    className="w-12 h-14"
-                  />
-                  <span className="w-full text-center font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
-                </Link>
-              ))}
+              <Link
+                href={getCategoryLink(category.category_name)}
+                key={category.category_id}
+                onClick={() => selectCategory(category)}
+                className="col-span-1 w-full h-full flex flex-col items-center justify-center space-y-2 rounded-2xl bg-gray-100 text-black p-3"
+              >
+                <Image
+                  src={`${imageBase(category.icon)}`}
+                  width={50}
+                  height={96}
+                  alt="category"
+                  className="w-12 h-14"
+                />
+                <span className="w-full text-center font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+              </Link>
+            ))}
         </div>
       </div>
     </>

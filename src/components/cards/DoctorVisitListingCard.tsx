@@ -11,7 +11,7 @@ import { RootState } from "@/store";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { imageBase, truncateString } from "@/utils/helpers";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
-import { addToCart, removeFromCart, toggleSidebar } from "@/store/global";
+import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 
 const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
     }
   };
 
-  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number) => {
+  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number, thumbnail: string, isQuantity: boolean = false) => {
     dispatch(
       addToCart({
         id,
@@ -41,13 +41,21 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
         price,
         discount,
         price_without_vat,
-        quantity: 1,
+        thumbnail,
+        quantity: isQuantity ? quantity + 1 : 1,
       })
     );
   };
 
-  const remove = (id: number) => {
-    dispatch(removeFromCart(id));
+  const remove = (item: DRIP_CARD) => {
+    if (item) {
+      if(Number(quantity) === 1){
+        dispatch(removeFromCart(Number(item.service_id)));
+      }else{
+        const updatedCart = cart.map(i => i.id === Number(item.service_id) ? { ...i, quantity: i.quantity - 1 } : i);
+        dispatch(setCart(updatedCart));
+      }
+    }
   };
 
   const like = async (id: string) => {
@@ -180,7 +188,8 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
                     drip.name!,
                     parseInt(drip.price_with_vat),
                     parseInt(drip.discount_value ? drip.discount_value : "0"),
-                    parseInt(drip.price_without_vat)
+                    parseInt(drip.price_without_vat),
+                    drip.thumbnail
                   );
                   handleSidebar();
                 }}
@@ -198,7 +207,8 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
                     drip.name!,
                     parseInt(drip.price_with_vat),
                     parseInt(drip.discount_value ? drip.discount_value : "0"),
-                    parseInt(drip.price_without_vat)
+                    parseInt(drip.price_without_vat),
+                    drip.thumbnail
                   );
                 }}
                 className="w-[95px] block md:hidden h-[36px] py-2 px-4 md:px-9 bg-primary rounded-md text-white font-semibold text-sm place-self-end"
@@ -210,7 +220,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
             <div className="w-[95px] flex items-center justify-between">
               <span
                 onClick={() => {
-                  remove(parseInt(drip.service_id!));
+                  remove(drip);
                   handleDecrement();
                 }}
                 className="border border-primary p-1 text-black rounded-lg size-[36px] flex items-center justify-center cursor-pointer"
@@ -228,7 +238,9 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
                     drip.name!,
                     parseInt(drip.price_with_vat),
                     parseInt(drip.discount_value ? drip.discount_value : "0"),
-                    parseInt(drip.price_without_vat)
+                    parseInt(drip.price_without_vat),
+                    drip.thumbnail,
+                    true
                   );
                 }}
                 className="bg-primary text-white p-1 rounded-lg size-[36px] flex items-center justify-center cursor-pointer"

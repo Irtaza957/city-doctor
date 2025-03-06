@@ -6,9 +6,12 @@ import {
 } from "@headlessui/react";
 import { Fragment } from "react";
 import { FaChevronDown } from "react-icons/fa6";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const FAQ = () => {
   return (
+    <>
+    <GoogleAnalytics />
     <div className="w-full flex items-center justify-center mt-[85px] md:mt-[150px]">
       <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto px-5 md:px-0 flex flex-col items-center justify-center space-y-2.5 pb-20">
         <h1 className="w-full text-left text-2xl xl:text-4xl font-bold !mb-5">
@@ -59,6 +62,7 @@ const FAQ = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

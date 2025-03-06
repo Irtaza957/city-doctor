@@ -35,17 +35,27 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Toaster />
-        <Navbar />
-        {loading && <Loader />}
-        <Component {...pageProps} />
-        <CheckoutBar />
-        <BottomNav />
-        <Footer />
-        <CartBar />
-      </PersistGate>
-    </Provider>
+    <>
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-WGSTHMG"
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        />
+      </noscript>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Toaster />
+          <Navbar />
+          {loading && <Loader />}
+          <Component {...pageProps} />
+          <CheckoutBar />
+          <BottomNav />
+          <Footer />
+          <CartBar />
+        </PersistGate>
+      </Provider>
+    </>
   );
 }

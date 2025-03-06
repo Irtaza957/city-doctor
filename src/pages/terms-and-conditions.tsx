@@ -1,7 +1,10 @@
 import React from "react";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const TermsAndConditions = () => {
   return (
+    <>
+    <GoogleAnalytics />
     <div className="w-full flex items-center justify-center mt-[91.25px] sm:mt-[85px] md:mt-[150px] px-5 md:px-0 mb-20">
       <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto flex flex-col items-center justify-center xl:space-y-8">
         <h1 className="w-full text-left text-2xl xl:text-4xl font-bold !mb-5">
@@ -27,6 +30,7 @@ const TermsAndConditions = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

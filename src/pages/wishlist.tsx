@@ -13,9 +13,10 @@ import { useGetWishlistQuery } from "@/store/services/wishlist";
 import ServiceCardSkeleton from "@/components/cards/skeleton/ServiceCardSkeleton";
 import { FaThList } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
-import { sortingOptions } from "./drips";
+import { sortingOptions } from "@/components/drips";
 import { sortWishlist } from "@/utils/helpers";
 import BestSellingListingCard from "@/components/cards/BestSellingListingCard";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState<WISHLIST[]>([]);
@@ -36,6 +37,8 @@ const Wishlist = () => {
   }, [data]);
 
   return (
+    <>
+    <GoogleAnalytics />
     <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto mt-[45.25px] sm:mt-[71.25px] md:mt-[120px] mb-10 pt-5 px-5 md:px-0">
       <h1 className="w-full text-left text-xl xl:text-2xl font-bold mb-5">
         My Wishlist
@@ -144,6 +147,7 @@ const Wishlist = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

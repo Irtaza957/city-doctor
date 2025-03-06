@@ -16,9 +16,17 @@ export function removeSpaces(str: string): string {
   return str?.replace(/\s+/g, "");
 }
 
-export const calculateWithoutVAT = (cart: CART[]) => cart?.reduce((acc, item) => acc + (item.price_without_vat || 0), 0)
-export const calculateDiscountValue = (cart: CART[]) => cart?.reduce((acc, item) => acc + (item.discount || 0), 0)
-export const calculateVAT = (cart: CART[]) => (calculateWithoutVAT(cart) - calculateDiscountValue(cart)) * (5/100)
+export const calculateWithoutVAT = (cart: CART[]) => {
+  return cart?.reduce(
+    (acc, item) => acc + (item.price_without_vat * item.quantity || 0),
+    0
+  );
+};
+export const calculateDiscountValue = (cart: CART[]) =>
+  cart?.reduce((acc, item) => acc + (item.discount || 0), 0);
+
+export const calculateVAT = (cart: CART[]) =>
+  (calculateWithoutVAT(cart) - calculateDiscountValue(cart)) * (5 / 100);
 
 export const calculateTotalCost = (cart: CART[]) => {
   let totalCost = 0;
@@ -248,7 +256,10 @@ export const calculateDiscount = (cart: CART[], promo: PROMO | null) => {
   };
 };
 
-export const sortWishlist = (sortType: string, array: WISHLIST[] | undefined) => {
+export const sortWishlist = (
+  sortType: string,
+  array: WISHLIST[] | undefined
+) => {
   if (array) {
     const sortedArray = [...array!];
 
@@ -256,16 +267,16 @@ export const sortWishlist = (sortType: string, array: WISHLIST[] | undefined) =>
       switch (sortType) {
         case "Price (Low to High)":
           return sortedArray.sort(
-            (a, b) =>
-              parseFloat(a.price!) - parseFloat(b.price!)
+            (a, b) => parseFloat(a.price!) - parseFloat(b.price!)
           );
         case "Price (High to Low)":
           return sortedArray.sort(
-            (a, b) =>
-              parseFloat(b.price!) - parseFloat(a.price!)
+            (a, b) => parseFloat(b.price!) - parseFloat(a.price!)
           );
         case "Alphabetically":
-          return sortedArray.sort((a, b) => a.service_name!.localeCompare(b.service_name!));
+          return sortedArray.sort((a, b) =>
+            a.service_name!.localeCompare(b.service_name!)
+          );
         default:
           return sortedArray;
       }
@@ -273,16 +284,16 @@ export const sortWishlist = (sortType: string, array: WISHLIST[] | undefined) =>
       switch (sortType) {
         case "Price (Low to High)":
           return sortedArray.sort(
-            (a, b) =>
-              parseFloat(a.price) - parseFloat(b.price)
+            (a, b) => parseFloat(a.price) - parseFloat(b.price)
           );
         case "Price (High to Low)":
           return sortedArray.sort(
-            (a, b) =>
-              parseFloat(b.price) - parseFloat(a.price)
+            (a, b) => parseFloat(b.price) - parseFloat(a.price)
           );
         case "Alphabetically":
-          return sortedArray.sort((a, b) => a.service_name!.localeCompare(b.service_name!));
+          return sortedArray.sort((a, b) =>
+            a.service_name!.localeCompare(b.service_name!)
+          );
         default:
           return sortedArray;
       }
@@ -298,13 +309,11 @@ export const sort = (sortType: string, array: DRIP_CARD[] | undefined) => {
       switch (sortType) {
         case "Price (Low to High)":
           return sortedArray.sort(
-            (a, b) =>
-              parseFloat(a.price!) - parseFloat(b.price!)
+            (a, b) => parseFloat(a.price!) - parseFloat(b.price!)
           );
         case "Price (High to Low)":
           return sortedArray.sort(
-            (a, b) =>
-              parseFloat(b.price!) - parseFloat(a.price!)
+            (a, b) => parseFloat(b.price!) - parseFloat(a.price!)
           );
         case "Alphabetically":
           return sortedArray.sort((a, b) => a.name!.localeCompare(b.name!));
@@ -362,3 +371,14 @@ export function formatString(input: string): string {
     .replace(/\s+/g, "-")
     .trim();
 }
+export const getCategoryLink = (category_name: string) => {
+  return category_name === "Doctor Home Visit"
+    ? "/doctor-on-home-visit"
+    : category_name === "Physiotherapy"
+    ? "/physiotherapy-and-body-adjustment"
+    : category_name === "IV Drip Therapy"
+    ? "/iv-drip-therapy"
+    : category_name === "Lab Tests & Checkups"
+    ? "/lab-test-and-checkup"
+    : "/drips";
+};

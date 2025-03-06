@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/navigation";
 import { RootState } from "@/store";
-import Card from "@/assets/img/card.png";
 import EmptyCart from "@/assets/img/empty-cart.svg";
 import LoginModal from "@/components/modals/LoginModal";
 import LoginDrawer from "@/components/drawers/LoginDrawer";
@@ -24,8 +23,9 @@ import { useFetchHomeDataQuery } from "@/store/services/home";
 import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
 import { useApplyPromoMutation } from "@/store/services/booking";
 import BestSellingCard from "@/components/cards/BestSellingCard";
-import { addToCart, removeFromCart, setPromo } from "@/store/global";
-import { calculateDiscount, calculateDiscountValue, calculateVAT, calculateWithoutVAT } from "@/utils/helpers";
+import { addToCart, removeFromCart, setCart, setPromo } from "@/store/global";
+import { calculateDiscount, calculateDiscountValue, calculateVAT, calculateWithoutVAT, imageBase } from "@/utils/helpers";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const Checkout = () => {
   const router = useRouter();
@@ -41,27 +41,32 @@ const Checkout = () => {
   const [startSlide, setStartSlide] = useState(true);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [applyPromo, { isLoading }] = useApplyPromoMutation();
-  const [selectedItem, setSelectedItem] = useState<CART | null>(null);
   const { user, cart, promo } = useSelector((state: RootState) => state.global);
 
-  const add = () => {
-    if (selectedItem) {
+  const add = (item: CART) => {
+    if (item) {
       dispatch(
         addToCart({
-          id: selectedItem?.id,
-          name: selectedItem?.name,
-          price: selectedItem?.price,
-          discount: selectedItem?.discount,
-          quantity: 1,
-          price_without_vat: selectedItem?.price_without_vat,
+          id: item?.id,
+          name: item?.name,
+          price: item?.price,
+          discount: item?.discount,
+          quantity: item?.quantity + 1,
+          price_without_vat: item?.price_without_vat,
+          thumbnail: item?.thumbnail,
         })
       );
     }
   };
 
-  const remove = () => {
-    if (selectedItem) {
-      dispatch(removeFromCart(selectedItem?.id));
+  const remove = (item: CART) => {
+    if (item) {
+      if (item.quantity === 1) {
+        dispatch(removeFromCart(item.id));
+      } else {
+        const updatedCart = cart.map(i => i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i);
+        dispatch(setCart(updatedCart));
+      }
     }
   };
 
@@ -101,6 +106,7 @@ const Checkout = () => {
 
   return (
     <>
+      <GoogleAnalytics />
       <LoginDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
       <LoginModal open={open} setOpen={setOpen} />
       <div className="w-full flex flex-col items-center justify-center gap-5 pb-10 mt-[69px] md:mt-[108px]">
@@ -137,7 +143,7 @@ const Checkout = () => {
                       className="w-full py-3 flex sm:hidden items-center justify-center border-b"
                     >
                       <Image
-                        src={Card}
+                        src={imageBase(item.thumbnail!)}
                         alt="card"
                         width={500}
                         height={500}
@@ -152,15 +158,14 @@ const Checkout = () => {
                             Qty: {item.quantity}
                           </span>
                           <span className="w-full text-left text-xs font-medium">
-                            AED {item.price}
+                            AED {item.price_without_vat}
                           </span>
                         </div>
                         <div className="w-[40%] h-full flex items-center justify-center">
                           <div className="w-full flex items-center justify-end gap-2.5">
                             <span
                               onClick={() => {
-                                setSelectedItem(item);
-                                remove();
+                                remove(item);
                               }}
                               className="border border-primary size-7 p-1 rounded-md text-black"
                             >
@@ -169,8 +174,7 @@ const Checkout = () => {
                             <span className="text-sm font-bold">{item.quantity}</span>
                             <span
                               onClick={() => {
-                                setSelectedItem(item);
-                                add();
+                                add(item);
                               }}
                               className="bg-primary text-white size-7 p-1 rounded-md"
                             >
@@ -185,7 +189,7 @@ const Checkout = () => {
                       className="w-full hidden sm:flex items-center justify-between space-x-4 py-3 border-b"
                     >
                       <Image
-                        src={Card}
+                        src={imageBase(item.thumbnail!)}
                         alt="card"
                         width={500}
                         height={500}
@@ -198,13 +202,12 @@ const Checkout = () => {
                         Qty: {item.quantity}
                       </span>
                       <span className="w-full text-left text-sm font-semibold">
-                        AED {item.price}
+                        AED {item.price_without_vat}
                       </span>
                       <div className="w-full flex items-center justify-end space-x-2.5">
                         <span
                           onClick={() => {
-                            setSelectedItem(item);
-                            remove();
+                            remove(item);
                           }}
                           className="border border-primary p-2 rounded-lg text-black"
                         >
@@ -213,8 +216,7 @@ const Checkout = () => {
                         <span>{item.quantity}</span>
                         <span
                           onClick={() => {
-                            setSelectedItem(item);
-                            add();
+                            add(item);
                           }}
                           className="bg-primary text-white p-2 rounded-lg"
                         >
@@ -240,9 +242,8 @@ const Checkout = () => {
                   />
                   <button
                     disabled={isLoading}
-                    className={`bg-transparent font-semibold ${
-                      promo ? "text-[#FF2727]" : "text-primary"
-                    }`}
+                    className={`bg-transparent font-semibold ${promo ? "text-[#FF2727]" : "text-primary"
+                      }`}
                   >
                     {isLoading ? (
                       <LuLoader2 className="animate-spin text-primary" />
@@ -277,7 +278,7 @@ const Checkout = () => {
                   <div className="w-full flex items-center justify-between font-medium">
                     <span className="text-sm">VAT</span>
                     <span className="text-sm">
-                      AED&nbsp;{calculateVAT(cart)}
+                      AED&nbsp;{calculateVAT(cart).toFixed(2)}
                     </span>
                   </div>
                   <div className="w-full flex items-center justify-between font-bold">
@@ -286,9 +287,9 @@ const Checkout = () => {
                       AED&nbsp;
                       {prices.discounted_total !== 0
                         ? new Intl.NumberFormat().format(
-                            prices.discounted_total
-                          )
-                        : calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart))}
+                          prices.discounted_total
+                        )
+                        : Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))}
                     </span>
                   </div>
                   <div

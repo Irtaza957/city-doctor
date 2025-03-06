@@ -5,9 +5,12 @@ import {
   FaHeadphonesSimple,
 } from "react-icons/fa6";
 import { GoogleMapsEmbed } from "@next/third-parties/google";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const ContactUs = () => {
   return (
+    <>
+    <GoogleAnalytics />
     <div className="w-full flex flex-col items-center justify-center mt-[91.25px] sm:mt-[85px] md:mt-[150px]">
       <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto px-5 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-10 pb-20">
         <h1 className="col-span-1 md:col-span-3 w-full text-left text-2xl xl:text-4xl font-bold">
@@ -154,6 +157,7 @@ const ContactUs = () => {
         />
       </div>
     </div>
+    </>
   );
 };
 

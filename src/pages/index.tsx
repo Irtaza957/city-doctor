@@ -11,6 +11,8 @@ import DoctorVisit from "@/components/DoctorVisit";
 import { fetchCountryFromIP } from "@/utils/helpers";
 import { useFetchHomeDataQuery } from "@/store/services/home";
 import DoctorVisitSkeleton from "@/components/cards/skeleton/DoctorVisitSkeleton";
+import Head from "next/head";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,11 @@ const Home = () => {
 
   return (
     <div className="w-full flex flex-col mb-10 xl:mb-20 items-center justify-center">
+      <GoogleAnalytics />
+      <Head>
+        <title>City Doctor Healthcare - At Your Doorstep in 30 to 45 Minutes</title>
+        <meta name="description" content="City Doctor offers 24/7 DHA-certified home healthcare in Dubai, reaching you in less than an hour at home, hotels, or offices. Expert care anytime, anywhere. Call 8005060 to book now." />
+      </Head>
       <Header />
       <Categories />
       {isLoading ? (

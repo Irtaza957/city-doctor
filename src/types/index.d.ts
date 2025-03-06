@@ -11,6 +11,7 @@ declare type CART = {
   discount?: number;
   quantity: number;
   price_without_vat: number;
+  thumbnail?: string;
 };
 
 declare type USER = {

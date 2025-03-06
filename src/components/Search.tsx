@@ -56,8 +56,10 @@ const Search = () => {
 
   useEffect(() => {
     setSelectedSub("0");
-    getSubs();
-  }, [category]);
+    if(showMenu){
+      getSubs();
+    }
+  }, [category, showMenu]);
 
   useEffect(() => {
     if (subCategories) {

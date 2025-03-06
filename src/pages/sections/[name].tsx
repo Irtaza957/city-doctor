@@ -12,12 +12,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import { GetServerSidePropsContext } from "next";
-import { imageBase, sort } from "@/utils/helpers";
+import { getCategoryLink, imageBase, sort } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import { useFetchCategoriesQuery } from "@/store/services/category";
 import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
 import BestSellingListingCard from "@/components/cards/BestSellingListingCard";
 import he from "he";
+import GoogleAnalytics from "../../components/GoogleAnalytics";
 
 const sortingOptions = [
   {
@@ -48,6 +49,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
 
   return (
     <>
+    <GoogleAnalytics />
       <div className="fixed flex w-full shadow-md z-50 top-[69px] sm:top-[65.75px] md:top-[108px] lg:top-[113px] left-0 bg-white md:border-b xl:border-none">
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto">
           <div className="w-full block sm:hidden pb-2.5">
@@ -70,7 +72,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                 >
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex flex-col items-center justify-center cursor-pointer gap-1 p-2 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -109,7 +111,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                 >
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -136,7 +138,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
               {categories?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -163,7 +165,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
               {categories?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href="/drips"
+                    href={getCategoryLink(category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full bg-[#F0F0F0] text-black flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-lg"
                   >

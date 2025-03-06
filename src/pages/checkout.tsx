@@ -37,6 +37,7 @@ import { FreeMode } from "swiper/modules";
 import { LuLoader2 } from "react-icons/lu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useDispatch, useSelector } from "react-redux";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const CheckoutDetails = () => {
   const dispatch = useDispatch();
@@ -196,6 +197,7 @@ const CheckoutDetails = () => {
 
   return (
     <>
+      <GoogleAnalytics />
       <TimeSlotDrawer
         slots={slots}
         open={openTime}
@@ -730,13 +732,13 @@ const CheckoutDetails = () => {
                 </div>
                 <div className="w-full flex items-center text-sm justify-between font-medium">
                   <span>VAT</span>
-                  <span>AED {calculateVAT(cart)}</span>
+                  <span>AED {calculateVAT(cart).toFixed(2)}</span>
                 </div>
                 <div className="w-full flex items-center justify-between font-bold">
                   <span>Grand Total</span>
                   <span>
                     AED&nbsp;
-                    {calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart))}
+                    {Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))}
                   </span>
                 </div>
                 <button

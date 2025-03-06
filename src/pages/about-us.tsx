@@ -5,9 +5,12 @@ import Icon3 from "@/assets/img/about/icon3.png";
 import About1 from "@/assets/img/about/about1.png";
 import About2 from "@/assets/img/about/about2.png";
 import About3 from "@/assets/img/about/about3.png";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const AboutUs = () => {
   return (
+    <>
+    <GoogleAnalytics />
     <div className="w-full flex items-center justify-center mt-[85px] md:mt-[150px]">
       <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto px-5 md:px-0 flex flex-col items-center justify-center gap-5 sm:gap-10 md:gap-20">
         <h1 className="w-full text-left text-2xl xl:text-4xl font-bold">
@@ -164,6 +167,7 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

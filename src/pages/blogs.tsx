@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import About1 from "@/assets/img/about/about1.png";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const Blogs = () => {
   const [unset, setUnset] = useState(false);
@@ -25,6 +26,8 @@ const Blogs = () => {
   }, []);
 
   return (
+    <>
+    <GoogleAnalytics />
     <div className="w-full flex items-center justify-center mt-[85px] md:mt-[150px]">
       <div className="relative w-full md:w-[90%] lg:max-w-[1440px] mx-auto px-5 md:px-0 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-y-5 lg:gap-x-10 pb-20">
         <h1 className="col-span-1 md:col-span-3 w-full text-left text-2xl xl:text-4xl font-bold">
@@ -125,6 +128,7 @@ const Blogs = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -215,8 +215,10 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
   };
 
   useEffect(() => {
-    fetchCountries(setCountryList);
-  }, []);
+    if(open){
+      fetchCountries(setCountryList);
+    }
+  }, [open]);
 
   /**
    * 1. Type Selection Drawer (Mobile, Email) && Input Drawer (Based on Type) --

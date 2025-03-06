@@ -12,7 +12,7 @@ import { RootState } from "@/store";
 import Card from "@/assets/img/card.png";
 import LoginDrawer from "./drawers/LoginDrawer";
 import { calculateTotalCost } from "@/utils/helpers";
-import { addToCart, removeFromCart } from "@/store/global";
+import { addToCart, removeFromCart, setCart } from "@/store/global";
 
 const CheckoutBar = () => {
   const { push } = useRouter();
@@ -20,11 +20,10 @@ const CheckoutBar = () => {
   const pathname = usePathname();
   const [openCart, setOpenCart] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<CART | null>(null);
   const { user, cart } = useSelector((state: RootState) => state.global);
   
-  const pathnames = ["/bookings", "/drips", "/account-settings", "/checkout"];
-  const dynamicPatterns = [/^\/bookings\/\d+$/, /^\/drips\/\d+$/];
+  const pathnames = ["/bookings", "/drips", "/doctor-on-home-visit", "/physiotherapy-and-body-adjustment", "/iv-drip-therapy", "/lab-test-and-checkup", "/account-settings", "/checkout"];
+  const dynamicPatterns = [/^\/bookings\/\d+$/, /^\/drips\/\d+$/, /^\/doctor-on-home-visit\/\d+$/, /^\/physiotherapy-and-body-adjustment\/\d+$/, /^\/iv-drip-therapy\/\d+$/, /^\/lab-test-and-checkup\/\d+$/];
   const shouldHide =
     pathnames.includes(pathname) ||
     dynamicPatterns.some((pattern) => pattern.test(pathname));
@@ -33,24 +32,30 @@ const CheckoutBar = () => {
     setOpenLogin(false);
   };
 
-  const add = () => {
-    if (selectedItem) {
+  const add = (item: CART) => {
+    if (item) {
       dispatch(
         addToCart({
-          id: selectedItem?.id,
-          name: selectedItem?.name,
-          price: selectedItem?.price,
-          discount: selectedItem?.discount,
-          quantity: 1,
-          price_without_vat: selectedItem?.price_without_vat,
+          id: item?.id,
+          name: item?.name,
+          price: item?.price,
+          discount: item?.discount,
+          quantity: item?.quantity + 1,
+          price_without_vat: item?.price_without_vat,
+          thumbnail: item?.thumbnail,
         })
       );
     }
   };
 
-  const remove = () => {
-    if (selectedItem) {
-      dispatch(removeFromCart(selectedItem?.id));
+  const remove = (item: CART) => {
+    if (item) {
+      if(item.quantity === 1){
+        dispatch(removeFromCart(item.id));
+      }else{
+        const updatedCart = cart.map(i => i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i);
+        dispatch(setCart(updatedCart));
+      }
     }
   };
 
@@ -112,9 +117,8 @@ const CheckoutBar = () => {
                 <div className="col-span-1 w-full flex items-center justify-between place-self-end">
                   <button
                     type="button"
-                    onClick={() => {
-                      setSelectedItem(item);
-                      remove();
+                    onClick={() => {  
+                      remove(item);
                     }}
                     className="size-8 border border-primary p-2 rounded-lg text-black flex items-center justify-center"
                   >
@@ -124,8 +128,7 @@ const CheckoutBar = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      setSelectedItem(item);
-                      add();
+                      add(item);
                     }}
                     className="size-8 border border-primary bg-primary p-2 rounded-lg text-white flex items-center justify-center"
                   >

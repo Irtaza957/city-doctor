@@ -11,7 +11,7 @@ import { RootState } from "@/store";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { imageBase, truncateString } from "@/utils/helpers";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
-import { addToCart, removeFromCart, toggleSidebar } from "@/store/global";
+import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 
 const WishlistCard = ({ service }: { service: WISHLIST }) => {
   const dispatch = useDispatch();
@@ -33,21 +33,29 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
     }
   };
 
-  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number) => {
+  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number, thumbnail: string, isQuantity: boolean = false) => {
     dispatch(
       addToCart({
         id,
         name,
         price,
         discount,
-        quantity: 1,
+        quantity: isQuantity ? quantity + 1 : 1,
         price_without_vat,
+        thumbnail,
       })
     );
   };
 
-  const remove = (id: number) => {
-    dispatch(removeFromCart(id));
+  const remove = (item: WISHLIST) => {
+    if (item) {
+      if(Number(quantity) === 1){
+        dispatch(removeFromCart(Number(item.service_id)));
+      }else{
+        const updatedCart = cart.map(i => i.id === Number(item.service_id) ? { ...i, quantity: i.quantity - 1 } : i);
+        dispatch(setCart(updatedCart));
+      }
+    }
   };
 
   const like = async (id: string) => {
@@ -184,7 +192,8 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
                     service.service_name!,
                     parseInt(service.price),
                     0,
-                    parseInt(service.price_without_vat)
+                    parseInt(service.price_without_vat),
+                    service.thumbnail
                   );
                   handleSidebar();
                 }}
@@ -204,7 +213,8 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
                     service.service_name!,
                     parseInt(service.price),
                     0,
-                    parseInt(service.price_without_vat)
+                    parseInt(service.price_without_vat),
+                    service.thumbnail
                   );
                 }}
                 className="w-[95px] text-center block md:hidden h-[36px] py-2 bg-primary rounded-md text-white font-semibold text-sm place-self-end"
@@ -216,7 +226,7 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
             <div className="w-[114px] md:w-[95px] flex items-center justify-between">
               <span
                 onClick={() => {
-                  remove(parseInt(service.service_id!));
+                  remove(service);
                   handleDecrement();
                 }}
                 className="border border-primary p-1 text-black rounded-lg size-[36px] flex items-center justify-center cursor-pointer"
@@ -236,7 +246,9 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
                     service.service_name!,
                     parseInt(service.price),
                     0,
-                    parseInt(service.price_without_vat)
+                    parseInt(service.price_without_vat),
+                    service.thumbnail,
+                    true
                   );
                 }}
                 className="bg-primary text-white p-1 rounded-lg size-[36px] flex items-center justify-center cursor-pointer"

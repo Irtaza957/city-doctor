@@ -60,6 +60,7 @@ const BookingsTab = () => {
               service.discount_value ? service.discount_value : "0"
             ),
             quantity: parseInt(service?.quantity!),
+            thumbnail: service?.thumbnail,
           };
         });
 

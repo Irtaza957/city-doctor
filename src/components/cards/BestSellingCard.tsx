@@ -10,7 +10,7 @@ import { RootState } from "@/store";
 import { imageBase } from "@/utils/helpers";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
-import { addToCart, removeFromCart, toggleSidebar } from "@/store/global";
+import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 
 const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
   const dispatch = useDispatch();
@@ -31,7 +31,8 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
     }
   };
 
-  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number) => {
+  const add = (id: number, name: string, price: number, discount: number, price_without_vat: number, thumbnail: string, isQuantity: boolean = false) => {
+    console.log(price_without_vat, 'price_without_vatprice_without_vat')
     dispatch(
       addToCart({
         id,
@@ -39,13 +40,22 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
         price,
         discount,
         price_without_vat,
-        quantity: 1,
+        thumbnail,
+        quantity: isQuantity ? quantity + 1 : 1,
       })
     );
   };
 
-  const remove = (id: number) => {
-    dispatch(removeFromCart(id));
+  const remove = (item: DRIP_CARD) => {
+    console.log(item, 'itemitemitem')
+    if (item) {
+      if(Number(quantity) === 1){
+        dispatch(removeFromCart(Number(item.service_id)));
+      }else{
+        const updatedCart = cart.map(i => i.id === Number(item.service_id) ? { ...i, quantity: i.quantity - 1 } : i);
+        dispatch(setCart(updatedCart));
+      }
+    }
   };
 
   const like = async (id: string) => {
@@ -164,6 +174,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       parseInt(drip.price_with_vat),
                       parseInt(drip.discount_value ? drip.discount_value : "0"),
                       parseInt(drip.price_without_vat),
+                      drip.thumbnail
                     );
                     handleSidebar();
                   }}
@@ -182,6 +193,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       parseInt(drip.price_with_vat),
                       parseInt(drip.discount_value ? drip.discount_value : "0"),
                       parseInt(drip.price_without_vat),
+                      drip.thumbnail
                     );
                   }}
                   className="w-full block md:hidden h-[36px] py-2 bg-primary rounded-md text-white font-semibold text-sm"
@@ -194,7 +206,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                 <span
                   onClick={() => {
                     handleDecrement();
-                    remove(parseInt(drip.service_id!));
+                    remove(drip);
                   }}
                   className="size-[36px] rounded-lg p-3 border border-primary flex items-center justify-center cursor-pointer"
                 >
@@ -212,6 +224,8 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       parseInt(drip.price_with_vat),
                       parseInt(drip.discount_value ? drip.discount_value : "0"),
                       parseInt(drip.price_without_vat),
+                      drip.thumbnail,
+                      true
                     );
                   }}
                   className="size-[36px] rounded-lg p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"

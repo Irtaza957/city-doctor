@@ -128,8 +128,10 @@ const RegisterModal = ({
   };
 
   useEffect(() => {
-    fetchCountries(setCountryList);
-  }, []);
+    if (open) {
+      fetchCountries(setCountryList);
+    }
+  }, [open]);
 
   return (
     <Modal
@@ -159,23 +161,20 @@ const RegisterModal = ({
             placeholder="First Name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className={`col-span-1 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${
-              errors.includes("firstName") ? "border border-red-600" : ""
-            }`}
+            className={`col-span-1 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${errors.includes("firstName") ? "border border-red-600" : ""
+              }`}
           />
           <input
             type="text"
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className={`col-span-1 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${
-              errors.includes("lastName") ? "border border-red-600" : ""
-            }`}
+            className={`col-span-1 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${errors.includes("lastName") ? "border border-red-600" : ""
+              }`}
           />
           <PhoneInput
-            className={`col-span-2 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${
-              errors.includes("phone") ? "border border-red-600" : ""
-            }`}
+            className={`col-span-2 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${errors.includes("phone") ? "border border-red-600" : ""
+              }`}
             defaultCountry={country as Country}
             international
             placeholder="+7 909 22-55-456"
@@ -194,18 +193,16 @@ const RegisterModal = ({
             placeholder="E-Mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`col-span-1 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${
-              errors.includes("email") ? "border border-red-600" : ""
-            }`}
+            className={`col-span-1 w-full py-2.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${errors.includes("email") ? "border border-red-600" : ""
+              }`}
           />
           <div className="col-span-1 w-full z-20">
             <SelectMenu
               value={gender}
               options={genders}
               setValue={setGender}
-              cn={`col-span-1 w-full flex py-3.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${
-                errors.includes("gender") ? "border border-red-600" : ""
-              }`}
+              cn={`col-span-1 w-full flex py-3.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${errors.includes("gender") ? "border border-red-600" : ""
+                }`}
             />
           </div>
           {countryList && (
@@ -213,15 +210,13 @@ const RegisterModal = ({
               value={nationality}
               options={countryList}
               setValue={setNationality}
-              cn={`col-span-1 flex w-full py-3.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${
-                errors.includes("nationality") ? "border border-red-600" : ""
-              }`}
+              cn={`col-span-1 flex w-full py-3.5 px-3 rounded-lg !bg-[#F5F6FA] text-sm text-[#535763] ${errors.includes("nationality") ? "border border-red-600" : ""
+                }`}
             />
           )}
           <div
-            className={`relative w-full flex items-center justify-center py-2.5 px-3 rounded-lg bg-[#F5F6FA] text-sm text-[#535763] ${
-              errors.includes("dob") ? "border border-red-600" : ""
-            }`}
+            className={`relative w-full flex items-center justify-center py-2.5 px-3 rounded-lg bg-[#F5F6FA] text-sm text-[#535763] ${errors.includes("dob") ? "border border-red-600" : ""
+              }`}
           >
             <input
               type="date"
