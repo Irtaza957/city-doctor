@@ -47,5 +47,5 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
   const service: { status: number; error: string; data: DRIP_DETAIL_RESPONSE } =
     await response.json();
 
-  return { props: { data: service.data } };
+  return { props: { data: service.data }, revalidate: 60 };
 }
