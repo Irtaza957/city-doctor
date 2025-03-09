@@ -275,7 +275,7 @@ const LoginModal = ({
             {isLogin ? "Login" : "Register"}
           </h1>
           {isLogin && (
-            <div className="w-full grid grid-cols-2 gap-5 mt-5">
+            <div className="w-full grid grid-cols-2 gap-2.5 mt-4">
               <div
                 onClick={() => {
                   setType("mobile");
@@ -313,7 +313,7 @@ const LoginModal = ({
               e.preventDefault();
               openVerification();
             }}
-            className="w-full flex flex-col items-center justify-center space-y-4 mt-5"
+            className="w-full flex flex-col items-center justify-center space-y-4 mt-4"
           >
             {isLogin ? (
               type === "mobile" ? (
@@ -376,7 +376,7 @@ const LoginModal = ({
                   setIsLogin(false);
                   setErrors([]);
                 }}
-                className="w-full text-center font-medium text-xs !my-5"
+                className="w-full text-center font-medium text-xs !my-4"
               >
                 Don&apos;t have an account yet?&nbsp;
                 <span className="text-primary cursor-pointer">Sign Up</span>
@@ -384,7 +384,7 @@ const LoginModal = ({
             ) : (
               <p
                 onClick={() => setIsLogin(true)}
-                className="w-full text-center font-medium text-xs !my-5"
+                className="w-full text-center font-medium text-xs !my-4"
               >
                 Already have an account?&nbsp;
                 <span className="text-primary cursor-pointer">Login</span>

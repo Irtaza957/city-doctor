@@ -371,14 +371,14 @@ export function formatString(input: string): string {
     .replace(/\s+/g, "-")
     .trim();
 }
-export const getCategoryLink = (category_name: string) => {
-  return category_name === "Doctor Home Visit"
-    ? "/doctor-on-home-visit"
-    : category_name === "Physiotherapy"
-    ? "/physiotherapy-and-body-adjustment"
-    : category_name === "IV Drip Therapy"
-    ? "/iv-drip-therapy"
-    : category_name === "Lab Tests & Checkups"
-    ? "/lab-test-and-checkup"
+export const getCategoryLink = (category_id: string,category_name: string) => {
+  return category_id === "19"
+    ? `/${category_name.replace(/\s+/g, "-")}`
+    : category_id === "20"
+    ? `/${category_name.replace(/\s+/g, "-")}`
+    : category_id === "21"
+    ? `/${category_name.replace(/\s+/g, "-")}`
+    : category_id === "22"
+    ? `/${category_name.replace(/\s+/g, "-")}`
     : "/drips";
 };

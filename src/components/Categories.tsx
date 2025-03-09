@@ -97,7 +97,7 @@ const Categories = () => {
                   className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                 >
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full bg-[#F0F0F0] text-black flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-4 rounded-lg"
                   >
@@ -124,7 +124,7 @@ const Categories = () => {
               {data?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -151,7 +151,7 @@ const Categories = () => {
               {data?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -178,7 +178,7 @@ const Categories = () => {
               {data?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full bg-[#F0F0F0] text-black flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-lg"
                   >
@@ -206,7 +206,7 @@ const Categories = () => {
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
               <Link
-                href={getCategoryLink(category.category_name)}
+                href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
                 className="w-full h-full flex flex-col items-center justify-between space-y-3 bg-[#F5F5F5] text-black py-5 px-6 lg:px-12 xl:px-14 3xl:px-12 rounded-lg"
@@ -232,7 +232,7 @@ const Categories = () => {
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
               <Link
-                href={getCategoryLink(category.category_name)}
+                href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
                 className="col-span-1 w-full h-full flex flex-col items-center justify-center space-y-2 rounded-2xl bg-gray-100 text-black p-3"

@@ -6,8 +6,26 @@ import {
 } from "react-icons/fa6";
 import { GoogleMapsEmbed } from "@next/third-parties/google";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import { useState } from "react";
 
 const ContactUs = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",  
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form submitted");
+  };
   return (
     <>
     <GoogleAnalytics />
@@ -70,7 +88,7 @@ const ContactUs = () => {
             </div>
           </div>
         </div>
-        <form className="col-span-1 md:col-span-2 w-full grid grid-cols-2 gap-5">
+        <form onSubmit={handleSubmit} className="col-span-1 md:col-span-2 w-full grid grid-cols-2 gap-5">
           <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-1.5">
             <label
               htmlFor="fname"
@@ -81,6 +99,10 @@ const ContactUs = () => {
             <input
               type="text"
               className="w-full p-1.5 rounded-lg bg-[#EFEFEF]"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-1.5">
@@ -93,6 +115,10 @@ const ContactUs = () => {
             <input
               type="text"
               className="w-full p-1.5 rounded-lg bg-[#EFEFEF]"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-1.5">
@@ -105,6 +131,10 @@ const ContactUs = () => {
             <input
               type="email"
               className="w-full p-1.5 rounded-lg bg-[#EFEFEF]"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-1.5">
@@ -115,8 +145,12 @@ const ContactUs = () => {
               Phone
             </label>
             <input
-              type="text"
+              type="tel"
               className="w-full p-1.5 rounded-lg bg-[#EFEFEF]"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="col-span-2 w-full flex flex-col items-center justify-center space-y-1.5">
@@ -129,6 +163,9 @@ const ContactUs = () => {
             <input
               type="text"
               className="w-full p-1.5 rounded-lg bg-[#EFEFEF]"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
             />
           </div>
           <div className="col-span-2 w-full flex flex-col items-center justify-center space-y-1.5">
@@ -138,9 +175,9 @@ const ContactUs = () => {
             >
               Message
             </label>
-            <textarea rows={3} className="w-full bg-[#EFEFEF] rounded-lg" />
+            <textarea rows={3} className="w-full bg-[#EFEFEF] rounded-lg" name="message" value={formData.message} onChange={handleChange} />
           </div>
-          <button className="w-1/2 xl:w-1/2 bg-primary text-white rounded-lg py-2.5 font-semibold">
+          <button type="submit" className="w-1/2 xl:w-1/2 bg-primary text-white rounded-lg py-2.5 font-semibold">
             Send
           </button>
         </form>

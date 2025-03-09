@@ -109,19 +109,27 @@ const DripListing = () => {
     }, 100);
   }, [activeCategory]);
 
+  function formatString(str:string) {
+    return str
+      .replace(/\//g, '') // Remove slashes
+      .replace(/-/g, ' ') // Replace hyphens with spaces
+      // .replace(/\b\w/g, (char:string) => char.toUpperCase()); // Capitalize first letter of each word
+  }
+
   useEffect(() => {
     if (pathname) {
-        let temp=''
-        if(pathname.includes('doctor-on-home-visit')){
-            temp='Doctor Home Visit'
-        }else if(pathname.includes('physiotherapy-and-body-adjustment')){
-            temp='Physiotherapy'
-        }else if(pathname.includes('iv-drip-therapy')){
-            temp='IV Drip Therapy'
-        }else if(pathname.includes('lab-test-and-checkup')){
-            temp='Lab Tests & Checkups'
-        }
-        const category=data?.find(category=>category.category_name===temp)
+        let temp=formatString(pathname)
+        // if(pathname.includes('doctor-on-home-visit')){
+        //     temp='Doctor Home Visit'
+        // }else if(pathname.includes('physiotherapy-and-body-adjustment')){
+        //     temp='Physiotherapy'
+        // }else if(pathname.includes('iv-drip-therapy')){
+        //     temp='IV Drip Therapy'
+        // }else if(pathname.includes('lab-test-and-checkup')){
+        //     temp='Lab Tests & Checkups'
+        // }
+        console.log(data, temp, 'temptemp')
+        const category=data?.find(category=>(category.category_name===temp || category.category_name.replace(/\s+/g, " ").trim()===temp))
       setSelectedCategory(category);
     } else {
       setSelectedCategory(data?.[1]!);
@@ -192,7 +200,7 @@ const DripListing = () => {
                     className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                   >
                     <div
-                      onClick={() => navigate(getCategoryLink(category.category_name))}
+                      onClick={() => navigate(getCategoryLink(category.category_id,category.category_name))}
                       className={`w-full flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-3 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
                           ? "bg-primary text-white"
@@ -293,7 +301,7 @@ const DripListing = () => {
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
-                      onClick={() => navigate(getCategoryLink(category.category_name))}
+                      onClick={() => navigate(getCategoryLink(category.category_id,category.category_name))}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
                           ? "bg-primary text-white"
@@ -338,7 +346,7 @@ const DripListing = () => {
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
-                     onClick={() => navigate(getCategoryLink(category.category_name))}
+                     onClick={() => navigate(getCategoryLink(category.category_id,category.category_name))}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
                           ? "bg-primary text-white"
@@ -440,7 +448,7 @@ const DripListing = () => {
             </Link>
           </div>
         ) : (
-          <div className="relative w-full sm:h-[calc(100vh-143.75px)] md:h-[calc(100vh-176px)] lg:h-[calc(100vh-183px)] flex items-start justify-start gap-5 pt-2 md:pt-0 px-5 md:px-0">
+          <div className="relative w-full sm:h-[calc(100vh-143.75px)] md:h-[calc(100vh-176px)] lg:h-[calc(100vh-183px)] flex items-start justify-start gap-3 pt-2 md:pt-0 px-5 md:px-0">
             <div className="sticky sm:top-[143.75px] md:top-[176px] lg:top-[185px] left-0 w-[30%] md:w-[25%] max-h-full overflow-auto custom-scrollbar flex flex-col bg-gray-100 divide-y">
               {subCategories?.map((sub, idx) => (
                 <div
@@ -480,7 +488,7 @@ const DripListing = () => {
                   />
                 )}
               </div> */}
-              <div className="sticky top-5 mt-5 z-10 md:mr-5 flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
+              <div className="sticky top-5 mt-2 z-10 md:mr-5 flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
                 <div className="flex items-center justify-start gap-2">
                   <button type="button" onClick={() => setViewType(false)}>
                     <FaThList
@@ -547,7 +555,7 @@ const DripListing = () => {
                 </div>
               </div>
               <div
-                className={`w-full grid pb-5 md:pr-5 overflow-auto custom-scrollbar -mt-2 ${
+                className={`w-full grid pb-5 md:pr-5 overflow-auto custom-scrollbar -mt-6 ${
                   viewType
                     ? "grid-cols-2 md:grid-cols-3 gap-2"
                     : "grid-cols-1 md:grid-cols-2 gap-2"

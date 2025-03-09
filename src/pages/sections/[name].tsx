@@ -72,7 +72,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                 >
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex flex-col items-center justify-center cursor-pointer gap-1 p-2 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -111,7 +111,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                 >
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -138,7 +138,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
               {categories?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
                   >
@@ -165,7 +165,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
               {categories?.map((category, idx) => (
                 <SwiperSlide key={idx}>
                   <Link
-                    href={getCategoryLink(category.category_name)}
+                    href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
                     className="w-full bg-[#F0F0F0] text-black flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-lg"
                   >
@@ -261,6 +261,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
               </div>
             </div>
           </div>
+          <h1 className="w-full text-left font-bold text-xl">{data?.section}</h1>
           <div
             className={`w-full grid pb-5 ${
               viewType

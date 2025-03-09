@@ -5,7 +5,7 @@ import {
   useFetchSubCategoriesMutation,
 } from "@/store/services/category";
 import AutoComplete from "./Autocomplete";
-import { imageBase, truncateString } from "@/utils/helpers";
+import { getCategoryLink, imageBase, truncateString } from "@/utils/helpers";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 import Link from "next/link";
@@ -13,6 +13,7 @@ import Image from "next/image";
 import { LuLoader2 } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
+import { useRouter } from "next/router";
 
 type ITEM = {
   id: string;
@@ -32,6 +33,7 @@ const Search = () => {
   const [subCategories, setSubCategories] = useState<SERVICE_LIST[] | null>(
     null
   );
+  const router = useRouter();
 
   const getSubs = async () => {
     const response = await getSubCategories(category);
@@ -40,6 +42,10 @@ const Search = () => {
     setSubCategories(data);
   };
 
+  const handleCategoryClick = (id: string) => {
+    setShowMenu(false)
+    router.push(getCategoryLink(id, list?.find(item=>item.id===String(category))?.name!))
+  }
   useEffect(() => {
     if (data) {
       const finalList: ITEM[] = data?.map((item) => {
@@ -68,7 +74,7 @@ const Search = () => {
       }
     }
   }, [subCategories])
-
+  
   return (
     <>
       <div className="w-full hidden sm:flex gap-3 py-2 px-4 rounded-lg bg-[#F5F5F5] divide-x-[1.5px] divide-gray-300">
@@ -103,6 +109,7 @@ const Search = () => {
                 {list?.map((option: ITEM, idx) => (
                   <div
                     key={idx}
+                    onClick={() => handleCategoryClick(option.id)}
                     onMouseEnter={() => setCategory(parseInt(option.id))}
                     className={`w-full grid grid-cols-12 items-center justify-center p-3 hover:bg-gray-100 hover:text-primary cursor-pointer ${
                       category === parseInt(option.id) && "bg-gray-100"
@@ -198,7 +205,7 @@ const Search = () => {
                   <div className="sticky bottom-0 left-0 w-full flex items-center justify-end pr-3 pb-3">
                     <Link
                       onClick={() => setShowMenu(false)}
-                      href="/drips"
+                      href={getCategoryLink(category.toString(), list?.find(item=>item.id===String(category))?.name!)}
                       className="px-6 py-2 rounded-md bg-primary text-white text-xs text-center"
                     >
                       View All

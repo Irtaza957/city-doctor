@@ -195,7 +195,7 @@ const Checkout = () => {
                         height={500}
                         className="w-12 h-12 rounded-full object-cover"
                       />
-                      <span className="w-full text-left text-sm font-semibold overflow-hidden truncate">
+                      <span className="text-left text-sm font-semibold overflow-hidden truncate w-full md:w-[1300px]">
                         {item.name}
                       </span>
                       <span className="w-full text-left text-sm">

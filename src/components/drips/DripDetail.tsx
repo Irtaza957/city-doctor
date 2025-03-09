@@ -356,6 +356,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               ))}
             </div>
             <div className="w-full flex items-center justify-start space-x-10 mt-1.5">
+              {data.size &&
               <div className="flex items-center justify-center space-x-2.5">
                 <DropletIcon
                   fillColor="#006FAC"
@@ -364,7 +365,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 <span className="text-[#A3A3A3] font-medium text-sm">
                   {data.size}
                 </span>
-              </div>
+              </div>}
               <div className="flex items-center justify-center space-x-2.5">
                 <FaRegClock className="w-4 h-4 text-primary" />
                 <span className="text-[#A3A3A3] font-medium text-sm">

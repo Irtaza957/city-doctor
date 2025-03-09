@@ -64,7 +64,7 @@ const Careers = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex flex-col items-center justify-center space-y-10 pb-20">
+          <div className="w-full flex flex-col items-center justify-center space-y-5 pb-20">
             <div className="w-full flex flex-col items-center justify-center space-y-2.5">
               <h1 className="w-full text-left text-2xl xl:text-4xl font-bold">
                 Why Join Us ?
@@ -79,30 +79,32 @@ const Careers = () => {
             {[...Array(5)].map((id) => (
               <div
                 key={id}
-                className="w-full flex flex-col items-center justify-center space-y-2.5"
+                className="w-full flex items-center justify-between space-y-2.5"
               >
-                <div className="w-full flex items-center justify-between">
-                  <h1 className="w-full text-xl xl:text-2xl font-bold text-left">
-                    Associate Admin Customer Services
-                  </h1>
-                  <button className="px-10 py-2.5 rounded-lg bg-primary text-white font-medium hidden md:flex">
-                    Apply
-                  </button>
-                </div>
-                <div className="w-full flex items-center justify-start">
-                  <button className="px-10 py-2 mr-5 rounded-lg bg-primary text-white font-medium flex md:hidden">
-                    Apply
-                  </button>
-                  <p className="px-10 py-2.5 md:mr-10 rounded-lg bg-gray-100 text-black text-sm">
-                    Fulltime
-                  </p>
-                  <p className="text-xs xl:text-sm hidden md:flex">
+                <div className="w-full ">
+                  <div className="w-full flex items-center justify-between">
+                    <h1 className="w-full text-xl xl:text-2xl font-bold text-left">
+                      Associate Admin Customer Services
+                    </h1>
+                  </div>
+                  <div className="w-full flex items-center justify-start my-3">
+                    <button className="px-10 py-2 mr-5 rounded-lg bg-primary text-white font-medium flex md:hidden">
+                      Apply
+                    </button>
+                    <p className="px-10 py-2.5 md:mr-10 rounded-lg bg-gray-100 text-black text-sm">
+                      Fulltime
+                    </p>
+                    <p className="text-xs xl:text-sm hidden md:flex">
+                      Last Date: 15 Jan
+                    </p>
+                  </div>
+                  <p className="text-xs xl:text-sm md:hidden flex w-full text-left">
                     Last Date: 15 Jan
                   </p>
                 </div>
-                <p className="text-xs xl:text-sm md:hidden flex w-full text-left">
-                  Last Date: 15 Jan
-                </p>
+                <button className="px-10 py-2.5 rounded-lg bg-primary text-white font-medium hidden md:flex">
+                  Apply
+                </button>
               </div>
             ))}
           </div>

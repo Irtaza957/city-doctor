@@ -256,7 +256,10 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                       : "bg-[#F5F6FA] text-black"
                   }`}
                 >
-                  <MobileIcon fillColor="#FFFFFF" className="size-6" />
+                  <MobileIcon
+                    fillColor={type === "mobile" ? "#FFFFFF" : "#555555"}
+                    className="size-6"
+                  />
                   <span className="w-full text-center pr-6">Mobile</span>
                 </div>
                 <div
