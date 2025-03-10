@@ -18,7 +18,7 @@ const Footer = () => {
           : "flex"
       } w-full items-center justify-center bg-[#181818] px-5 pt-10 pb-36 md:pb-10`}
     >
-      <footer className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto h-full flex flex-col items-center justify-center space-y-2 text-white">
+      <footer className="w-full md:w-[70%] mx-auto h-full flex flex-col items-center justify-center space-y-2 text-white">
         <Image
           priority
           src={Logo}

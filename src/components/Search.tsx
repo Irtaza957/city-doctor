@@ -87,7 +87,7 @@ const Search = () => {
             onClick={() => setShowMenu(!showMenu)}
             className="w-full h-full text-left text-xs flex items-center justify-center gap-2"
           >
-            <span className="w-full text-left font-semibold text-xs xl:text-sm">
+            <span className="w-full text-left font-semibold text-xs xl:text-sm whitespace-nowrap">
               All Categories
             </span>
             <FaChevronDown className="size-4 text-primary" />

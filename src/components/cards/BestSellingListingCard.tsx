@@ -112,7 +112,7 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
           <div className="relative w-full h-48 xl:h-60 3xl:h-52 rounded-t-xl bg-[#E8E8E8]">
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
-              className="size-full rounded-t-xl bg-top bg-cover"
+              className="size-full rounded-t-xl bg-center bg-contain"
             />
           </div>
         </Link>
@@ -157,7 +157,7 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
               </span>
             </div>
             <span className="w-full text-left text-base font-semibold xl:font-bold">
-              AED {drip.price_without_vat || drip.price}
+              AED {Math.round(Number(drip.price_without_vat || drip.price_with_vat))}
             </span>
           </Link>
           <div

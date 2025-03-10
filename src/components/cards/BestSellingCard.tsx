@@ -157,10 +157,10 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
               </span>
             </div>
             <span className="w-full text-left text-base font-semibold xl:font-bold">
-              AED {drip.price_without_vat}
+              AED {Math.round(Number(drip.price_without_vat))}
             </span>
           </Link>
-          <div className="col-span-1 ml-auto w-[100px] md:w-[115px] xl:w-[135px] flex items-center justify-between">
+          <div className="col-span-1 ml-auto flex items-center justify-between">
             {quantity === 0 ? (
               <>
                 <button
@@ -178,7 +178,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                     );
                     handleSidebar();
                   }}
-                  className="w-full hidden md:block h-[36px] py-2 bg-primary rounded-md text-white font-semibold text-sm"
+                  className="w-full hidden md:block h-[36px] px-8 py-2 bg-primary rounded-md text-white font-semibold text-sm"
                 >
                   Add
                 </button>
@@ -196,7 +196,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       drip.thumbnail
                     );
                   }}
-                  className="w-full block md:hidden h-[36px] py-2 bg-primary rounded-md text-white font-semibold text-sm"
+                  className="w-full block md:hidden h-[36px] px-8 sm:px-6 md:px-8 py-2 bg-primary rounded-md text-white font-semibold text-sm"
                 >
                   Add
                 </button>
@@ -208,11 +208,11 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                     handleDecrement();
                     remove(drip);
                   }}
-                  className="size-[36px] rounded-lg p-3 border border-primary flex items-center justify-center cursor-pointer"
+                  className="size-[36px] sm:size-[30px] md:size-[36px] rounded-lg p-3 border border-primary flex items-center justify-center cursor-pointer"
                 >
                   <FaMinus />
                 </span>
-                <span className="text-xl font-semibold">{quantity}</span>
+                <span className="text-xl font-semibold px-2 md:px-4">{quantity}</span>
                 <span
                   onClick={() => {
                     setQuantity((prev) => prev + 1);
@@ -228,7 +228,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
                       true
                     );
                   }}
-                  className="size-[36px] rounded-lg p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"
+                  className="size-[36px] sm:size-[30px] md:size-[36px] rounded-lg p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"
                 >
                   <FaPlus />
                 </span>

@@ -158,7 +158,7 @@ const CartBar = () => {
             </div>
             <div className="w-full text-sm flex items-center justify-between font-medium text-[#555555]">
               <span>VAT</span>
-              <span>AED {calculateVAT(cart).toFixed(2)}</span>
+              <span>AED {Math.round(Number(calculateVAT(cart)))}</span>
             </div>
             <div className="w-full text-sm flex items-center justify-between font-bold">
               <span>Grand Total</span>

@@ -116,6 +116,10 @@ const DripListing = () => {
       // .replace(/\b\w/g, (char:string) => char.toUpperCase()); // Capitalize first letter of each word
   }
 
+  const navigateToCategory=(category:CATEGORY)=>{
+    navigate(getCategoryLink(category.category_id,category.category_name))
+  }
+
   useEffect(() => {
     if (pathname) {
         let temp=formatString(pathname)
@@ -200,7 +204,7 @@ const DripListing = () => {
                     className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
                   >
                     <div
-                      onClick={() => navigate(getCategoryLink(category.category_id,category.category_name))}
+                      onClick={() => navigateToCategory(category)}
                       className={`w-full flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-3 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
                           ? "bg-primary text-white"
@@ -301,7 +305,7 @@ const DripListing = () => {
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
-                      onClick={() => navigate(getCategoryLink(category.category_id,category.category_name))}
+                      onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
                           ? "bg-primary text-white"
@@ -322,7 +326,7 @@ const DripListing = () => {
               </Swiper>
             )}
           </div>
-          <div className="w-full hidden md:block lg:hidden py-2.5">
+          <div className="w-full hidden md:block lg:hidden py-2.5 pt-5">
             {isLoading ? (
               <Swiper
                 freeMode={true}
@@ -346,7 +350,7 @@ const DripListing = () => {
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
-                     onClick={() => navigate(getCategoryLink(category.category_id,category.category_name))}
+                     onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
                           ? "bg-primary text-white"
@@ -393,7 +397,7 @@ const DripListing = () => {
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
-                      onClick={() => setSelectedCategory(category)}
+                      onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-14 xl:pl-6 xl:pr-16 pl-4 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
                           ? "bg-primary text-white"
@@ -448,8 +452,8 @@ const DripListing = () => {
             </Link>
           </div>
         ) : (
-          <div className="relative w-full sm:h-[calc(100vh-143.75px)] md:h-[calc(100vh-176px)] lg:h-[calc(100vh-183px)] flex items-start justify-start gap-3 pt-2 md:pt-0 px-5 md:px-0">
-            <div className="sticky sm:top-[143.75px] md:top-[176px] lg:top-[185px] left-0 w-[30%] md:w-[25%] max-h-full overflow-auto custom-scrollbar flex flex-col bg-gray-100 divide-y">
+          <div className="relative w-full sm:h-[calc(100vh-143.75px)] md:h-[calc(100vh-176px)] lg:h-[calc(100vh-183px)] flex items-start justify-start gap-3 pt-2 md:pt-4 px-5 md:px-0">
+            <div className="mt-1.5 rounded-lg sticky sm:top-[143.75px] md:top-[176px] lg:top-[185px] left-0 w-[30%] md:w-[25%] max-h-full overflow-auto custom-scrollbar flex flex-col bg-gray-100 divide-y">
               {subCategories?.map((sub, idx) => (
                 <div
                   key={idx}

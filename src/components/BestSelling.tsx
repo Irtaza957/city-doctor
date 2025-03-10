@@ -25,7 +25,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
 
   return (
     <div className={`w-full flex items-center justify-center ${bg}`}>
-      <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto h-full pt-7 pb-8">
+      <div className="w-full md:max-w-[70%] mx-auto h-full pt-7 pb-8">
         <div className="w-full h-full flex items-center justify-between mb-5 px-5 md:px-0">
           <h1 className="text-xl xl:text-2xl font-bold">{section.section}</h1>
           <Link

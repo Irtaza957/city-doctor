@@ -160,10 +160,12 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             {data.description}
           </p>
           <div className="w-full flex items-center justify-start space-x-5 px-5">
-            <div className="flex items-center justify-center space-x-2.5">
-              <FaDroplet className="w-4 h-4 text-primary" />
-              <span className="text-[#A3A3A3] text-xs">{data.size}</span>
-            </div>
+            {data.size &&
+              <div className="flex items-center justify-center space-x-2.5">
+                <FaDroplet className="w-4 h-4 text-primary" />
+                <span className="text-[#A3A3A3] text-xs">{data.size}ml</span>
+              </div>
+            }
             <div className="flex items-center justify-center space-x-2.5">
               <FaRegClock className="w-4 h-4 text-primary" />
               <span className="text-[#A3A3A3] text-xs">
@@ -172,7 +174,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>
           </div>
           <p className="w-full text-left font-bold text-xl px-5">
-            AED {data.price}
+            AED {Math.round(Number(data.price))}
           </p>
           <div className="w-full flex flex-col items-center justify-center space-y-2.5 px-5">
             {data.sections.map((section, idx) => (
@@ -297,14 +299,14 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>
           </div>
           {data.faqs.length ?
-          <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
-            <h1 className="w-full text-left text-xl font-bold">FAQs</h1>
-            <div className="w-full flex flex-col items-center justify-center space-y-2.5">
-              {data.faqs.map((section, idx) => (
-                <Accordion section={section} key={idx} />
-              ))}
-            </div>
-          </div>: null}
+            <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
+              <h1 className="w-full text-left text-xl font-bold">FAQs</h1>
+              <div className="w-full flex flex-col items-center justify-center space-y-2.5">
+                {data.faqs.map((section, idx) => (
+                  <Accordion section={section} key={idx} />
+                ))}
+              </div>
+            </div> : null}
           <div className="fixed w-full z-20 bottom-[68px] left-0 p-3 bg-white border-t">
             {quantity === 0 ? (
               <button
@@ -357,15 +359,15 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>
             <div className="w-full flex items-center justify-start space-x-10 mt-1.5">
               {data.size &&
-              <div className="flex items-center justify-center space-x-2.5">
-                <DropletIcon
-                  fillColor="#006FAC"
-                  className="w-4 h-4 text-transparent"
-                />
-                <span className="text-[#A3A3A3] font-medium text-sm">
-                  {data.size}
-                </span>
-              </div>}
+                <div className="flex items-center justify-center space-x-2.5">
+                  <DropletIcon
+                    fillColor="#006FAC"
+                    className="w-4 h-4 text-transparent"
+                  />
+                  <span className="text-[#A3A3A3] font-medium text-sm">
+                    {data.size}ml
+                  </span>
+                </div>}
               <div className="flex items-center justify-center space-x-2.5">
                 <FaRegClock className="w-4 h-4 text-primary" />
                 <span className="text-[#A3A3A3] font-medium text-sm">
@@ -393,16 +395,16 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 )
                   ? "0"
                   : Math.round(
-                      priceCalculator(
-                        data.discount_type,
-                        data.price,
-                        data.discount_value
-                      )
-                    )}
+                    priceCalculator(
+                      data.discount_type,
+                      data.price,
+                      data.discount_value
+                    )
+                  )}
                 .00
               </p>
               <p className="text-left text-xl font-semibold">
-                AED {data.price}
+                AED {Math.round(Number(data.price))}
               </p>
             </div>
             <div className="w-full md:w-3/6 xl:w-3/6 gap-2.5 flex items-center justify-center">
@@ -448,9 +450,8 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               >
                 <HeartIcon
                   fillColor={wishlist ? "#006FAC" : "transparent"}
-                  className={`size-full ${
-                    !wishlist ? "text-primary" : "text-transparent"
-                  }`}
+                  className={`size-full ${!wishlist ? "text-primary" : "text-transparent"
+                    }`}
                 />
               </button>
               <button
@@ -468,15 +469,23 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               <p
                 key={idx}
                 onClick={() => setTab(section.name)}
-                className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${
-                  tab === section.name
-                    ? "bg-primary text-white"
-                    : "bg-[#DDDDDD] text-[#555555]"
-                }`}
+                className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === section.name
+                  ? "bg-primary text-white"
+                  : "bg-[#DDDDDD] text-[#555555]"
+                  }`}
               >
                 {section.name}
               </p>
             ))}
+            <p
+              onClick={() => setTab("Reviews")}
+              className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === "Reviews"
+                ? "bg-primary text-white"
+                : "bg-[#DDDDDD] text-[#555555]"
+                }`}
+            >
+              Reviews
+            </p>
           </div>
           {data.sections
             .filter((section) => section.name === tab)
@@ -489,92 +498,93 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 }}
               />
             ))}
-        </div>
-        <div className="w-full grid grid-cols-2 gap-5 my-5 lg:my-10">
-          <h1 className="col-span-2 w-full text-left text-xl font-bold">
-            Service Ratings & Reviews
-          </h1>
-          <div className="col-span-1 w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
-            <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
-              <p className="w-full text-left text-2xl font-bold">
-                {data.rating}
-                <span className="text-[#67767E] text-lg font-medium">
-                  &nbsp;/ 5.0
-                </span>
-              </p>
-              <div className="w-full flex items-center justify-start gap-1.5">
-                {[...Array(parseInt(data.rating))].map((id, idx) => (
-                  <FaStar key={idx} className="w-6 h-6 text-accent" />
-                ))}
-                {[...Array(5 - parseInt(data.rating))].map((id, idx) => (
-                  <FaStar key={idx} className="w-6 h-6 text-[#DDDDDD]" />
-                ))}
-              </div>
-              <p className="w-full text-left text-2xl font-bold">
-                {data.total_reviews}&nbsp;
-                <span className="text-[#67767E] text-lg font-medium">
-                  Ratings
-                </span>
-              </p>
-            </div>
-            <div className="col-span-1 w-full flex flex-col pl-2.5">
-              {[...Array(5)].map((_, idx) => (
-                <div key={idx} className="w-full grid grid-cols-12 gap-x-2">
-                  <div className="col-span-1 w-full flex items-center justify-center">
-                    <span className="font-extrabold pt-0.5">{5 - idx}</span>
+          {tab === 'Reviews' &&
+            <div className="w-full grid grid-cols-2 gap-5 px-4">
+              <h1 className="col-span-2 w-full text-left text-xl font-bold">
+                Service Ratings & Reviews
+              </h1>
+              <div className="col-span-1 w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
+                <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
+                  <p className="w-full text-left text-2xl font-bold">
+                    {data.rating}
+                    <span className="text-[#67767E] text-lg font-medium">
+                      &nbsp;/ 5.0
+                    </span>
+                  </p>
+                  <div className="w-full flex items-center justify-start gap-1.5">
+                    {[...Array(parseInt(data.rating))].map((id, idx) => (
+                      <FaStar key={idx} className="w-6 h-6 text-accent" />
+                    ))}
+                    {[...Array(5 - parseInt(data.rating))].map((id, idx) => (
+                      <FaStar key={idx} className="w-6 h-6 text-[#DDDDDD]" />
+                    ))}
                   </div>
-                  <div className="col-span-2 w-full flex items-center justify-center">
-                    <FaStar className="text-amber-500 size-4" />
-                  </div>
-                  <div className="col-span-5 w-full flex items-center justify-center">
-                    <div className="w-full border-[3px] rounded-full border-amber-500" />
-                  </div>
-                  <div className="col-span-4 w-full flex items-center justify-center">
-                    <span className="font-medium">1,432</span>
-                  </div>
+                  <p className="w-full text-left text-2xl font-bold">
+                    {data.total_reviews}&nbsp;
+                    <span className="text-[#67767E] text-lg font-medium">
+                      Ratings
+                    </span>
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div className="w-full col-span-2 mt-5 flex flex-col space-y-5">
-            {data.reviews.map((review, idx) => (
-              <div
-                key={idx}
-                className="w-full flex flex-col items-center justify-center space-x-5"
-              >
-                <div className="w-full flex items-center justify-start space-x-6">
-                  <Image
-                    src="https://ui.shadcn.com/avatars/04.png"
-                    alt="user"
-                    width={50}
-                    height={50}
-                    className="rounded-full bg-gray-200"
-                  />
-                  <div className="w-full flex flex-col items-center justify-start space-y-1">
-                    <div className="w-full flex items-center justify-start space-x-10">
-                      <p className="font-bold">{review.customer}</p>
-                      <div className="flex items-center justify-center gap-0.5">
-                        {[...Array(parseInt(review.review || "0"))].map((id, idx) => (
-                          <FaStar key={idx} className="text-accent" />
-                        ))}
-                        {[...Array(5 - parseInt(review.review || "0"))].map(
-                          (id, idx) => (
-                            <FaStar key={idx} className="text-gray-300" />
-                          )
-                        )}
+                <div className="col-span-1 w-full flex flex-col pl-2.5">
+                  {[...Array(5)].map((_, idx) => (
+                    <div key={idx} className="w-full grid grid-cols-12 gap-x-2">
+                      <div className="col-span-1 w-full flex items-center justify-center">
+                        <span className="font-extrabold pt-0.5">{5 - idx}</span>
+                      </div>
+                      <div className="col-span-2 w-full flex items-center justify-center">
+                        <FaStar className="text-amber-500 size-4" />
+                      </div>
+                      <div className="col-span-5 w-full flex items-center justify-center">
+                        <div className="w-full border-[3px] rounded-full border-amber-500" />
+                      </div>
+                      <div className="col-span-4 w-full flex items-center justify-center">
+                        <span className="font-medium">1,432</span>
                       </div>
                     </div>
-                    <span className="w-full text-left text-xs text-gray-400">
-                      {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
-                    </span>
-                  </div>
+                  ))}
                 </div>
-                <p className="w-full pl-16 text-left text-sm text-[#535763] font-medium pt-3">
-                  {review.description}
-                </p>
               </div>
-            ))}
-          </div>
+              <div className="w-full col-span-2 mt-5 flex flex-col space-y-5">
+                {data.reviews.map((review, idx) => (
+                  <div
+                    key={idx}
+                    className="w-full flex flex-col items-center justify-center space-x-5"
+                  >
+                    <div className="w-full flex items-center justify-start space-x-6">
+                      <Image
+                        src="https://ui.shadcn.com/avatars/04.png"
+                        alt="user"
+                        width={50}
+                        height={50}
+                        className="rounded-full bg-gray-200"
+                      />
+                      <div className="w-full flex flex-col items-center justify-start space-y-1">
+                        <div className="w-full flex items-center justify-start space-x-10">
+                          <p className="font-bold">{review.customer}</p>
+                          <div className="flex items-center justify-center gap-0.5">
+                            {[...Array(parseInt(review.review || "0"))].map((id, idx) => (
+                              <FaStar key={idx} className="text-accent" />
+                            ))}
+                            {[...Array(5 - parseInt(review.review || "0"))].map(
+                              (id, idx) => (
+                                <FaStar key={idx} className="text-gray-300" />
+                              )
+                            )}
+                          </div>
+                        </div>
+                        <span className="w-full text-left text-xs text-gray-400">
+                          {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="w-full pl-16 text-left text-sm text-[#535763] font-medium pt-3">
+                      {review.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>}
         </div>
         {/* <Image
           src={`${imageBase(data.cover_image)}`}
@@ -711,16 +721,16 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
           </div>
         )}
         {data.faqs.length ?
-        <div className="w-full flex flex-col items-center space-y-5 mt-5 lg:mt-10">
-          <h1 className="col-span-2 w-full text-left text-xl font-bold">
-            FAQs
-          </h1>
-          <div className="w-full flex flex-col items-center justify-center space-y-2.5">
-            {data.faqs.map((section, idx) => (
-              <Accordion section={section} key={idx} />
-            ))}
-          </div>
-        </div>: null}
+          <div className="w-full flex flex-col items-center space-y-5 mt-5 lg:mt-10">
+            <h1 className="col-span-2 w-full text-left text-xl font-bold">
+              FAQs
+            </h1>
+            <div className="w-full flex flex-col items-center justify-center space-y-2.5">
+              {data.faqs.map((section, idx) => (
+                <Accordion section={section} key={idx} />
+              ))}
+            </div>
+          </div> : null}
       </div>
     </>
   );

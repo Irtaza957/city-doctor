@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 // import toast from "react-hot-toast";
 import { Libraries } from "@react-google-maps/api";
+import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx";
 
 export const libraries: Libraries = ["places"];
 
@@ -382,3 +384,8 @@ export const getCategoryLink = (category_id: string,category_name: string) => {
     ? `/${category_name.replace(/\s+/g, "-")}`
     : "/drips";
 };
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+

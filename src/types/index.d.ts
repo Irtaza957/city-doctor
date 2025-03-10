@@ -2,6 +2,7 @@ declare type CATEGORY = {
   category_id: string;
   category_name: string;
   icon: string;
+  color?: string;
 };
 
 declare type CART = {

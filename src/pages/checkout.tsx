@@ -732,7 +732,7 @@ const CheckoutDetails = () => {
                 </div>
                 <div className="w-full flex items-center text-sm justify-between font-medium">
                   <span>VAT</span>
-                  <span>AED {calculateVAT(cart).toFixed(2)}</span>
+                  <span>AED {Math.round(Number(calculateVAT(cart)))}</span>
                 </div>
                 <div className="w-full flex items-center justify-between font-bold">
                   <span>Grand Total</span>
