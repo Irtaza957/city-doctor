@@ -100,7 +100,7 @@ const Navbar = () => {
       >
         <StatusBar />
         <div className="w-full bg-white hidden sm:flex items-center justify-center py-3 px-5 md:px-0">
-          <div className="w-full sm:w-[90%] md:max-w-[70%] mx-auto h-full flex">
+          <div className="w-full md:max-w-[70%] mx-auto h-full flex">
             <Link
               href="/"
               className="flex items-center justify-center pr-5 lg:pr-9 mb-1.5"
