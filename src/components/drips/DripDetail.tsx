@@ -40,7 +40,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
   const [startSlide, setStartSlide] = useState(true);
   const [addToWishlist] = useAddToWishlistMutation();
   const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
-  const [tab, setTab] = useState<string>(data?.sections[0]?.name);
+  const [tab, setTab] = useState<string>(data?.sections?.[0]?.name);
   const { user, cart } = useSelector((state: RootState) => state.global);
 
   const handleSidebar = () => {
@@ -103,7 +103,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
   };
 
   useEffect(() => {
-    if (data.service_id !== undefined) {
+    if (data?.service_id !== undefined) {
       const product = cart.find(
         (item: CART) => item.id === parseInt(data.service_id)
       );
@@ -116,7 +116,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
 
   useEffect(() => {
     if (data) {
-      if (data.wishlist_id) {
+      if (data?.wishlist_id) {
         setWishlist(true);
       }
     }
@@ -131,7 +131,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
       />
       <div className="w-full sm:hidden mt-[69px] mb-10">
         <Image
-          src={`${imageBase(data.thumbnail)}`}
+          src={`${imageBase(data?.thumbnail)}`}
           alt="detail-banner"
           width={1000}
           height={1000}
@@ -139,7 +139,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
         />
         <div className="w-full flex flex-col items-center justify-center space-y-5 mt-5">
           <div className="w-full flex items-center justify-between px-5">
-            <h1 className="text-left font-bold text-xl">{data.service_name}</h1>
+            <h1 className="text-left font-bold text-xl">{data?.service_name}</h1>
             <div className="flex items-center justify-end space-x-4">
               <IoShareSocialOutline className="size-6" />
               <button
@@ -157,27 +157,27 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>
           </div>
           <p className="w-full text-left text-gray-400 text-xs font-medium my-3 px-5">
-            {data.description}
+            {data?.description}
           </p>
           <div className="w-full flex items-center justify-start space-x-5 px-5">
-            {data.size &&
+            {data?.size &&
               <div className="flex items-center justify-center space-x-2.5">
                 <FaDroplet className="w-4 h-4 text-primary" />
-                <span className="text-[#A3A3A3] text-xs">{data.size}ml</span>
+                <span className="text-[#A3A3A3] text-xs">{data?.size}ml</span>
               </div>
             }
             <div className="flex items-center justify-center space-x-2.5">
               <FaRegClock className="w-4 h-4 text-primary" />
               <span className="text-[#A3A3A3] text-xs">
-                {data.response_time}
+                {data?.response_time}
               </span>
             </div>
           </div>
           <p className="w-full text-left font-bold text-xl px-5">
-            AED {Math.round(Number(data.price))}
+            AED {data?.price ? Math.round(Number(data?.price)) : '-'}
           </p>
           <div className="w-full flex flex-col items-center justify-center space-y-2.5 px-5">
-            {data.sections.map((section, idx) => (
+            {data?.sections?.map((section, idx) => (
               <Accordion section={section} key={idx} />
             ))}
           </div>
@@ -188,21 +188,21 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
               <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
                 <p className="w-full text-left text-xl font-bold">
-                  {data.rating}
+                  {data?.rating}
                   <span className="text-[#67767E] text-sm font-semibold">
                     &nbsp;/ 5.0
                   </span>
                 </p>
                 <div className="w-full flex items-center justify-start space-x-1.5">
-                  {[...Array(parseInt(data.rating))].map((_, idx) => (
+                  {[...Array(parseInt(data?.rating || "0"))].map((_, idx) => (
                     <FaStar key={idx} className="size-4 text-accent" />
                   ))}
-                  {[...Array(5 - parseInt(data.rating))].map((_, idx) => (
+                  {[...Array(5 - parseInt(data?.rating || "0"))].map((_, idx) => (
                     <FaStar key={idx} className="size-4 text-[#DDDDDD]" />
                   ))}
                 </div>
                 <p className="w-full text-left text-xl font-bold">
-                  {data.total_reviews}&nbsp;
+                  {data?.total_reviews}&nbsp;
                   <span className="text-[#67767E] text-sm font-semibold">
                     Ratings
                   </span>
@@ -228,7 +228,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               </div>
             </div>
           </div>
-          {data.reviews.map((review, idx) => (
+          {data?.reviews?.map((review, idx) => (
             <div
               key={idx}
               className="w-full flex flex-col items-center justify-center space-x-5 px-5"
@@ -287,7 +287,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                   }
                 }}
               >
-                {data.similar_services.map((drip, idx) => (
+                {data?.similar_services?.map((drip, idx) => (
                   <SwiperSlide
                     key={drip.service_id}
                     className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
@@ -298,11 +298,11 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               </Swiper>
             </div>
           </div>
-          {data.faqs.length ?
+          {data?.faqs?.length ?
             <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
               <h1 className="w-full text-left text-xl font-bold">FAQs</h1>
               <div className="w-full flex flex-col items-center justify-center space-y-2.5">
-                {data.faqs.map((section, idx) => (
+                {data?.faqs?.map((section, idx) => (
                   <Accordion section={section} key={idx} />
                 ))}
               </div>
@@ -341,43 +341,43 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
         <div className="w-full h-[375px] md:h-[500px] flex items-start justify-start gap-5 md:gap-10">
           <div className="w-2/5 xl:w-1/3 max-h-full">
             <div
-              style={{ backgroundImage: `url(${imageBase(data.thumbnail)})` }}
+              style={{ backgroundImage: `url(${imageBase(data?.thumbnail)})` }}
               className="bg-top bg-cover w-full h-[375px] md:h-[500px] rounded-lg"
             />
           </div>
           <div className="w-3/5 xl:w-2/3 flex flex-col items-start justify-start gap-y-1.5">
             <h1 className="w-full text-left font-bold text-2xl xl:text-4xl">
-              {data.service_name}
+              {data?.service_name}
             </h1>
             <div className="w-full flex items-center justify-start gap-1">
-              {[...Array(parseInt(data.rating))].map((_, idx) => (
+              {[...Array(parseInt(data?.rating || "0"))].map((_, idx) => (
                 <FaStar key={idx} className="size-4 text-accent" />
               ))}
-              {[...Array(5 - parseInt(data.rating))].map((_, idx) => (
+              {[...Array(5 - parseInt(data?.rating || "0"))].map((_, idx) => (
                 <FaStar key={idx} className="size-4 text-gray-300" />
               ))}
             </div>
             <div className="w-full flex items-center justify-start space-x-10 mt-1.5">
-              {data.size &&
+              {data?.size &&
                 <div className="flex items-center justify-center space-x-2.5">
                   <DropletIcon
                     fillColor="#006FAC"
                     className="w-4 h-4 text-transparent"
                   />
                   <span className="text-[#A3A3A3] font-medium text-sm">
-                    {data.size}ml
+                    {data?.size}ml
                   </span>
                 </div>}
               <div className="flex items-center justify-center space-x-2.5">
                 <FaRegClock className="w-4 h-4 text-primary" />
                 <span className="text-[#A3A3A3] font-medium text-sm">
-                  {data.response_time}
+                  {data?.response_time}
                 </span>
               </div>
             </div>
             <p
               dangerouslySetInnerHTML={{
-                __html: he.decode(data.description),
+                __html: he.decode(data?.description || ""),
               }}
               className="w-full text-left text-[#535763] text-sm font-medium my-6"
             />
@@ -385,26 +385,26 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               <p className="text-left text-lg text-[#A3A3A3] font-medium line-through">
                 AED&nbsp;
                 {isNaN(
-                  Math.round(
+                  Math.round( 
                     priceCalculator(
-                      data.discount_type,
-                      data.price,
-                      data.discount_value
+                      data?.discount_type,
+                      data?.price,
+                      data?.discount_value
                     )
                   )
                 )
                   ? "0"
                   : Math.round(
                     priceCalculator(
-                      data.discount_type,
-                      data.price,
-                      data.discount_value
+                      data?.discount_type,
+                      data?.price,
+                      data?.discount_value
                     )
                   )}
                 .00
               </p>
               <p className="text-left text-xl font-semibold">
-                AED {Math.round(Number(data.price))}
+                AED {data?.price ? Math.round(Number(data?.price)) : '-'}
               </p>
             </div>
             <div className="w-full md:w-3/6 xl:w-3/6 gap-2.5 flex items-center justify-center">
@@ -465,7 +465,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
         </div>
         <div className="w-full flex flex-col items-center justify-center mt-10 space-y-5">
           <div className="w-full flex space-x-2.5 bg-[#F5F5F5] p-4 rounded-lg">
-            {data.sections.map((section, idx) => (
+            {data?.sections?.map((section, idx) => (
               <p
                 key={idx}
                 onClick={() => setTab(section.name)}
@@ -487,14 +487,14 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               Reviews
             </p>
           </div>
-          {data.sections
-            .filter((section) => section.name === tab)
-            .map((section, idx) => (
+          {data?.sections
+            ?.filter((section) => section.name === tab)
+            ?.map((section, idx) => (
               <p
                 key={idx}
                 className="w-full text-left text-[#535763] font-medium px-4 text-sm"
                 dangerouslySetInnerHTML={{
-                  __html: he.decode(section.description),
+                  __html: he.decode(section?.description || ""),
                 }}
               />
             ))}
@@ -506,21 +506,21 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               <div className="col-span-1 w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
                 <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
                   <p className="w-full text-left text-2xl font-bold">
-                    {data.rating}
+                    {data?.rating}
                     <span className="text-[#67767E] text-lg font-medium">
                       &nbsp;/ 5.0
                     </span>
                   </p>
                   <div className="w-full flex items-center justify-start gap-1.5">
-                    {[...Array(parseInt(data.rating))].map((id, idx) => (
+                    {[...Array(parseInt(data?.rating))].map((id, idx) => (
                       <FaStar key={idx} className="w-6 h-6 text-accent" />
                     ))}
-                    {[...Array(5 - parseInt(data.rating))].map((id, idx) => (
+                    {[...Array(5 - parseInt(data?.rating))].map((id, idx) => (
                       <FaStar key={idx} className="w-6 h-6 text-[#DDDDDD]" />
                     ))}
                   </div>
                   <p className="w-full text-left text-2xl font-bold">
-                    {data.total_reviews}&nbsp;
+                    {data?.total_reviews}&nbsp;
                     <span className="text-[#67767E] text-lg font-medium">
                       Ratings
                     </span>
@@ -546,7 +546,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 </div>
               </div>
               <div className="w-full col-span-2 mt-5 flex flex-col space-y-5">
-                {data.reviews.map((review, idx) => (
+                {data?.reviews?.map((review, idx) => (
                   <div
                     key={idx}
                     className="w-full flex flex-col items-center justify-center space-x-5"
@@ -563,10 +563,10 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                         <div className="w-full flex items-center justify-start space-x-10">
                           <p className="font-bold">{review.customer}</p>
                           <div className="flex items-center justify-center gap-0.5">
-                            {[...Array(parseInt(review.review || "0"))].map((id, idx) => (
+                            {[...Array(parseInt(review?.review || "0"))].map((id, idx) => (
                               <FaStar key={idx} className="text-accent" />
                             ))}
-                            {[...Array(5 - parseInt(review.review || "0"))].map(
+                            {[...Array(5 - parseInt(review?.review || "0"))].map(
                               (id, idx) => (
                                 <FaStar key={idx} className="text-gray-300" />
                               )
@@ -579,7 +579,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                       </div>
                     </div>
                     <p className="w-full pl-16 text-left text-sm text-[#535763] font-medium pt-3">
-                      {review.description}
+                      {review?.description}
                     </p>
                   </div>
                 ))}
@@ -587,13 +587,13 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>}
         </div>
         {/* <Image
-          src={`${imageBase(data.cover_image)}`}
+          src={`${imageBase(data?.cover_image)}`}
           alt="cover-image"
           width={1000}
           height={1000}
           className="rounded-lg w-full"
         /> */}
-        {data.similar_services.length !== 0 && (
+        {data?.similar_services?.length !== 0 && (
           <div className="w-full mt-5 lg:mt-10">
             <h1 className="w-full text-left text-xl font-bold mb-5">
               Customers Also Viewed
@@ -621,7 +621,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                   prevEl: ".prev-detail",
                 }}
               >
-                {data.similar_services.map((drip) => (
+                {data?.similar_services?.map((drip) => (
                   <SwiperSlide key={drip.service_id}>
                     <BestSellingCard drip={drip} />
                   </SwiperSlide>
@@ -651,7 +651,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                   prevEl: ".prev-detail",
                 }}
               >
-                {data.similar_services.map((drip) => (
+                {data?.similar_services?.map((drip) => (
                   <SwiperSlide key={drip.service_id}>
                     <BestSellingCard drip={drip} />
                   </SwiperSlide>
@@ -681,7 +681,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                   prevEl: ".prev-detail",
                 }}
               >
-                {data.similar_services.map((drip) => (
+                {data?.similar_services?.map((drip) => (
                   <SwiperSlide key={drip.service_id}>
                     <BestSellingCard drip={drip} />
                   </SwiperSlide>
@@ -711,7 +711,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                   prevEl: ".prev-detail",
                 }}
               >
-                {data.similar_services.map((drip) => (
+                {data?.similar_services?.map((drip) => (
                   <SwiperSlide key={drip.service_id}>
                     <BestSellingCard drip={drip} />
                   </SwiperSlide>
@@ -720,13 +720,13 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>
           </div>
         )}
-        {data.faqs.length ?
+        {data?.faqs?.length ?
           <div className="w-full flex flex-col items-center space-y-5 mt-5 lg:mt-10">
             <h1 className="col-span-2 w-full text-left text-xl font-bold">
               FAQs
             </h1>
             <div className="w-full flex flex-col items-center justify-center space-y-2.5">
-              {data.faqs.map((section, idx) => (
+              {data?.faqs?.map((section, idx) => (
                 <Accordion section={section} key={idx} />
               ))}
             </div>

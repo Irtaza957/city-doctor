@@ -45,6 +45,8 @@ const Footer = () => {
           {/* <Link href="/contact-us">Contact Us</Link> */}
           <Link href="/about-us">About Us</Link>
           <Link href="/contact-us">Contact Us</Link>
+          <Link href="/refund-policy">Refund Policy</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
         </div>
         <h1 className="w-full text-center text-xs font-light !mt-8">
           MOHAP License: 58974

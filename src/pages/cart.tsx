@@ -104,6 +104,10 @@ const Checkout = () => {
     }
   }, [promo]);
 
+  const getNavLink = (id: string) => {
+    return `/related-services/${id}`;
+  };
+
   return (
     <>
       <GoogleAnalytics />
@@ -295,7 +299,7 @@ const Checkout = () => {
                   <div
                     onClick={() => {
                       if (user) {
-                        router.push("/checkout");
+                        router.push("/check-out");
                       } else {
                         setOpen(true);
                       }
@@ -336,7 +340,7 @@ const Checkout = () => {
                       key={idx}
                       className={`${startSlide && i === 0 ? "ml-5" : ""}`}
                     >
-                      <BestSellingCard drip={drip} />
+                      <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
                     </SwiperSlide>
                   ))
                 )}
@@ -371,7 +375,7 @@ const Checkout = () => {
                 .map((drip, idx) =>
                   drip.section_data.map((drip) => (
                     <SwiperSlide key={idx}>
-                      <BestSellingCard drip={drip} />
+                      <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
                     </SwiperSlide>
                   ))
                 )}
@@ -406,7 +410,7 @@ const Checkout = () => {
                 .map((drip, idx) =>
                   drip.section_data.map((drip) => (
                     <SwiperSlide key={idx}>
-                      <BestSellingCard drip={drip} />
+                      <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
                     </SwiperSlide>
                   ))
                 )}
@@ -441,7 +445,7 @@ const Checkout = () => {
                 .map((drip, idx) =>
                   drip.section_data.map((drip) => (
                     <SwiperSlide key={idx}>
-                      <BestSellingCard drip={drip} />
+                      <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
                     </SwiperSlide>
                   ))
                 )}

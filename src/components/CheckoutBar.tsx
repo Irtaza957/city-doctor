@@ -22,7 +22,7 @@ const CheckoutBar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const { user, cart } = useSelector((state: RootState) => state.global);
   
-  const pathnames = ["/bookings", "/drips", "/doctor-on-home-visit", "/physiotherapy-and-body-adjustment", "/iv-drip-therapy", "/lab-test-and-checkup", "/account-settings", "/checkout"];
+  const pathnames = ["/bookings", "/drips", "/doctor-on-home-visit", "/physiotherapy-and-body-adjustment", "/iv-drip-therapy", "/lab-test-and-checkup", "/account-settings", "/check-out"];
   const dynamicPatterns = [/^\/bookings\/\d+$/, /^\/drips\/\d+$/, /^\/doctor-on-home-visit\/\d+$/, /^\/physiotherapy-and-body-adjustment\/\d+$/, /^\/iv-drip-therapy\/\d+$/, /^\/lab-test-and-checkup\/\d+$/];
   const shouldHide =
     pathnames.includes(pathname) ||
@@ -162,7 +162,7 @@ const CheckoutBar = () => {
               <div
                 onClick={() => {
                   if (user) {
-                    push("/checkout");
+                    push("/check-out");
                   } else {
                     setOpenLogin((prev) => (prev = !prev));
                   }
@@ -176,7 +176,7 @@ const CheckoutBar = () => {
               <div
                 onClick={() => {
                   if (user) {
-                    push("/checkout");
+                    push("/check-out");
                   } else {
                     setOpenLogin((prev) => (prev = !prev));
                   }

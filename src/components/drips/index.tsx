@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
 import "swiper/css";
 import {
   useFetchCategoriesQuery,
+  useFetchServicesByCategoryIdMutation,
   useFetchSubCategoriesMutation,
 } from "@/store/services/category";
 import { getCategoryLink, imageBase, sort } from "@/utils/helpers";
@@ -49,10 +50,12 @@ const DripListing = () => {
   const desktopSubCatRef = useRef<SwiperRef>(null);
   const [startSlide, setStartSlide] = useState(true);
   const [getSubCategories, { isLoading: subLoading }] =
-  useFetchSubCategoriesMutation();
-//   const { selectedCategory: selected } = useSelector(
-//     (state: RootState) => state.global
-//   );
+    useFetchSubCategoriesMutation();
+  const [fetchServicesByCategoryId, { isLoading: catLoading }] =
+    useFetchServicesByCategoryIdMutation();
+  //   const { selectedCategory: selected } = useSelector(
+  //     (state: RootState) => state.global
+  //   );
   const { data, isLoading } = useFetchCategoriesQuery({});
   const [startSubSlide, setStartSubSlide] = useState(true);
   const [activeCategory, setActiveCategory] = useState("0");
@@ -62,8 +65,8 @@ const DripListing = () => {
     null
   );
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("0");
-  const pathname=usePathname()
-  const router=useRouter()
+  const pathname = usePathname()
+  const router = useRouter()
 
   const scrollToElement = (elementId: string) => {
     const element = document.getElementById(elementId);
@@ -85,7 +88,13 @@ const DripListing = () => {
     setSubCategories(data);
   };
 
-  const navigate=(link:string)=>{
+  const getServices = async () => {
+    const response = await fetchServicesByCategoryId(selectedCategory?.category_id)
+    const data = response.data ?? []
+    console.log(data, 'datadata')
+    // setServices(data)
+  }
+  const navigate = (link: string) => {
     router.push(link)
   }
 
@@ -109,31 +118,21 @@ const DripListing = () => {
     }, 100);
   }, [activeCategory]);
 
-  function formatString(str:string) {
+  function formatString(str: string) {
     return str
       .replace(/\//g, '') // Remove slashes
       .replace(/-/g, ' ') // Replace hyphens with spaces
-      // .replace(/\b\w/g, (char:string) => char.toUpperCase()); // Capitalize first letter of each word
+    // .replace(/\b\w/g, (char:string) => char.toUpperCase()); // Capitalize first letter of each word
   }
 
-  const navigateToCategory=(category:CATEGORY)=>{
-    navigate(getCategoryLink(category.category_id,category.category_name))
+  const navigateToCategory = (category: CATEGORY) => {
+    navigate(getCategoryLink(category.category_id, category.category_name))
   }
 
   useEffect(() => {
     if (pathname) {
-        let temp=formatString(pathname)
-        // if(pathname.includes('doctor-on-home-visit')){
-        //     temp='Doctor Home Visit'
-        // }else if(pathname.includes('physiotherapy-and-body-adjustment')){
-        //     temp='Physiotherapy'
-        // }else if(pathname.includes('iv-drip-therapy')){
-        //     temp='IV Drip Therapy'
-        // }else if(pathname.includes('lab-test-and-checkup')){
-        //     temp='Lab Tests & Checkups'
-        // }
-        console.log(data, temp, 'temptemp')
-        const category=data?.find(category=>(category.category_name===temp || category.category_name.replace(/\s+/g, " ").trim()===temp))
+      let temp = formatString(pathname)
+      const category = data?.find(category => (category.category_name.toLowerCase() === temp || category.category_name.toLowerCase().replace(/\s+/g, " ").trim() === temp))
       setSelectedCategory(category);
     } else {
       setSelectedCategory(data?.[1]!);
@@ -166,6 +165,18 @@ const DripListing = () => {
     };
   }, [subCategories]);
 
+  useEffect(() => {
+    if (selectedCategory?.category_id) {
+      getServices()
+    }
+  }, [selectedCategory])
+
+  const getNavLink=(service_id:string)=>{
+    if(service_id){
+      return `/${selectedCategory?.category_name?.toLowerCase().replace(/\s+/g, "-")}/${subCategories?.[parseInt(selectedSubCategory)]?.name?.toLowerCase().replace(/\s+/g, "-")}/${service_id}`
+    }
+  }
+console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCategory')
   return (
     <>
       <div className="fixed w-full z-20 top-[69px] sm:top-[75.75px] md:top-[108px] lg:top-[113px] left-0 bg-white md:border-b xl:border-none">
@@ -188,7 +199,7 @@ const DripListing = () => {
               <Swiper
                 freeMode={true}
                 spaceBetween={10}
-                slidesPerView={3.9}
+                slidesPerView={2.8}
                 modules={[FreeMode]}
                 onSlideChange={(swiper) => {
                   if (swiper.activeIndex === 0) {
@@ -201,15 +212,14 @@ const DripListing = () => {
                 {data?.map((category, idx) => (
                   <SwiperSlide
                     key={idx}
-                    className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
+                    className={`flex items-center justify-center ${startSlide && idx === 0 ? "ml-5" : ""}`}
                   >
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-3 rounded-lg ${
-                        selectedCategory?.category_id === category.category_id
+                      className={`w-full flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-3 rounded-lg ${selectedCategory?.category_id === category.category_id
                           ? "text-white"
                           : "text-black"
-                      }`}
+                        }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
@@ -219,7 +229,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-center font-semibold text-[10px] h-[35px]">
+                      <span className="text-center font-semibold text-[10px] whitespace-nowrap px-2">
                         {category.category_name}
                       </span>
                     </div>
@@ -229,7 +239,7 @@ const DripListing = () => {
             )}
           </div>
           <div className="w-full block sm:hidden py-2.5">
-            {subLoading ? (
+            {subLoading || catLoading ? (
               <Swiper
                 freeMode={true}
                 spaceBetween={10}
@@ -267,11 +277,10 @@ const DripListing = () => {
                         scrollToElement(idx.toString());
                         setActiveCategory(idx.toString());
                       }}
-                      className={`flex items-center justify-center cursor-pointer space-x-1 py-2 rounded-md ${
-                        parseInt(activeCategory) === idx
+                      className={`flex items-center justify-center cursor-pointer space-x-1 py-2 rounded-md ${parseInt(activeCategory) === idx
                           ? "bg-primary text-white"
                           : "bg-[#F7F7F7] text-black"
-                      }`}
+                        }`}
                     >
                       <span className="text-center font-semibold text-xs w-full overflow-hidden truncate">
                         {sub.name}
@@ -300,18 +309,17 @@ const DripListing = () => {
               <Swiper
                 freeMode={true}
                 spaceBetween={10}
-                slidesPerView={4.7}
+                slidesPerView={4}
                 modules={[FreeMode]}
               >
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg ${
-                        selectedCategory?.category_id === category.category_id
+                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg ${selectedCategory?.category_id === category.category_id
                           ? "text-white"
                           : "text-black"
-                      }`}
+                        }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
@@ -321,7 +329,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-left font-bold text-xs line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                      <span className="text-left font-bold text-xs line-clamp-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                     </div>
                   </SwiperSlide>
                 ))}
@@ -346,18 +354,17 @@ const DripListing = () => {
               <Swiper
                 freeMode={true}
                 spaceBetween={10}
-                slidesPerView={4.8}
+                slidesPerView={4}
                 modules={[FreeMode]}
               >
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
-                     onClick={() => navigateToCategory(category)}
-                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-lg ${
-                        selectedCategory?.category_id === category.category_id
+                      onClick={() => navigateToCategory(category)}
+                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-lg ${selectedCategory?.category_id === category.category_id
                           ? " text-white"
                           : " text-black"
-                      }`}
+                        }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
@@ -367,7 +374,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-left font-bold text-xs">
+                      <span className="text-left font-bold text-xs whitespace-nowrap">
                         {category.category_name}
                       </span>
                     </div>
@@ -394,18 +401,17 @@ const DripListing = () => {
               <Swiper
                 freeMode={true}
                 spaceBetween={10}
-                slidesPerView={6}
+                slidesPerView={4}
                 modules={[FreeMode]}
               >
                 {data?.map((category, idx) => (
                   <SwiperSlide key={idx}>
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-14 xl:pl-6 xl:pr-16 pl-4 rounded-lg ${
-                        selectedCategory?.category_id === category.category_id
+                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-  rounded-lg ${selectedCategory?.category_id === category.category_id
                           ? "text-white"
                           : `text-black`
-                      }`}
+                        }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
@@ -415,7 +421,7 @@ const DripListing = () => {
                         height={56}
                         className="size-7 lg:size-9 3xl:size-9"
                       />
-                      <span className="text-left font-bold text-sm line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                      <span className="text-left font-bold text-sm line-clamp-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                     </div>
                   </SwiperSlide>
                 ))}
@@ -462,13 +468,12 @@ const DripListing = () => {
                 <div
                   key={idx}
                   onClick={() => setSelectedSubCategory(idx.toString())}
-                  className={`w-full cursor-pointer flex items-center justify-start gap-4 p-3 hover:bg-primary hover:text-white ${
-                    selectedSubCategory === idx.toString() &&
+                  className={`w-full cursor-pointer flex items-center justify-start gap-4 p-3 hover:bg-primary hover:text-white ${selectedSubCategory === idx.toString() &&
                     "bg-primary text-white"
-                  }`}
+                    }`}
                 >
                   <Image
-                    src={sub.icon || ''}
+                    src={imageBase(sub.icon) || ''}
                     alt="sub-icon"
                     width={50}
                     height={50}
@@ -500,16 +505,14 @@ const DripListing = () => {
                 <div className="flex items-center justify-start gap-2">
                   <button type="button" onClick={() => setViewType(false)}>
                     <FaThList
-                      className={`size-6 ${
-                        viewType ? "text-gray-400" : "text-primary"
-                      }`}
+                      className={`size-6 ${viewType ? "text-gray-400" : "text-primary"
+                        }`}
                     />
                   </button>
                   <button type="button" onClick={() => setViewType(true)}>
                     <IoGrid
-                      className={`size-6 ${
-                        viewType ? "text-primary" : "text-gray-400"
-                      }`}
+                      className={`size-6 ${viewType ? "text-primary" : "text-gray-400"
+                        }`}
                     />
                   </button>
                 </div>
@@ -563,31 +566,52 @@ const DripListing = () => {
                 </div>
               </div>
               <div
-                className={`w-full grid pb-5 md:pr-5 overflow-auto custom-scrollbar -mt-6 ${
-                  viewType
+                className={`w-full grid pb-5 md:pr-5 overflow-auto custom-scrollbar -mt-6 ${viewType
                     ? "grid-cols-2 md:grid-cols-3 gap-2"
                     : "grid-cols-1 md:grid-cols-2 gap-2"
-                }`}
+                  }`}
               >
                 <h1
-                  className={`mt-5 w-full text-left font-bold text-lg ${
-                    viewType
+                  className={`mt-5 w-full text-left font-bold text-lg ${viewType
                       ? "col-span-2 md:col-span-3"
                       : "col-span-1 md:col-span-2"
-                  }`}
+                    }`}
                 >
                   {subCategories?.[parseInt(selectedSubCategory)]?.name}
                 </h1>
                 {limit === "All"
                   ? sort(
-                      sorting,
-                      subCategories?.[parseInt(selectedSubCategory)]?.services
-                    )?.map((service) => {
+                    sorting,
+                    subCategories?.[parseInt(selectedSubCategory)]?.services
+                  )?.map((service) => {
+                    if (!viewType) {
+                      return (
+                        <DoctorVisitListingCard
+                          key={service.service_id}
+                          drip={service}
+                          navLink={getNavLink(service.service_id || '')}
+                        />
+                      );
+                    } else {
+                      return (
+                        <BestSellingListingCard
+                          key={service.service_id}
+                          drip={service}
+                          navLink={getNavLink(service.service_id || '')}
+                        />
+                      );
+                    }
+                  })
+                  : subCategories?.[parseInt(selectedSubCategory)]?.services
+                    .slice(0, parseInt(limit))
+                    .map((service) => {
                       if (!viewType) {
                         return (
                           <DoctorVisitListingCard
                             key={service.service_id}
                             drip={service}
+                            navLink={getNavLink(service.service_id || '')}
+                            
                           />
                         );
                       } else {
@@ -595,29 +619,11 @@ const DripListing = () => {
                           <BestSellingListingCard
                             key={service.service_id}
                             drip={service}
+                            navLink={getNavLink(service.service_id || '')}
                           />
                         );
                       }
-                    })
-                  : subCategories?.[parseInt(selectedSubCategory)]?.services
-                      .slice(0, parseInt(limit))
-                      .map((service) => {
-                        if (!viewType) {
-                          return (
-                            <DoctorVisitListingCard
-                              key={service.service_id}
-                              drip={service}
-                            />
-                          );
-                        } else {
-                          return (
-                            <BestSellingListingCard
-                              key={service.service_id}
-                              drip={service}
-                            />
-                          );
-                        }
-                      })}
+                    })}
               </div>
             </div>
           </div>
@@ -682,6 +688,7 @@ const DripListing = () => {
                 <DoctorVisitListingCard
                   key={service.service_id}
                   drip={service}
+                  navLink={getNavLink(service.service_id || '')}
                 />
               ))}
             </div>

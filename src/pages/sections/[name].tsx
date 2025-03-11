@@ -47,6 +47,13 @@ const SectionListing = ({ data }: { data: DRIP }) => {
     dispatch(setSelectedCategory(value));
   };
 
+  const getNavLink = (id: string) => {
+    return `/${data.section
+      .toLowerCase()
+      .split(" ")
+      .join("-")}/${id}`;
+  };
+
   return (
     <>
     <GoogleAnalytics />
@@ -276,9 +283,9 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             {limit === "All"
               ? sort(sorting, data?.section_data)?.map((service, idx) => {
                   if (!viewType) {
-                    return <DoctorVisitListingCard key={idx} drip={service} />;
+                    return <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />;
                   } else {
-                    return <BestSellingListingCard key={idx} drip={service} />;
+                    return <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />;
                   }
                 })
               : data?.section_data
@@ -286,11 +293,11 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   .map((service, idx) => {
                     if (!viewType) {
                       return (
-                        <DoctorVisitListingCard key={idx} drip={service} />
+                        <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />
                       );
                     } else {
                       return (
-                        <BestSellingListingCard key={idx} drip={service} />
+                        <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />
                       );
                     }
                   })}

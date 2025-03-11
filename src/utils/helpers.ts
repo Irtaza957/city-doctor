@@ -375,13 +375,13 @@ export function formatString(input: string): string {
 }
 export const getCategoryLink = (category_id: string,category_name: string) => {
   return category_id === "19"
-    ? `/${category_name.replace(/\s+/g, "-")}`
+    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
     : category_id === "20"
-    ? `/${category_name.replace(/\s+/g, "-")}`
+    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
     : category_id === "21"
-    ? `/${category_name.replace(/\s+/g, "-")}`
+    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
     : category_id === "22"
-    ? `/${category_name.replace(/\s+/g, "-")}`
+    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
     : "/drips";
 };
 

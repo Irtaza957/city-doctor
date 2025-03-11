@@ -12,7 +12,7 @@ import { imageBase, truncateString } from "@/utils/helpers";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 
-const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
+const DoctorVisitCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
@@ -105,7 +105,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
 
   return (
     <div className="grid shadow-sm sm:h-[180px] grid-cols-8 mr-2 mb-2 items-start justify-start rounded-xl border border-[#EAEAEA] bg-white">
-      <Link href={`/drips/${drip.service_id}`} className="col-span-3 w-full">
+      <Link href={navLink || `/drips/${drip.service_id}`} className="col-span-3 w-full">
         <div className="relative w-full h-[150px] sm:h-[178px] rounded-l-xl bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
           <div
             style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
@@ -122,7 +122,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
           <div className="w-full flex flex-col items-center justify-center">
             <div className="w-full flex items-center justify-between space-x-2.5">
               <Link
-                href={`/drips/${drip.service_id}`}
+                href={navLink || `/drips/${drip.service_id}`}
                 className="w-full text-left overflow-hidden truncate font-semibold xl:font-bold text-base"
               >
                 {drip.name}
@@ -140,7 +140,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
                 </div>
               )}
             </div>
-            <Link href={`/drips/${drip.service_id}`} className="w-full">
+            <Link href={navLink || `/drips/${drip.service_id}`} className="w-full">
               <p className="w-full text-left text-xs line-clamp-1 text-[#555555] font-medium mt-0.5 flex md:hidden">
                 {truncateString(drip.description, 40)}
               </p>
@@ -155,7 +155,7 @@ const DoctorVisitCard = ({ drip }: { drip: DRIP_CARD }) => {
         </div>
         <div className="w-full h-full flex items-end justify-between">
           <Link
-            href={`/drips/${drip.service_id}`}
+            href={navLink || `/drips/${drip.service_id}`}
             className="flex flex-col items-start justify-start space-y-1"
           >
             <div className="flex items-center justify-between space-x-1">

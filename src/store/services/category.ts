@@ -24,8 +24,19 @@ export const categoryApi = api.injectEndpoints({
         data: SERVICE_LIST[];
       }) => response.data,
     }),
+    fetchServicesByCategoryId: build.mutation({
+      query: (id) => ({
+        url: `/category?id=${id}`,
+        method: "GET",
+      }),
+      transformResponse: (response: {
+        success: number;
+        error: string;
+        data: SERVICE_LIST[];
+      }) => response.data,
+    }),
   }),
 });
 
-export const { useFetchCategoriesQuery, useFetchSubCategoriesMutation } =
+export const { useFetchCategoriesQuery, useFetchSubCategoriesMutation, useFetchServicesByCategoryIdMutation } =
   categoryApi;

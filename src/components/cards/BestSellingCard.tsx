@@ -12,7 +12,7 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 
-const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
+const BestSellingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
@@ -108,7 +108,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
   return (
     <div className="w-full flex flex-col items-center justify-center border rounded-xl shadow-sm">
       <div className="relative w-full">
-        <Link href={`/drips/${drip.service_id}`}>
+        <Link href={navLink || `/drips/${drip.service_id}`}>
           <div className="relative w-full h-48 xl:h-60 3xl:h-52 rounded-t-xl bg-[#E8E8E8]">
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
@@ -134,7 +134,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
       </div>
       <div className="w-full p-3 bg-white rounded-b-xl flex flex-col items-start justify-start space-y-4">
         <Link
-          href={`/drips/${drip.service_id}`}
+          href={navLink || `/drips/${drip.service_id}`}
           className="w-full flex flex-col items-center justify-center space-y-1.5"
         >
           <h1 className="w-full text-left text-base overflow-hidden truncate font-semibold xl:font-bold">
@@ -146,7 +146,7 @@ const BestSellingCard = ({ drip }: { drip: DRIP_CARD }) => {
         </Link>
         <div className="w-full grid grid-cols-2 items-end justify-between">
           <Link
-            href={`/drips/${drip.service_id}`}
+            href={navLink || `/drips/${drip.service_id}`}
             className="col-span-1 w-full flex flex-col items-center justify-start space-y-2"
           >
             <div className="w-full flex items-center justify-start gap-1">

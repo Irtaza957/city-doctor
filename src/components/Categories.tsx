@@ -81,7 +81,7 @@ const Categories = () => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={3.9}
+              slidesPerView={2.8}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
                 if (swiper.activeIndex === 0) {
@@ -109,7 +109,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-center font-semibold text-[10px] h-[30px] line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-center font-semibold text-[10px] whitespace-nowrap line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -119,7 +119,7 @@ const Categories = () => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={4.7}
+              slidesPerView={4}
               modules={[FreeMode]}
             >
               {data?.map((category, idx) => (
@@ -137,7 +137,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-left font-bold text-xs line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-left font-bold text-xs line-clamp-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -205,7 +205,7 @@ const Categories = () => {
         ref={categoryDRef}
         className="w-full hidden md:flex items-center justify-center"
       >
-        <div className="w-full sm:w-[90%] md:w-[70%] mx-auto xl:pt-5 pb-4 flex items-center justify-center gap-3">
+        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto xl:pt-5 pb-4 flex items-center justify-center gap-3">
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
@@ -223,7 +223,7 @@ const Categories = () => {
                   alt="category"
                   className="size-16 lg:size-20"
                 />
-                <span className="w-full h-[50px] line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                <span className="w-full whitespace-nowrap line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl:!leading-[24px] 3xl:!leading-[26px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>
