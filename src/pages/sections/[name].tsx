@@ -74,7 +74,8 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex flex-col items-center justify-center cursor-pointer gap-1 p-2 rounded-lg bg-[#F0F0F0] text-black"
+                    className="w-full flex flex-col items-center justify-center cursor-pointer gap-1 p-2 rounded-lg text-black"
+                    style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
                       src={`${imageBase(category.icon)}`}
@@ -83,7 +84,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-center font-semibold text-[10px]">
+                    <span className="text-center font-semibold text-[10px] h-[30px]">
                       {category.category_name}
                     </span>
                   </Link>
@@ -113,7 +114,8 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
+                    className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg text-black"
+                    style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
                       src={`${imageBase(category.icon)}`}
@@ -140,7 +142,8 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black"
+                    className="w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg text-black"
+                    style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
                       src={`${imageBase(category.icon)}`}
@@ -167,7 +170,8 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full bg-[#F0F0F0] text-black flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-lg"
+                    className="w-full text-black flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-lg"
+                    style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
                       src={`${imageBase(category.icon)}`}

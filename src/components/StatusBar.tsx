@@ -59,7 +59,7 @@ const StatusBar = () => {
 
   return (
     <div className="w-full bg-primary text-white hidden md:flex items-center justify-between">
-      <div className="w-full md:w-[70%] mx-auto py-2.5 flex items-center justify-center">
+      <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto py-2.5 flex items-center justify-center">
         {user && (
           <div className="w-full flex items-center justify-between space-x-5">
             <div className="flex items-center justify-center space-x-2.5">

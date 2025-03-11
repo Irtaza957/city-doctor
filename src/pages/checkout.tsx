@@ -11,7 +11,6 @@ import {
   calculateVAT,
 } from "@/utils/helpers";
 import { RootState } from "@/store";
-import Modal from "@/components/Modal";
 import { emptyCart } from "@/store/global";
 import ServedDrawer from "@/components/drawers/ServedDrawer";
 import TimeSlotModal from "@/components/modals/TimeSlotModal";
@@ -24,12 +23,10 @@ import CancellationModal from "@/components/modals/CancellationModal";
 import CancellationDrawer from "@/components/drawers/CancellationDrawer";
 
 import {
-  FaCheck,
   FaMoneyBill,
   FaCircleInfo,
   FaRegCreditCard,
 } from "react-icons/fa6";
-import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 // @ts-ignore
@@ -38,13 +35,13 @@ import { LuLoader2 } from "react-icons/lu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import { useRouter } from "next/navigation";
+import { setBookingID } from "@/store/city";
 
 const CheckoutDetails = () => {
   const dispatch = useDispatch();
   const dates = generateDates(15);
-  const [done, setDone] = useState(false);
   const [comments, setComments] = useState("");
-  const [bookingID, setBookingID] = useState("");
   const [openTime, setOpenTime] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [openServed, setOpenServed] = useState(false);
@@ -62,6 +59,7 @@ const CheckoutDetails = () => {
 
   const slots = generateTimeSlots(convertToDateString(selectedDate));
   const [selectedSlot, setSelectedSlot] = useState(slots[0]);
+  const router = useRouter();
   const [finalMember, setFinalMember] = useState<FAMILY_LIST | null>({
     family_member_id: user?.customer_id!,
     mrn: user?.mrn!,
@@ -186,9 +184,9 @@ const CheckoutDetails = () => {
         // @ts-ignore
         toast.error(data.error.data.error);
       } else {
-        setBookingID(data.data.data.id);
+        dispatch(setBookingID(data.data.data.id));
         clearCheckout();
-        setDone(true);
+        router.push("/thank-you");
       }
     } catch (err) {
       toast.error("Please Try Again!");
@@ -218,7 +216,7 @@ const CheckoutDetails = () => {
         setSelectedAddress={setFinalAddress}
       />
       <CancellationDrawer open={openCancel} onClose={onCloseCancel} />
-      <Modal width="w-fit" toggle={done} setToggle={setDone}>
+      {/* <Modal width="w-fit" toggle={done} setToggle={setDone}>
         <div className="w-full mx-auto flex flex-col items-center justify-center rounded-lg bg-white px-5 pt-10">
           <div className="w-full flex flex-col items-center justify-center">
             <div className="w-[70px] h-[70px] p-4 rounded-full bg-[#38B1A2] flex items-center justify-center">
@@ -244,7 +242,7 @@ const CheckoutDetails = () => {
             </Link>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
       <AddFamilyModal
         open={openFamily}
         setOpen={setOpenFamily}

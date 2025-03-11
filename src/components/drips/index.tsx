@@ -207,9 +207,10 @@ const DripListing = () => {
                       onClick={() => navigateToCategory(category)}
                       className={`w-full flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-3 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
-                          ? "bg-primary text-white"
-                          : "bg-[#F0F0F0] text-black"
+                          ? "text-white"
+                          : "text-black"
                       }`}
+                      style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
                         src={`${imageBase(category.icon)}`}
@@ -218,7 +219,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-center font-semibold text-[10px]">
+                      <span className="text-center font-semibold text-[10px] h-[35px]">
                         {category.category_name}
                       </span>
                     </div>
@@ -308,9 +309,10 @@ const DripListing = () => {
                       onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
-                          ? "bg-primary text-white"
-                          : "bg-[#F0F0F0] text-black"
+                          ? "text-white"
+                          : "text-black"
                       }`}
+                      style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
                         src={`${imageBase(category.icon)}`}
@@ -353,9 +355,10 @@ const DripListing = () => {
                      onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
-                          ? "bg-primary text-white"
-                          : "bg-[#F0F0F0] text-black"
+                          ? " text-white"
+                          : " text-black"
                       }`}
+                      style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
                         src={`${imageBase(category.icon)}`}
@@ -400,9 +403,10 @@ const DripListing = () => {
                       onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 lg:pr-14 xl:pl-6 xl:pr-16 pl-4 rounded-lg ${
                         selectedCategory?.category_id === category.category_id
-                          ? "bg-primary text-white"
-                          : "bg-[#F0F0F0] text-black"
+                          ? "text-white"
+                          : `text-black`
                       }`}
+                      style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
                       <Image
                         src={`${imageBase(category.icon)}`}

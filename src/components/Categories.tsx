@@ -76,7 +76,7 @@ const Categories = () => {
         className={`fixed ${showSlider ? "flex" : "hidden"
           } w-full shadow-md z-40 top-[69px] sm:top-[71.75px] md:top-[116px] 3xl:top-[115px] left-0 bg-white md:border-b xl:border-none`}
       >
-        <div className="w-full md:max-w-[70%] mx-auto sm:px-5 md:px-0">
+        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto sm:px-5 md:px-0">
           <div className="block sm:hidden py-2.5">
             <Swiper
               freeMode={true}
@@ -109,7 +109,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-center font-semibold text-[10px]" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-center font-semibold text-[10px] h-[30px] line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -205,7 +205,7 @@ const Categories = () => {
         ref={categoryDRef}
         className="w-full hidden md:flex items-center justify-center"
       >
-        <div className="w-full sm:w-[90%] md:w-[70%] mx-auto py-10 lg:py-5 xl:py-10 mb-5 xl:mb-0 flex items-center justify-center gap-3">
+        <div className="w-full sm:w-[90%] md:w-[70%] mx-auto xl:pt-5 pb-4 flex items-center justify-center gap-3">
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
@@ -213,7 +213,7 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("w-full h-full flex flex-col items-center justify-between space-y-3 text-black py-5 px-6 lg:px-12 xl:px-14 3xl:px-12 rounded-lg shadow-sm")}
+                className={cn("w-full flex flex-col items-center justify-between space-y-3 text-black py-5 px-6 lg:px-12 xl:px-14 3xl:px-12 rounded-lg shadow-sm")}
                 style={{ backgroundColor: category?.color || "#F5F5F5" }}
               >
                 <Image
@@ -223,7 +223,7 @@ const Categories = () => {
                   alt="category"
                   className="size-16 lg:size-20"
                 />
-                <span className="w-full line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                <span className="w-full h-[50px] line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl: 3xl:!leading-[24px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>

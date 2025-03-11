@@ -31,7 +31,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
     <div className={`w-full flex items-center justify-center ${bg}`}>
       <div
         id="doctor"
-        className="w-full md:w-[70%] mx-auto h-full pt-7 pb-8"
+        className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto h-full pt-7 pb-8"
       >
         <div className="w-full h-full flex items-center justify-between mb-5 px-5 md:px-0">
           <h1 className="text-left text-xl xl:text-2xl font-bold">

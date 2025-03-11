@@ -328,3 +328,7 @@ declare type IconProps = {
   height?: string | number;
   className?: string;
 }
+
+declare type CITY_STATE = {
+  bookingID: string | null;
+}
