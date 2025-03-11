@@ -113,7 +113,7 @@ const WishlistCard = ({ service }: { service: WISHLIST }) => {
         <div className="relative w-full h-[150px] sm:h-[178px] rounded-l-xl bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
           <div
             style={{ backgroundImage: `url(${imageBase(service.thumbnail)})` }}
-            className="rounded-l-xl size-full bg-center bg-contain flex items-center justify-center"
+            className="rounded-l-xl size-full bg-top bg-cover flex items-center justify-center"
           >
             <span className="absolute bottom-1 bg-tagline text-white py-0.5 px-3 rounded-full font-semibold text-xs">
               {service.response_time}*

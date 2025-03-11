@@ -112,7 +112,7 @@ const BestSellingListingCard = ({ drip }: { drip: DRIP_CARD }) => {
           <div className="relative w-full h-48 xl:h-60 3xl:h-52 rounded-t-xl bg-[#E8E8E8]">
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
-              className="size-full rounded-t-xl bg-center bg-contain"
+              className="size-full rounded-t-xl bg-top bg-cover"
             />
           </div>
         </Link>
