@@ -34,15 +34,11 @@ const Footer = () => {
           {/* <FaTiktok className="w-5 h-5 text-white" /> */}
           {/* <FaXTwitter className="w-5 h-5 text-white" /> */}
         </div>
-        <div className="w-full h-full flex items-center justify-center xl:justify-between gap-5 flex-wrap text-white font-light pt-2 pb-4 xl:px-20 border-b">
+        <div className="w-full h-full text-sm md:text-base flex items-center justify-center xl:justify-between gap-5 flex-wrap text-white font-light pt-2 pb-4 xl:px-20 border-b">
           <Link href="/faq">FAQs</Link>
           <Link href="/terms-and-conditions">Terms</Link>
-          {/* <Link href="/privacy-policy">Privacy</Link> */}
-          {/* <Link href="/">Sitemap</Link> */}
           <Link href="/careers">Careers</Link>
           <Link href="/blogs">Blogs</Link>
-          {/* <Link href="/">Support</Link> */}
-          {/* <Link href="/contact-us">Contact Us</Link> */}
           <Link href="/about-us">About Us</Link>
           <Link href="/contact-us">Contact Us</Link>
           <Link href="/refund-policy">Refund Policy</Link>

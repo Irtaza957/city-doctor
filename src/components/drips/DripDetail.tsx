@@ -180,86 +180,88 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             {data?.sections?.map((section, idx) => (
               <Accordion section={section} key={idx} />
             ))}
-          </div>
-          <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
-            <h1 className="w-full text-left text-xl font-bold">
-              Service Ratings & Reviews
-            </h1>
-            <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
-              <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
-                <p className="w-full text-left text-xl font-bold">
-                  {data?.rating}
-                  <span className="text-[#67767E] text-sm font-semibold">
-                    &nbsp;/ 5.0
-                  </span>
-                </p>
-                <div className="w-full flex items-center justify-start space-x-1.5">
-                  {[...Array(parseInt(data?.rating || "0"))].map((_, idx) => (
-                    <FaStar key={idx} className="size-4 text-accent" />
-                  ))}
-                  {[...Array(5 - parseInt(data?.rating || "0"))].map((_, idx) => (
-                    <FaStar key={idx} className="size-4 text-[#DDDDDD]" />
-                  ))}
-                </div>
-                <p className="w-full text-left text-xl font-bold">
-                  {data?.total_reviews}&nbsp;
-                  <span className="text-[#67767E] text-sm font-semibold">
-                    Ratings
-                  </span>
-                </p>
-              </div>
-              <div className="col-span-1 w-full flex flex-col items-center justify-between pl-2.5 text-sm">
-                {[...Array(5)].map((_, idx) => (
-                  <div key={idx} className="w-full grid grid-cols-12 gap-x-2">
-                    <div className="col-span-1 w-full flex items-center justify-center">
-                      <span className="font-bold pt-0.5">{5 - idx}</span>
-                    </div>
-                    <div className="col-span-2 w-full flex items-center justify-center">
-                      <FaStar className="text-amber-500 size-4" />
-                    </div>
-                    <div className="col-span-5 w-full flex items-center justify-center">
-                      <div className="w-full border-[3px] rounded-full border-amber-500" />
-                    </div>
-                    <div className="col-span-4 w-full flex items-center justify-center">
-                      <span className="font-bold">1,432</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          {data?.reviews?.map((review, idx) => (
-            <div
-              key={idx}
-              className="w-full flex flex-col items-center justify-center space-x-5 px-5"
-            >
-              <div className="w-full flex items-center justify-start space-x-6">
-                <Image
-                  src="https://ui.shadcn.com/avatars/04.png"
-                  alt="user"
-                  width={40}
-                  height={40}
-                  className="rounded-full bg-gray-200 size-10"
-                />
-                <div className="w-full flex flex-col items-center justify-start space-y-1">
-                  <div className="w-full flex items-center justify-start space-x-10">
-                    <p className="font-bold text-xs">{review.customer}</p>
-                    <div className="flex items-center justify-center space-x-1.5">
-                      {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
-                        <FaStar key={idx} className="text-accent" />
+            <Accordion section={{ name: 'Service Ratings & Reviews' }} >
+              <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 mb-3">
+                <h1 className="w-full text-left text-lg md:text-xl font-bold">
+                  Service Ratings & Reviews
+                </h1>
+                <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
+                  <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
+                    <p className="w-full text-left text-xl font-bold">
+                      {data?.rating}
+                      <span className="text-[#67767E] text-sm font-semibold">
+                        &nbsp;/ 5.0
+                      </span>
+                    </p>
+                    <div className="w-full flex items-center justify-start space-x-1.5">
+                      {[...Array(parseInt(data?.rating || "0"))].map((_, idx) => (
+                        <FaStar key={idx} className="size-4 text-accent" />
+                      ))}
+                      {[...Array(5 - parseInt(data?.rating || "0"))].map((_, idx) => (
+                        <FaStar key={idx} className="size-4 text-[#DDDDDD]" />
                       ))}
                     </div>
+                    <p className="w-full text-left text-xl font-bold">
+                      {data?.total_reviews}&nbsp;
+                      <span className="text-[#67767E] text-sm font-semibold">
+                        Ratings
+                      </span>
+                    </p>
                   </div>
-                  <span className="w-full text-left text-xs text-gray-400">
-                    {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
-                  </span>
+                  <div className="col-span-1 w-full flex flex-col items-center justify-between pl-2.5 text-sm">
+                    {[...Array(5)].map((_, idx) => (
+                      <div key={idx} className="w-full grid grid-cols-12 gap-x-2">
+                        <div className="col-span-1 w-full flex items-center justify-center">
+                          <span className="font-bold pt-0.5">{5 - idx}</span>
+                        </div>
+                        <div className="col-span-2 w-full flex items-center justify-center">
+                          <FaStar className="text-amber-500 size-4" />
+                        </div>
+                        <div className="col-span-5 w-full flex items-center justify-center">
+                          <div className="w-full border-[3px] rounded-full border-amber-500" />
+                        </div>
+                        <div className="col-span-4 w-full flex items-center justify-center">
+                          <span className="font-bold">1,432</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <p className="w-full pl-[52.5px] text-left text-xs text-[#535763] font-medium pt-3">
-                {numberSentences(1, review.description)}
-              </p>
-            </div>
-          ))}
+              {data?.reviews?.map((review, idx) => (
+                <div
+                  key={idx}
+                  className="w-full flex flex-col items-center justify-center space-x-5 px-5"
+                >
+                  <div className="w-full flex items-center justify-start space-x-6">
+                    <Image
+                      src="https://ui.shadcn.com/avatars/04.png"
+                      alt="user"
+                      width={40}
+                      height={40}
+                      className="rounded-full bg-gray-200 size-10"
+                    />
+                    <div className="w-full flex flex-col items-center justify-start space-y-1">
+                      <div className="w-full flex items-center justify-start space-x-10">
+                        <p className="font-bold text-xs">{review.customer}</p>
+                        <div className="flex items-center justify-center space-x-1.5">
+                          {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
+                            <FaStar key={idx} className="text-accent" />
+                          ))}
+                        </div>
+                      </div>
+                      <span className="w-full text-left text-xs text-gray-400">
+                        {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="w-full pl-[52.5px] text-left text-xs text-[#535763] font-medium pt-3">
+                    {numberSentences(1, review.description)}
+                  </p>
+                </div>
+              ))}
+            </Accordion>
+          </div>
           {/* <div className="w-full px-5">
             <Image
               src={`${imageBase(data.cover_image)}`}
@@ -385,7 +387,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               <p className="text-left text-lg text-[#A3A3A3] font-medium line-through">
                 AED&nbsp;
                 {isNaN(
-                  Math.round( 
+                  Math.round(
                     priceCalculator(
                       data?.discount_type,
                       data?.price,

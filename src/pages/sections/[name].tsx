@@ -63,7 +63,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={3.9}
+              slidesPerView={2.8}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
                 if (swiper.activeIndex === 0) {
@@ -103,7 +103,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={4.7}
+              slidesPerView={4.2}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
                 if (swiper.activeIndex === 0) {
@@ -141,7 +141,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={6}
+              slidesPerView={4}
               modules={[FreeMode]}
             >
               {categories?.map((category, idx) => (
@@ -169,7 +169,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={6}
+              slidesPerView={4}
               modules={[FreeMode]}
             >
               {categories?.map((category, idx) => (
