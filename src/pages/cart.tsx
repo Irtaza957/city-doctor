@@ -190,24 +190,26 @@ const Checkout = () => {
                     </div>
                     <div
                       key={idx}
-                      className="w-full hidden sm:flex items-center justify-between space-x-4 py-3 border-b"
+                      className="w-full hidden sm:flex items-center justify-around space-x-4 py-3 border-b"
                     >
-                      <Image
-                        src={imageBase(item.thumbnail!)}
-                        alt="card"
-                        width={500}
-                        height={500}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                      <span className="text-left text-sm font-semibold overflow-hidden truncate w-full md:w-[1300px]">
-                        {item.name}
-                      </span>
-                      <span className="w-full text-left text-sm">
+                      <div className="w-[50%] lg:w-[45%] flex items-center justify-start gap-4">
+                        <Image
+                          src={imageBase(item.thumbnail!)}
+                          alt="card"
+                          width={500}
+                          height={500}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                        <span className="text-left text-sm font-semibold overflow-hidden truncate w-full md:w-[1300px]">
+                          {item.name}
+                        </span>
+                      </div>
+                      <div className="w-full text-left text-sm">
                         Qty: {item.quantity}
-                      </span>
-                      <span className="w-full text-left text-sm font-semibold">
+                      </div>
+                      <div className="w-full text-left text-sm font-semibold">
                         AED {item.price_without_vat}
-                      </span>
+                      </div>
                       <div className="w-full flex items-center justify-end space-x-2.5">
                         <span
                           onClick={() => {

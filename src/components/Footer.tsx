@@ -37,7 +37,7 @@ const Footer = () => {
         <div className="w-full h-full text-sm md:text-base flex items-center justify-center xl:justify-between gap-5 flex-wrap text-white font-light pt-2 pb-4 xl:px-20 border-b">
           <Link href="/faq">FAQs</Link>
           <Link href="/terms-and-conditions">Terms</Link>
-          <Link href="/careers">Careers</Link>
+          {/* <Link href="/careers">Careers</Link> */}
           <Link href="/blogs">Blogs</Link>
           <Link href="/about-us">About Us</Link>
           <Link href="/contact-us">Contact Us</Link>
