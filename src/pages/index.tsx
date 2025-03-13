@@ -13,14 +13,20 @@ import { useFetchHomeDataQuery } from "@/store/services/home";
 import DoctorVisitSkeleton from "@/components/cards/skeleton/DoctorVisitSkeleton";
 import Head from "next/head";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const route=useRouter()
   const { data, isLoading } = useFetchHomeDataQuery({});
 
   const setCountryCode = (code: string) => {
     dispatch(setCountry(code));
   };
+
+  const handleNavigate=()=>{
+    route.push('/about-us')
+  }
 
   useEffect(() => {
     fetchCountryFromIP(setCountryCode);
@@ -64,6 +70,11 @@ const Home = () => {
           }
         })
       )}
+      <div className="flex flex-col items-center text-center justify-center gap-5 px-10 sm:w-[70%] md:w-[45%] my-7">
+        <p className="text-xl sm:text-2xl font-bold md:whitespace-nowrap">City Doctor – Trusted Home Healthcare Services in Dubai</p>
+        <p className="text-xs sm:text-base">At City Doctor, we provide expert home healthcare services across Dubai, ensuring you receive professional medical care without leaving your home. Whether you need a doctor on call, IV therapy, lab tests, or physiotherapy, our dedicated team is available 24/7, delivering medical services at home in Dubai with convenience, care, and efficiency.</p>
+        <button onClick={handleNavigate} className="h-[36px] px-8 py-2 bg-primary rounded-md text-white mt-3 font-semibold text-sm">Read More</button>
+      </div>
     </div>
   );
 };

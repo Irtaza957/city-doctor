@@ -389,3 +389,6 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
+export const getSlug=(value: string)=>{
+  return value?.toLowerCase()?.replace(/[()]/g, "")?.replace(/\s+/g, "-")
+}

@@ -12,7 +12,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import { GetServerSidePropsContext } from "next";
-import { getCategoryLink, imageBase, sort } from "@/utils/helpers";
+import { getCategoryLink, getSlug, imageBase, sort } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import { useFetchCategoriesQuery } from "@/store/services/category";
 import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
@@ -47,11 +47,11 @@ const SectionListing = ({ data }: { data: DRIP }) => {
     dispatch(setSelectedCategory(value));
   };
 
-  const getNavLink = (id: string) => {
+  const getNavLink = (name: string) => {
     return `/${data.section
       .toLowerCase()
       .split(" ")
-      .join("-")}/${id}`;
+      .join("-")}/${getSlug(name)}`;
   };
 
   return (
@@ -283,9 +283,9 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             {limit === "All"
               ? sort(sorting, data?.section_data)?.map((service, idx) => {
                   if (!viewType) {
-                    return <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />;
+                    return <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />;
                   } else {
-                    return <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />;
+                    return <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />;
                   }
                 })
               : data?.section_data
@@ -293,11 +293,11 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   .map((service, idx) => {
                     if (!viewType) {
                       return (
-                        <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />
+                        <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />
                       );
                     } else {
                       return (
-                        <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.service_id || '')} />
+                        <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />
                       );
                     }
                   })}

@@ -3,7 +3,7 @@
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import { formatString } from "@/utils/helpers";
+import { formatString, getSlug } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import BestSellingCard from "./cards/BestSellingCard";
 import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
@@ -23,11 +23,8 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
     dispatch(setSelectedCategory(null));
   };
 
-  const getNavLink = (id: string) => {
-    return `/${section.section
-      .toLowerCase()
-      .split(" ")
-      .join("-")}/${id}`;
+  const getNavLink = (name: string, category_name: string='') => {
+    return `/${getSlug(section.section)}/${getSlug(category_name)}/${getSlug(name)}`;
   };
   return (
     <div className={`w-full flex items-center justify-center ${bg}`}>
@@ -64,7 +61,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
                 key={idx}
                 className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
               >
-                <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -103,7 +100,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide key={idx}>
-                <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -142,7 +139,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide key={idx}>
-                <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -181,7 +178,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide key={idx}>
-                <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -220,7 +217,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide key={idx}>
-                <BestSellingCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>

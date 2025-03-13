@@ -3,7 +3,7 @@
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/navigation";
-import { formatString } from "@/utils/helpers";
+import { formatString, getSlug } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import DoctorVisitCard from "./cards/DoctorVisitCard";
 import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
@@ -26,11 +26,8 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
   const clearCategory = () => {
     dispatch(setSelectedCategory(null));
   };
-  const getNavLink = (id: string) => {
-    return `/${section.section
-      .toLowerCase()
-      .split(" ")
-      .join("-")}/${id}`;
+  const getNavLink = (name: string, category_name: string='') => {
+    return `/${getSlug(section.section)}/${getSlug(category_name)}/${getSlug(name)}`;
   };
 
   return (
@@ -77,7 +74,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
               <SwiperSlide
                 key={idx}
               >
-                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -118,7 +115,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide key={idx}>
-                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -159,7 +156,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide key={idx}>
-                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -200,7 +197,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide key={idx}>
-                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.service_id || '')} />
+                <DoctorVisitCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>

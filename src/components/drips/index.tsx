@@ -12,10 +12,9 @@ import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
 import "swiper/css";
 import {
   useFetchCategoriesQuery,
-  useFetchServicesByCategoryIdMutation,
   useFetchSubCategoriesMutation,
 } from "@/store/services/category";
-import { getCategoryLink, imageBase, sort } from "@/utils/helpers";
+import { getCategoryLink, getSlug, imageBase, sort } from "@/utils/helpers";
 import EmptyResults from "@/assets/img/empty-results.svg";
 import HeaderSkeleton from "@/components/cards/skeleton/HeaderSkeleton";
 import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
@@ -51,11 +50,6 @@ const DripListing = () => {
   const [startSlide, setStartSlide] = useState(true);
   const [getSubCategories, { isLoading: subLoading }] =
     useFetchSubCategoriesMutation();
-  const [fetchServicesByCategoryId, { isLoading: catLoading }] =
-    useFetchServicesByCategoryIdMutation();
-  //   const { selectedCategory: selected } = useSelector(
-  //     (state: RootState) => state.global
-  //   );
   const { data, isLoading } = useFetchCategoriesQuery({});
   const [startSubSlide, setStartSubSlide] = useState(true);
   const [activeCategory, setActiveCategory] = useState("0");
@@ -81,19 +75,20 @@ const DripListing = () => {
     }
   };
 
+  const handleNavigate = (subCategory?: string) => {
+    router.push(`/${pathname}/${getSlug(subCategory || '')}`)
+  }
+
   const getSubs = async () => {
     const response = await getSubCategories(selectedCategory?.category_id);
     const data = response.data ?? [];
 
+    if (pathname?.split('/')?.length <= 2) {
+      handleNavigate(response.data?.[0].name)
+    }
     setSubCategories(data);
   };
 
-  const getServices = async () => {
-    const response = await fetchServicesByCategoryId(selectedCategory?.category_id)
-    const data = response.data ?? []
-    console.log(data, 'datadata')
-    // setServices(data)
-  }
   const navigate = (link: string) => {
     router.push(link)
   }
@@ -122,7 +117,6 @@ const DripListing = () => {
     return str
       .replace(/\//g, '') // Remove slashes
       .replace(/-/g, ' ') // Replace hyphens with spaces
-    // .replace(/\b\w/g, (char:string) => char.toUpperCase()); // Capitalize first letter of each word
   }
 
   const navigateToCategory = (category: CATEGORY) => {
@@ -131,13 +125,29 @@ const DripListing = () => {
 
   useEffect(() => {
     if (pathname) {
-      let temp = formatString(pathname)
+      const path = pathname?.split('/')
+      let temp = formatString(path?.[1])
+
       const category = data?.find(category => (category.category_name.toLowerCase() === temp || category.category_name.toLowerCase().replace(/\s+/g, " ").trim() === temp))
       setSelectedCategory(category);
     } else {
       setSelectedCategory(data?.[1]!);
     }
   }, [pathname, data]);
+
+  useEffect(() => {
+    const path = pathname?.split('/')
+    if (subCategories && path?.length > 2) {
+      let selectedSubCat = formatString(path?.[2])
+      let index = 0
+      for (let i = 0; i < subCategories.length; i++) {
+        if (subCategories[i].name.toLowerCase() === selectedSubCat) {
+          index = i
+        }
+      }
+      setSelectedSubCategory(String(index))
+    }
+  }, [pathname, subCategories]);
 
   useEffect(() => {
     if (selectedCategory) {
@@ -165,18 +175,16 @@ const DripListing = () => {
     };
   }, [subCategories]);
 
-  useEffect(() => {
-    if (selectedCategory?.category_id) {
-      getServices()
-    }
-  }, [selectedCategory])
-
-  const getNavLink=(service_id:string)=>{
-    if(service_id){
-      return `/${selectedCategory?.category_name?.toLowerCase().replace(/\s+/g, "-")}/${subCategories?.[parseInt(selectedSubCategory)]?.name?.toLowerCase().replace(/\s+/g, "-")}/${service_id}`
+  const getNavLink = (service_name: string) => {
+    if (service_name) {
+      return `/${getSlug(selectedCategory?.category_name || '')}/${getSlug(subCategories?.[parseInt(selectedSubCategory)]?.name || '')}/${getSlug(service_name)}`
     }
   }
-console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCategory')
+
+  const handleSubCategorySelect = (subCategory: string) => {
+    router.push(`/${getSlug(selectedCategory?.category_name || '')}/${getSlug(subCategory || '')}`)
+  }
+
   return (
     <>
       <div className="fixed w-full z-20 top-[69px] sm:top-[75.75px] md:top-[108px] lg:top-[113px] left-0 bg-white md:border-b xl:border-none">
@@ -217,8 +225,8 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                     <div
                       onClick={() => navigateToCategory(category)}
                       className={`w-full flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-3 rounded-lg ${selectedCategory?.category_id === category.category_id
-                          ? "text-white"
-                          : "text-black"
+                        ? "text-white"
+                        : "text-black"
                         }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
@@ -239,7 +247,7 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
             )}
           </div>
           <div className="w-full block sm:hidden py-2.5">
-            {subLoading || catLoading ? (
+            {subLoading ? (
               <Swiper
                 freeMode={true}
                 spaceBetween={10}
@@ -278,8 +286,8 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                         setActiveCategory(idx.toString());
                       }}
                       className={`flex items-center justify-center cursor-pointer space-x-1 py-2 rounded-md ${parseInt(activeCategory) === idx
-                          ? "bg-primary text-white"
-                          : "bg-[#F7F7F7] text-black"
+                        ? "bg-primary text-white"
+                        : "bg-[#F7F7F7] text-black"
                         }`}
                     >
                       <span className="text-center font-semibold text-xs w-full overflow-hidden truncate">
@@ -317,8 +325,8 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                     <div
                       onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg ${selectedCategory?.category_id === category.category_id
-                          ? "text-white"
-                          : "text-black"
+                        ? "text-white"
+                        : "text-black"
                         }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
@@ -362,8 +370,8 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                     <div
                       onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-lg ${selectedCategory?.category_id === category.category_id
-                          ? " text-white"
-                          : " text-black"
+                        ? " text-white"
+                        : " text-black"
                         }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
@@ -409,8 +417,8 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                     <div
                       onClick={() => navigateToCategory(category)}
                       className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-  rounded-lg ${selectedCategory?.category_id === category.category_id
-                          ? "text-white"
-                          : `text-black`
+                        ? "text-white"
+                        : `text-black`
                         }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
@@ -467,7 +475,7 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
               {subCategories?.map((sub, idx) => (
                 <div
                   key={idx}
-                  onClick={() => setSelectedSubCategory(idx.toString())}
+                  onClick={() => handleSubCategorySelect(sub?.name)}
                   className={`w-full cursor-pointer flex items-center justify-start gap-4 p-3 hover:bg-primary hover:text-white ${selectedSubCategory === idx.toString() &&
                     "bg-primary text-white"
                     }`}
@@ -567,14 +575,14 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
               </div>
               <div
                 className={`w-full grid pb-5 md:pr-5 overflow-auto custom-scrollbar -mt-6 ${viewType
-                    ? "grid-cols-2 md:grid-cols-3 gap-2"
-                    : "grid-cols-1 md:grid-cols-2 gap-2"
+                  ? "grid-cols-2 md:grid-cols-3 gap-2"
+                  : "grid-cols-1 md:grid-cols-2 gap-2"
                   }`}
               >
                 <h1
                   className={`mt-5 w-full text-left font-bold text-lg ${viewType
-                      ? "col-span-2 md:col-span-3"
-                      : "col-span-1 md:col-span-2"
+                    ? "col-span-2 md:col-span-3"
+                    : "col-span-1 md:col-span-2"
                     }`}
                 >
                   {subCategories?.[parseInt(selectedSubCategory)]?.name}
@@ -589,7 +597,7 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                         <DoctorVisitListingCard
                           key={service.service_id}
                           drip={service}
-                          navLink={getNavLink(service.service_id || '')}
+                          navLink={getNavLink(service.name || '')}
                         />
                       );
                     } else {
@@ -597,7 +605,7 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                         <BestSellingListingCard
                           key={service.service_id}
                           drip={service}
-                          navLink={getNavLink(service.service_id || '')}
+                          navLink={getNavLink(service.name || '')}
                         />
                       );
                     }
@@ -610,8 +618,8 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                           <DoctorVisitListingCard
                             key={service.service_id}
                             drip={service}
-                            navLink={getNavLink(service.service_id || '')}
-                            
+                            navLink={getNavLink(service.name || '')}
+
                           />
                         );
                       } else {
@@ -619,7 +627,7 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                           <BestSellingListingCard
                             key={service.service_id}
                             drip={service}
-                            navLink={getNavLink(service.service_id || '')}
+                            navLink={getNavLink(service.name || '')}
                           />
                         );
                       }
@@ -688,7 +696,7 @@ console.log(selectedCategory,selectedSubCategory, 'selectedCategoryselectedCateg
                 <DoctorVisitListingCard
                   key={service.service_id}
                   drip={service}
-                  navLink={getNavLink(service.service_id || '')}
+                  navLink={getNavLink(service.name || '')}
                 />
               ))}
             </div>
