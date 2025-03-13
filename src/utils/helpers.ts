@@ -373,7 +373,7 @@ export function formatString(input: string): string {
     .replace(/\s+/g, "-")
     .trim();
 }
-export const getCategoryLink = (category_id: string,category_name: string) => {
+export const getCategoryLink = (category_id: string, category_name: string) => {
   return category_id === "19"
     ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
     : category_id === "20"
@@ -389,6 +389,6 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
-export const getSlug=(value: string)=>{
-  return value?.toLowerCase()?.replace(/[()]/g, "")?.replace(/\s+/g, "-")
-}
+export const getSlug = (value: string) => {
+  return value?.toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, "-");
+};
