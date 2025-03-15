@@ -5,7 +5,7 @@ import {
   useFetchSubCategoriesMutation,
 } from "@/store/services/category";
 import AutoComplete from "./Autocomplete";
-import { getCategoryLink, imageBase, truncateString } from "@/utils/helpers";
+import { getCategoryLink, getSlug, imageBase, truncateString } from "@/utils/helpers";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 import Link from "next/link";
@@ -45,6 +45,12 @@ const Search = () => {
   const handleCategoryClick = (id: string) => {
     setShowMenu(false)
     router.push(getCategoryLink(id, list?.find(item=>item.id===String(category))?.name!))
+  }
+
+  const getNavLink = (service_name: string) => {
+    if (service_name) {
+      return `/${getSlug(list?.find(item=>item.id===String(category))?.name!) || ''}/${getSlug(subCategories?.[parseInt(selectedSub)-2]?.name || '')}/${getSlug(service_name)}`
+    }
   }
   useEffect(() => {
     if (data) {
@@ -178,7 +184,7 @@ const Search = () => {
                         <Link
                           key={service.service_id}
                           onClick={() => setShowMenu(false)}
-                          href={`/drips/${service.service_id}`}
+                          href={getNavLink(service.name || '') || `/drips/${service.service_id}`}
                           className="flex items-center justify-center space-x-2.5 p-3.5 hover:bg-primary/10 xl:rounded-lg"
                         >
                           <Image
