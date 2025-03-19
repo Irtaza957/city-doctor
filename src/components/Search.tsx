@@ -49,7 +49,7 @@ const Search = () => {
 
   const getNavLink = (service_name: string) => {
     if (service_name) {
-      return `/${getSlug(list?.find(item=>item.id===String(category))?.name!) || ''}/${getSlug(subCategories?.[parseInt(selectedSub)-2]?.name || '')}/${getSlug(service_name)}`
+      return `/${getSlug(list?.find(item=>item.id===String(category))?.name!) || ''}/${getSlug(subCategories?.find(item=> item?.id===selectedSub)?.name || '')}/${getSlug(service_name)}`
     }
   }
   useEffect(() => {

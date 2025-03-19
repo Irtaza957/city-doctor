@@ -307,7 +307,7 @@ export const sort = (sortType: string, array: DRIP_CARD[] | undefined) => {
   if (array) {
     const sortedArray = [...array!];
 
-    if (array[0].price) {
+    if (array[0]?.price) {
       switch (sortType) {
         case "Price (Low to High)":
           return sortedArray.sort(
@@ -374,15 +374,7 @@ export function formatString(input: string): string {
     .trim();
 }
 export const getCategoryLink = (category_id: string, category_name: string) => {
-  return category_id === "19"
-    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
-    : category_id === "20"
-    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
-    : category_id === "21"
-    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
-    : category_id === "22"
-    ? `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
-    : "/drips";
+  return `/${category_name.toLowerCase().replace(/\s+/g, "-")}`
 };
 
 export const cn = (...inputs: ClassValue[]) => {

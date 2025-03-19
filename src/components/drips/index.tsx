@@ -58,7 +58,7 @@ const DripListing = () => {
   const [subCategories, setSubCategories] = useState<SERVICE_LIST[] | null>(
     null
   );
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string>("0");
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>("");
   const pathname = usePathname()
   const router = useRouter()
 
@@ -75,17 +75,13 @@ const DripListing = () => {
     }
   };
 
-  const handleNavigate = (subCategory?: string) => {
-    router.push(`/${pathname}/${getSlug(subCategory || '')}`)
-  }
-
   const getSubs = async () => {
     const response = await getSubCategories(selectedCategory?.category_id);
     const data = response.data ?? [];
 
-    if (pathname?.split('/')?.length <= 2) {
-      handleNavigate(response.data?.[0].name)
-    }
+    // if (pathname?.split('/')?.length <= 2) {
+    //   handleNavigate(response.data?.[0].name)
+    // }
     setSubCategories(data);
   };
 
@@ -141,11 +137,12 @@ const DripListing = () => {
       let selectedSubCat = formatString(path?.[2])
       let index = 0
       for (let i = 0; i < subCategories.length; i++) {
-        if (subCategories[i].name.toLowerCase() === selectedSubCat) {
+        if (subCategories[i].name?.toLowerCase()?.replace(/[^a-zA-Z0-9 ]/g, '') === selectedSubCat) {
           index = i
         }
       }
       setSelectedSubCategory(String(index))
+      
     }
   }, [pathname, subCategories]);
 
@@ -180,9 +177,8 @@ const DripListing = () => {
       return `/${getSlug(selectedCategory?.category_name || '')}/${getSlug(subCategories?.[parseInt(selectedSubCategory)]?.name || '')}/${getSlug(service_name)}`
     }
   }
-
-  const handleSubCategorySelect = (subCategory: string) => {
-    router.push(`/${getSlug(selectedCategory?.category_name || '')}/${getSlug(subCategory || '')}`)
+  const handleSubCategorySelect = async (subCategory: string) => {
+    router.push(`/${(selectedCategory?.category_name || '').toLowerCase().replace(/\s+/g, "-")}/${getSlug(subCategory || '')}`)
   }
 
   return (
@@ -585,12 +581,14 @@ const DripListing = () => {
                     : "col-span-1 md:col-span-2"
                     }`}
                 >
-                  {subCategories?.[parseInt(selectedSubCategory)]?.name}
+                {subCategories?.[parseInt(selectedSubCategory)]?.name || pathname?.split('/')?.[1]?.replace(/-/g, " ")?.toUpperCase()}
                 </h1>
                 {limit === "All"
                   ? sort(
                     sorting,
-                    subCategories?.[parseInt(selectedSubCategory)]?.services
+                    selectedSubCategory
+                      ? subCategories?.[parseInt(selectedSubCategory)]?.services
+                      : subCategories?.flatMap((item) => item?.services) || []
                   )?.map((service) => {
                     if (!viewType) {
                       return (
