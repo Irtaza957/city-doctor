@@ -25,6 +25,10 @@ import CategorySliderSkeleton from "@/components/cards/skeleton/CategorySliderSk
 import he from "he";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
+import DoctorHomeVisit from "./CategoriesContent/DoctorHomeVisit";
+import IVDrip from "./CategoriesContent/IVDrip";
+import LabText from "./CategoriesContent/LabText";
+import Physiotherapy from "./CategoriesContent/Physiotherapy";
 
 export const sortingOptions = [
   {
@@ -55,11 +59,13 @@ const DripListing = () => {
   const [activeCategory, setActiveCategory] = useState("0");
   const [sorting, setSorting] = useState("Price (Low to High)");
   const [selectedCategory, setSelectedCategory] = useState<CATEGORY | null>();
+  const [hoveredSubCat, setHoveredSubCat] = useState<string | null>();
   const [subCategories, setSubCategories] = useState<SERVICE_LIST[] | null>(
     null
   );
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("");
   const pathname = usePathname()
+  const path = pathname?.split('/')?.[1]
   const router = useRouter()
 
   const scrollToElement = (elementId: string) => {
@@ -142,7 +148,7 @@ const DripListing = () => {
         }
       }
       setSelectedSubCategory(String(index))
-      
+
     }
   }, [pathname, subCategories]);
 
@@ -475,13 +481,15 @@ const DripListing = () => {
                   className={`w-full cursor-pointer flex items-center justify-start gap-4 p-3 hover:bg-primary hover:text-white ${selectedSubCategory === idx.toString() &&
                     "bg-primary text-white"
                     }`}
+                  onMouseEnter={() => setHoveredSubCat(sub?.id)}
+                  onMouseLeave={() => setHoveredSubCat(null)}
                 >
                   <Image
                     src={imageBase(sub.icon) || ''}
                     alt="sub-icon"
                     width={50}
                     height={50}
-                    className="size-7"
+                    className={`size-7 px-1 rounded-md ${hoveredSubCat === sub?.id ? 'bg-white' : 'bg-transparent'}`}
                   />
                   <p className="w-full text-left text-xs lg:text-sm font-medium">
                     {sub.name}
@@ -581,7 +589,7 @@ const DripListing = () => {
                     : "col-span-1 md:col-span-2"
                     }`}
                 >
-                {subCategories?.[parseInt(selectedSubCategory)]?.name || pathname?.split('/')?.[1]?.replace(/-/g, " ")?.toUpperCase()}
+                  {subCategories?.[parseInt(selectedSubCategory)]?.name || pathname?.split('/')?.[1]?.replace(/-/g, " ")?.toUpperCase()}
                 </h1>
                 {limit === "All"
                   ? sort(
@@ -701,6 +709,7 @@ const DripListing = () => {
           ))
         )}
       </div>
+      {path === 'doctor-home-visit' ? <DoctorHomeVisit /> : path === 'iv-drip-therapy' ? <IVDrip /> : path === 'lab-tests-&-checkups' ? <LabText /> : (path === 'physio-&-chiropractic' || path==='physiotherapy ') ? <Physiotherapy /> : null}
     </>
   );
 };
