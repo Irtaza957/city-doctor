@@ -24,7 +24,7 @@ const ThankYou = () => {
             </p>
             <div className="w-[90%] px-4 mb-7 flex items-center justify-center">
                 <Link
-                    href="/"
+                    href="/home"
                     className="w-full py-2 rounded-lg bg-primary text-white text-center font-medium text-sm"
                 >
                     Go To Home

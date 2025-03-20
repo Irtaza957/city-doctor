@@ -465,129 +465,131 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div>
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-center mt-10 space-y-5">
-          <div className="w-full flex space-x-2.5 bg-[#F5F5F5] p-4 rounded-lg">
-            {data?.sections?.map((section, idx) => (
-              <p
-                key={idx}
-                onClick={() => setTab(section.name)}
-                className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === section.name
-                  ? "bg-primary text-white"
-                  : "bg-[#DDDDDD] text-[#555555]"
-                  }`}
-              >
-                {section.name}
-              </p>
-            ))}
-            <p
-              onClick={() => setTab("Reviews")}
-              className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === "Reviews"
-                ? "bg-primary text-white"
-                : "bg-[#DDDDDD] text-[#555555]"
-                }`}
-            >
-              Reviews
-            </p>
-          </div>
-          {data?.sections
-            ?.filter((section) => section.name === tab)
-            ?.map((section, idx) => (
-              <p
-                key={idx}
-                className="w-full text-left text-[#535763] font-medium px-4 text-sm"
-                dangerouslySetInnerHTML={{
-                  __html: he.decode(section?.description || ""),
-                }}
-              />
-            ))}
-          {tab === 'Reviews' &&
-            <div className="w-full grid grid-cols-2 gap-5 px-4">
-              <h1 className="col-span-2 w-full text-left text-xl font-bold">
-                Service Ratings & Reviews
-              </h1>
-              <div className="col-span-1 w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
-                <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
-                  <p className="w-full text-left text-2xl font-bold">
-                    {data?.rating}
-                    <span className="text-[#67767E] text-lg font-medium">
-                      &nbsp;/ 5.0
-                    </span>
-                  </p>
-                  <div className="w-full flex items-center justify-start gap-1.5">
-                    {[...Array(parseInt(data?.rating))].map((id, idx) => (
-                      <FaStar key={idx} className="w-6 h-6 text-accent" />
-                    ))}
-                    {[...Array(5 - parseInt(data?.rating))].map((id, idx) => (
-                      <FaStar key={idx} className="w-6 h-6 text-[#DDDDDD]" />
+        {(data?.sections?.length || data?.rating) ?
+          <div className="w-full flex flex-col items-center justify-center mt-10 space-y-5">
+            <div className="w-full flex space-x-2.5 bg-[#F5F5F5] p-4 rounded-lg">
+              {data?.sections?.map((section, idx) => (
+                <p
+                  key={idx}
+                  onClick={() => setTab(section.name)}
+                  className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === section.name
+                    ? "bg-primary text-white"
+                    : "bg-[#DDDDDD] text-[#555555]"
+                    }`}
+                >
+                  {section.name}
+                </p>
+              ))}
+              {/* {data?.rating && */}
+                <p
+                  onClick={() => setTab("Reviews")}
+                  className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === "Reviews"
+                    ? "bg-primary text-white"
+                    : "bg-[#DDDDDD] text-[#555555]"
+                    }`}
+                >
+                  Reviews
+                </p>
+            </div>
+            {data?.sections
+              ?.filter((section) => section.name === tab)
+              ?.map((section, idx) => (
+                <p
+                  key={idx}
+                  className="w-full text-left text-[#535763] font-medium px-4 text-sm"
+                  dangerouslySetInnerHTML={{
+                    __html: he.decode(section?.description || ""),
+                  }}
+                />
+              ))}
+            {tab === 'Reviews' &&
+              <div className="w-full grid grid-cols-2 gap-5 px-4">
+                <h1 className="col-span-2 w-full text-left text-xl font-bold">
+                  Service Ratings & Reviews
+                </h1>
+                <div className="col-span-1 w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
+                  <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
+                    <p className="w-full text-left text-2xl font-bold">
+                      {data?.rating || '0'}
+                      <span className="text-[#67767E] text-lg font-medium">
+                        &nbsp;/ 5.0
+                      </span>
+                    </p>
+                    <div className="w-full flex items-center justify-start gap-1.5">
+                      {[...Array(parseInt(data?.rating || '0'))].map((id, idx) => (
+                        <FaStar key={idx} className="w-6 h-6 text-accent" />
+                      ))}
+                      {[...Array(5 - parseInt(data?.rating || '0'))].map((id, idx) => (
+                        <FaStar key={idx} className="w-6 h-6 text-[#DDDDDD]" />
+                      ))}
+                    </div>
+                    <p className="w-full text-left text-2xl font-bold">
+                      {data?.total_reviews}&nbsp;
+                      <span className="text-[#67767E] text-lg font-medium">
+                        Ratings
+                      </span>
+                    </p>
+                  </div>
+                  <div className="col-span-1 w-full flex flex-col pl-2.5">
+                    {[...Array(5)].map((_, idx) => (
+                      <div key={idx} className="w-full grid grid-cols-12 gap-x-2">
+                        <div className="col-span-1 w-full flex items-center justify-center">
+                          <span className="font-extrabold pt-0.5">{5 - idx}</span>
+                        </div>
+                        <div className="col-span-2 w-full flex items-center justify-center">
+                          <FaStar className="text-amber-500 size-4" />
+                        </div>
+                        <div className="col-span-5 w-full flex items-center justify-center">
+                          <div className="w-full border-[3px] rounded-full border-amber-500" />
+                        </div>
+                        <div className="col-span-4 w-full flex items-center justify-center">
+                          <span className="font-medium">1,432</span>
+                        </div>
+                      </div>
                     ))}
                   </div>
-                  <p className="w-full text-left text-2xl font-bold">
-                    {data?.total_reviews}&nbsp;
-                    <span className="text-[#67767E] text-lg font-medium">
-                      Ratings
-                    </span>
-                  </p>
                 </div>
-                <div className="col-span-1 w-full flex flex-col pl-2.5">
-                  {[...Array(5)].map((_, idx) => (
-                    <div key={idx} className="w-full grid grid-cols-12 gap-x-2">
-                      <div className="col-span-1 w-full flex items-center justify-center">
-                        <span className="font-extrabold pt-0.5">{5 - idx}</span>
+                <div className="w-full col-span-2 mt-5 flex flex-col space-y-5">
+                  {data?.reviews?.map((review, idx) => (
+                    <div
+                      key={idx}
+                      className="w-full flex flex-col items-center justify-center space-x-5"
+                    >
+                      <div className="w-full flex items-center justify-start space-x-6">
+                        <Image
+                          src="https://ui.shadcn.com/avatars/04.png"
+                          alt="user"
+                          width={50}
+                          height={50}
+                          className="rounded-full bg-gray-200"
+                        />
+                        <div className="w-full flex flex-col items-center justify-start space-y-1">
+                          <div className="w-full flex items-center justify-start space-x-10">
+                            <p className="font-bold">{review.customer}</p>
+                            <div className="flex items-center justify-center gap-0.5">
+                              {[...Array(parseInt(review?.review || "0"))].map((id, idx) => (
+                                <FaStar key={idx} className="text-accent" />
+                              ))}
+                              {[...Array(5 - parseInt(review?.review || "0"))].map(
+                                (id, idx) => (
+                                  <FaStar key={idx} className="text-gray-300" />
+                                )
+                              )}
+                            </div>
+                          </div>
+                          <span className="w-full text-left text-xs text-gray-400">
+                            {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
+                          </span>
+                        </div>
                       </div>
-                      <div className="col-span-2 w-full flex items-center justify-center">
-                        <FaStar className="text-amber-500 size-4" />
-                      </div>
-                      <div className="col-span-5 w-full flex items-center justify-center">
-                        <div className="w-full border-[3px] rounded-full border-amber-500" />
-                      </div>
-                      <div className="col-span-4 w-full flex items-center justify-center">
-                        <span className="font-medium">1,432</span>
-                      </div>
+                      <p className="w-full pl-16 text-left text-sm text-[#535763] font-medium pt-3">
+                        {review?.description}
+                      </p>
                     </div>
                   ))}
                 </div>
-              </div>
-              <div className="w-full col-span-2 mt-5 flex flex-col space-y-5">
-                {data?.reviews?.map((review, idx) => (
-                  <div
-                    key={idx}
-                    className="w-full flex flex-col items-center justify-center space-x-5"
-                  >
-                    <div className="w-full flex items-center justify-start space-x-6">
-                      <Image
-                        src="https://ui.shadcn.com/avatars/04.png"
-                        alt="user"
-                        width={50}
-                        height={50}
-                        className="rounded-full bg-gray-200"
-                      />
-                      <div className="w-full flex flex-col items-center justify-start space-y-1">
-                        <div className="w-full flex items-center justify-start space-x-10">
-                          <p className="font-bold">{review.customer}</p>
-                          <div className="flex items-center justify-center gap-0.5">
-                            {[...Array(parseInt(review?.review || "0"))].map((id, idx) => (
-                              <FaStar key={idx} className="text-accent" />
-                            ))}
-                            {[...Array(5 - parseInt(review?.review || "0"))].map(
-                              (id, idx) => (
-                                <FaStar key={idx} className="text-gray-300" />
-                              )
-                            )}
-                          </div>
-                        </div>
-                        <span className="w-full text-left text-xs text-gray-400">
-                          {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="w-full pl-16 text-left text-sm text-[#535763] font-medium pt-3">
-                      {review?.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>}
-        </div>
+              </div>}
+          </div> : null}
         {/* <Image
           src={`${imageBase(data?.cover_image)}`}
           alt="cover-image"

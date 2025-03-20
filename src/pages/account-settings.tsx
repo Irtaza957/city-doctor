@@ -60,7 +60,7 @@ const sidebar = [
   {
     id: 5,
     name: "Logout",
-    link: "/",
+    link: "/home",
     icon: <MdOutlineLogout className="size-5 sm:size-6" />,
   },
 ];
@@ -77,7 +77,7 @@ const AccountSettings = () => {
   const signout = () => {
     dispatch(emptyCart());
     dispatch(logout());
-    router.push("/");
+    router.push("/home");
   };
 
   return (

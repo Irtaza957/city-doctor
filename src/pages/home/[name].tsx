@@ -47,11 +47,11 @@ const SectionListing = ({ data }: { data: DRIP }) => {
     dispatch(setSelectedCategory(value));
   };
 
-  const getNavLink = (name: string, category_name: string='') => {
-    return `/${data.section
+  const getNavLink = (name: string) => {
+    return `/home/${data.section
       .toLowerCase()
       .split(" ")
-      .join("-")}/${getSlug(category_name)}/${getSlug(name)}`;
+      .join("-")}/${getSlug(name)}`;
   };
 
   return (
@@ -283,9 +283,9 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             {limit === "All"
               ? sort(sorting, data?.section_data)?.map((service, idx) => {
                   if (!viewType) {
-                    return <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '', service?.category_name)} />;
+                    return <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />;
                   } else {
-                    return <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.name || '', service?.category_name)} />;
+                    return <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />;
                   }
                 })
               : data?.section_data
@@ -293,11 +293,11 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   .map((service, idx) => {
                     if (!viewType) {
                       return (
-                        <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '', service?.category_name)} />
+                        <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />
                       );
                     } else {
                       return (
-                        <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.name || '', service?.category_name)} />
+                        <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />
                       );
                     }
                   })}

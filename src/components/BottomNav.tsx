@@ -37,9 +37,9 @@ const BottomNav = () => {
         }`}
       >
         <Link
-          href="/"
+          href="/home"
           className={`flex flex-col items-center justify-center space-y-2 cursor-pointer ${
-            pathname === "/" && "text-primary"
+            pathname === "/home" && "text-primary"
           }`}
         >
           <HomeIcon className="size-5" />

@@ -34,7 +34,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
           <Link
             onClick={clearCategory}
             className="text-sm text-primary font-medium"
-            href={`/sections/${section.section
+            href={`/home/${section.section
               .toLowerCase()
               .split(" ")
               .join("-")}`}

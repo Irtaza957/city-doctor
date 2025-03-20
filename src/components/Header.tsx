@@ -10,11 +10,14 @@ import { imageBase } from "@/utils/helpers";
 import HeaderSkeleton from "./cards/skeleton/HeaderSkeleton";
 import { useFetchHomeBannersQuery } from "@/store/services/home";
 
-const Header = () => {
-  const { data, isLoading } = useFetchHomeBannersQuery({});
+interface HeaderProps{
+  position: string
+}
 
+const Header = ({position}: HeaderProps) => {
+  const { data, isLoading } = useFetchHomeBannersQuery({});
   return (
-    <div className="block w-full h-full mt-[69px] sm:mt-[72px] md:mt-[112.5px] mb-5 xl:mb-0">
+    <div className={`block w-full h-full mb-5 xl:mb-0 ${position==='middle' ? 'mt-5' : 'mt-[69px] sm:mt-[72px] md:mt-[112.5px]'}`}>
       {isLoading ? (
         <Swiper
           loop={true}
@@ -45,10 +48,10 @@ const Header = () => {
           }}
           modules={[Pagination, EffectFade, Autoplay]}
         >
-          {data?.map((banner, idx) => (
+          {data?.filter(item=> item?.place===String(position))?.map((banner, idx) => (
             <SwiperSlide key={idx}>
               <img
-                src={`${imageBase(banner.image)}`}
+                src={imageBase(window.innerWidth < 640 ? (banner.mobile_banner || '') : banner.image)}
                 alt="banner"
                 className="w-full"
               />

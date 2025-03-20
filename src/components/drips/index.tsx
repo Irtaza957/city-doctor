@@ -178,9 +178,9 @@ const DripListing = () => {
     };
   }, [subCategories]);
 
-  const getNavLink = (service_name: string) => {
+  const getNavLink = (service_name: string, category_name: string) => {
     if (service_name) {
-      return `/${getSlug(selectedCategory?.category_name || '')}/${getSlug(subCategories?.[parseInt(selectedSubCategory)]?.name || '')}/${getSlug(service_name)}`
+      return `/${getSlug(selectedCategory?.category_name || '')}/${getSlug(selectedSubCategory ?subCategories?.[parseInt(selectedSubCategory)]?.name || '' : category_name)}/${getSlug(service_name)}`
     }
   }
   const handleSubCategorySelect = async (subCategory: string) => {
@@ -465,7 +465,7 @@ const DripListing = () => {
               Explore more and shortlist some services
             </p>
             <Link
-              href="/"
+              href="/home"
               className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
             >
               Continue Shopping
@@ -603,7 +603,7 @@ const DripListing = () => {
                         <DoctorVisitListingCard
                           key={service.service_id}
                           drip={service}
-                          navLink={getNavLink(service.name || '')}
+                          navLink={getNavLink(service.name || '', service?.category_name)}
                         />
                       );
                     } else {
@@ -611,7 +611,7 @@ const DripListing = () => {
                         <BestSellingListingCard
                           key={service.service_id}
                           drip={service}
-                          navLink={getNavLink(service.name || '')}
+                          navLink={getNavLink(service.name || '', service?.category_name)}
                         />
                       );
                     }
@@ -624,7 +624,7 @@ const DripListing = () => {
                           <DoctorVisitListingCard
                             key={service.service_id}
                             drip={service}
-                            navLink={getNavLink(service.name || '')}
+                            navLink={getNavLink(service.name || '', service?.category_name)}
 
                           />
                         );
@@ -633,7 +633,7 @@ const DripListing = () => {
                           <BestSellingListingCard
                             key={service.service_id}
                             drip={service}
-                            navLink={getNavLink(service.name || '')}
+                            navLink={getNavLink(service.name || '', service?.category_name)}
                           />
                         );
                       }
@@ -671,7 +671,7 @@ const DripListing = () => {
               Explore more and shortlist some services
             </p>
             <Link
-              href="/"
+              href="/home"
               className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
             >
               Continue Shopping
@@ -702,7 +702,7 @@ const DripListing = () => {
                 <DoctorVisitListingCard
                   key={service.service_id}
                   drip={service}
-                  navLink={getNavLink(service.name || '')}
+                  navLink={getNavLink(service.name || '', service?.category_name)}
                 />
               ))}
             </div>

@@ -102,7 +102,7 @@ const Navbar = () => {
         <div className="w-full bg-white hidden sm:flex items-center justify-center py-3 px-5 md:px-0">
           <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto h-full flex">
             <Link
-              href="/"
+              href="/home"
               className="flex items-center justify-center pr-5 lg:pr-9 mb-1.5"
             >
               <Image
@@ -208,7 +208,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="bg-white px-5 py-2.5 w-full h-[69px] flex sm:hidden items-center justify-between gap-4 shadow-sm">
-          <Link href="/">
+          <Link href="/home">
             <Image
               priority
               width={240}

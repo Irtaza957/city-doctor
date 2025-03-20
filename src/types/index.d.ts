@@ -218,6 +218,8 @@ declare type BANNER = {
   image: string;
   type: string;
   link_to: string;
+  place?: string;
+  mobile_banner?: string
 };
 
 declare type DRIP_DETAIL_RESPONSE = {

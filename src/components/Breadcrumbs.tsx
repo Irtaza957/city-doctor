@@ -52,7 +52,7 @@ const Breadcrumbs: React.FC<BreadcrumbProps> = ({
         itemProp="itemListElement"
         itemType="https://schema.org/ListItem"
       >
-        <Link itemProp="item" href="/">
+        <Link itemProp="item" href="/home">
           <span
             itemProp="name"
             className="capitalize text-xs xl:text-sm hover:underline hover:underline-offset-4"

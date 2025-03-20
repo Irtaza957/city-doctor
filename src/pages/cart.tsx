@@ -124,7 +124,7 @@ const Checkout = () => {
               Explore more and shortlist some services
             </p>
             <Link
-              href="/"
+              href="/home"
               className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
             >
               Explore More
