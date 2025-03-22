@@ -12,7 +12,7 @@ import SelectedCartIcon from "@/assets/icons/mobileMenu/selectedCart.svg";
 import BookingCalendarIcon from "@/assets/icons/mobileMenu/booking.svg";
 import SelectedBookingCalendarIcon from "@/assets/icons/mobileMenu/selectedBooking.svg";
 import OfferIcon from "@/assets/icons/mobileMenu/offer.svg";
-import SelectedOfferIcon from "@/assets/icons/mobileMenu/SelectedOffer.svg";
+import SelectedOfferIcon from "@/assets/icons/mobileMenu/selectedOffer.svg";
 
 import Link from "next/link";
 import { useState } from "react";
