@@ -81,7 +81,7 @@ const Categories = () => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={2.8}
+              slidesPerView={3.40}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
                 if (swiper.activeIndex === 0) {
@@ -99,7 +99,7 @@ const Categories = () => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className={"w-full text-black flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-4 rounded-lg"}
+                    className={"w-full text-black flex items-center justify-center gap-4 cursor-pointer py-2 rounded-lg"}
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
@@ -109,7 +109,7 @@ const Categories = () => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-center font-semibold text-[10px] whitespace-nowrap line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-left w-[64px] break-words font-semibold text-[10px] md:whitespace-nowrap line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -240,7 +240,7 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("col-span-1 w-full h-full flex flex-col items-center justify-center space-y-2 rounded-2xl bg-gray-100 text-black p-3")}
+                className={cn("col-span-1 w-full h-full flex items-center justify-center gap-4 space-y-2 rounded-2xl bg-gray-100 text-black p-3")}
                 style={{ backgroundColor: category?.color || "#F5F5F5" }}
               >
                 <Image
@@ -250,7 +250,7 @@ const Categories = () => {
                   alt="category"
                   className="w-12 h-14"
                 />
-                <span className="w-full text-center font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                <span className="w-[74px] text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>

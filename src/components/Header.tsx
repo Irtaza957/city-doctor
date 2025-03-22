@@ -50,11 +50,13 @@ const Header = ({position}: HeaderProps) => {
         >
           {data?.filter(item=> item?.place===String(position))?.map((banner, idx) => (
             <SwiperSlide key={idx}>
+              <div className="flex items-center justify-center w-full mt-3 md:mt-0">
               <img
                 src={imageBase(window.innerWidth < 640 ? (banner.mobile_banner || '') : banner.image)}
                 alt="banner"
-                className="w-full"
+                className="w-[95%] rounded-xl md:rounded-none md:w-full"
               />
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

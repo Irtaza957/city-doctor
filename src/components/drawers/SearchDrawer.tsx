@@ -16,7 +16,7 @@ const SearchDrawer = ({ open, onClose }: DIALOG_PROPS) => {
           onClick={() => handleClose()}
           className="fixed inset-0 bg-black/40 z-50"
         />
-        <Drawer.Content className="bg-white h-[75vh] flex flex-col rounded-t-xl fixed bottom-0 left-0 right-0 z-50 focus-visible:outline-none">
+        <Drawer.Content className="bg-white h-[90vh] flex flex-col rounded-t-xl fixed bottom-0 left-0 right-0 z-50 focus-visible:outline-none">
           <Drawer.Title className="font-medium flex items-center justify-center p-3 border-b">
             <p className="w-full text-left text-xl font-bold">
               Search
@@ -26,7 +26,7 @@ const SearchDrawer = ({ open, onClose }: DIALOG_PROPS) => {
             </button>
           </Drawer.Title>
           <div className="w-full p-3">
-            <AutoComplete />
+            <AutoComplete handleClose={handleClose} />
           </div>
         </Drawer.Content>
       </Drawer.Portal>

@@ -9,9 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaArrowRight, FaChevronDown, FaMinus, FaPlus } from "react-icons/fa6";
 
 import { RootState } from "@/store";
-import Card from "@/assets/img/card.png";
 import LoginDrawer from "./drawers/LoginDrawer";
-import { calculateTotalCost } from "@/utils/helpers";
+import { calculateTotalCost, imageBase } from "@/utils/helpers";
 import { addToCart, removeFromCart, setCart } from "@/store/global";
 
 const CheckoutBar = () => {
@@ -98,7 +97,7 @@ const CheckoutBar = () => {
                   <Image
                     width={500}
                     height={500}
-                    src={Card}
+                    src={`${imageBase(item?.thumbnail || '')}`}
                     alt="card"
                     className="size-[68px] rounded-full object-cover"
                   />

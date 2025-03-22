@@ -63,7 +63,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
             <Swiper
               freeMode={true}
               spaceBetween={10}
-              slidesPerView={2.8}
+              slidesPerView={3.40}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
                 if (swiper.activeIndex === 0) {
@@ -81,7 +81,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex flex-col items-center justify-center cursor-pointer gap-1 p-2 rounded-lg text-black"
+                    className="w-full flex items-center justify-center cursor-pointer gap-3 py-2 rounded-lg text-black"
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
@@ -91,7 +91,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                       height={56}
                       className="w-7 h-7"
                     />
-                    <span className="text-center font-semibold text-[10px] h-[30px]">
+                    <span className="text-left font-semibold text-[10px] h-[30px] w-[64px]">
                       {category.category_name}
                     </span>
                   </Link>
@@ -196,7 +196,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
         </div>
       </div>
       <div className="w-full px-5 lg:px-0 md:w-[90%] lg:max-w-[1440px] mx-auto mb-20 flex flex-col items-start justify-start gap-5">
-        <div className="w-full flex flex-col items-center gap-4 mt-[175.75px] sm:mt-[163.75px] md:mt-[196px] lg:mt-[205px]">
+        <div className="w-full flex flex-col items-center gap-4 mt-[145.75px] sm:mt-[163.75px] md:mt-[196px] lg:mt-[205px]">
           <Image
             width={1000}
             height={1000}

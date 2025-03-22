@@ -9,15 +9,14 @@ import BestSellingCard from "./cards/BestSellingCard";
 import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
 
 import Link from "next/link";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 // @ts-ignore
 import { FreeMode, Navigation } from "swiper/modules";
+import he from "he";
 
 const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
   const dispatch = useDispatch();
-  const [startSlide, setStartSlide] = useState(true);
 
   const clearCategory = () => {
     dispatch(setSelectedCategory(null));
@@ -30,7 +29,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
     <div className={`w-full flex items-center justify-center ${bg}`}>
       <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto h-full pt-7 pb-8">
         <div className="w-full h-full flex items-center justify-between mb-5 px-5 md:px-0">
-          <h1 className="text-xl xl:text-2xl font-bold">{section.section}</h1>
+          <h1 className="text-xl xl:text-2xl font-bold" dangerouslySetInnerHTML={{ __html: he.decode(section.section) }}/>
           <Link
             onClick={clearCategory}
             className="text-sm text-primary font-medium"
@@ -42,29 +41,24 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
             View All
           </Link>
         </div>
-        <div className="w-full block sm:hidden">
+        <div className="flex items-center justify-center">
+        <div className="block sm:hidden w-[92%]">
           <Swiper
             slidesPerView={1.5}
             spaceBetween={10}
             freeMode={true}
             modules={[FreeMode]}
-            onSlideChange={(swiper) => {
-              if (swiper.activeIndex === 0) {
-                setStartSlide(true);
-              } else {
-                setStartSlide(false);
-              }
-            }}
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide
                 key={idx}
-                className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
+                // className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
               >
                 <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
         </div>
         <div className="relative w-full hidden px-5 sm:block md:hidden">
           <div

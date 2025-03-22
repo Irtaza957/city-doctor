@@ -113,7 +113,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
   return (
     <div className="grid shadow-sm sm:h-[180px] grid-cols-8 items-start justify-start rounded-xl border border-[#EAEAEA] bg-white">
       <Link href={navLink || `/drips/${drip.service_id}`} className="col-span-3 w-full">
-        <div className="relative w-full h-[150px] sm:h-[178px] rounded-l-xl bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
+        <div className="relative w-full h-[120px] sm:h-[178px] rounded-l-xl bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
           <div
             style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
             className="rounded-l-xl size-full bg-top bg-cover flex items-center justify-center"
@@ -148,8 +148,8 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
               )}
             </div>
             <Link href={navLink || `/drips/${drip.service_id}`} className="w-full">
-              <p className="w-full text-left text-xs overflow-hidden text-[#555555] font-medium mt-0.5 flex sm:hidden">
-                {truncateString(drip.description, 50)}
+              <p className="text-left text-xs overflow-hidden truncate text-[#555555] font-medium mt-0.5 flex sm:hidden">
+                {drip.description}
               </p>
               <p className="w-full text-left text-xs overflow-hidden text-[#555555] font-medium mt-0.5 hidden sm:flex md:hidden">
                 {asPath.includes("section")
@@ -177,7 +177,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                 <span className="font-medium">({drip.total_reviews})</span>
               </span>
             </div>
-            <span className="w-full text-left text-sm lg:text-base font-semibold xl:font-bold">
+            <span className="w-full text-left text-xs sm:text-sm lg:text-base font-semibold xl:font-bold whitespace-nowrap">
               AED {Math.round(Number(drip.price_without_vat))}
             </span>
           </Link>
@@ -216,23 +216,23 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                     drip.thumbnail
                   );
                 }}
-                className="w-[95px] block md:hidden h-[36px] py-2 px-4 md:px-9 bg-primary rounded-md text-white font-semibold text-sm place-self-end"
+                className="md:w-[95px] block md:hidden md:h-[36px] py-2 px-3 md:px-9 bg-primary rounded-md text-white font-semibold text-xs place-self-end"
               >
                 Add
               </button>
             </>
           ) : (
-            <div className="w-[95px] flex items-center justify-between">
+            <div className="w-[95px] flex items-center justify-between ml-1">
               <span
                 onClick={() => {
                   remove(drip);
                   handleDecrement();
                 }}
-                className="border border-primary p-1 text-black rounded-lg size-[36px] flex items-center justify-center cursor-pointer"
+                className="border border-primary p-1 text-black rounded-lg size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
               >
                 <FaMinus />
               </span>
-              <span className="font-semibold text-lg w-[10px]">{quantity}</span>
+              <span className="font-semibold text-sm sm:text-lg w-[10px]">{quantity}</span>
               <span
                 onClick={() => {
                   setQuantity((prev) => prev + 1);
@@ -248,7 +248,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                     true
                   );
                 }}
-                className="bg-primary text-white p-1 rounded-lg size-[36px] flex items-center justify-center cursor-pointer"
+                className="bg-primary text-white p-1 rounded-lg size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
               >
                 <FaPlus />
               </span>

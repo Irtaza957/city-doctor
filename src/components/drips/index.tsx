@@ -29,6 +29,7 @@ import DoctorHomeVisit from "./CategoriesContent/DoctorHomeVisit";
 import IVDrip from "./CategoriesContent/IVDrip";
 import LabText from "./CategoriesContent/LabText";
 import Physiotherapy from "./CategoriesContent/Physiotherapy";
+import { PiMountainsFill } from "react-icons/pi";
 
 export const sortingOptions = [
   {
@@ -55,7 +56,6 @@ const DripListing = () => {
   const [getSubCategories, { isLoading: subLoading }] =
     useFetchSubCategoriesMutation();
   const { data, isLoading } = useFetchCategoriesQuery({});
-  const [startSubSlide, setStartSubSlide] = useState(true);
   const [activeCategory, setActiveCategory] = useState("0");
   const [sorting, setSorting] = useState("Price (Low to High)");
   const [selectedCategory, setSelectedCategory] = useState<CATEGORY | null>();
@@ -68,18 +68,18 @@ const DripListing = () => {
   const path = pathname?.split('/')?.[1]
   const router = useRouter()
 
-  const scrollToElement = (elementId: string) => {
-    const element = document.getElementById(elementId);
+  // const scrollToElement = (elementId: string) => {
+  //   const element = document.getElementById(elementId);
 
-    if (element) {
-      const elementRect = element.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const offset = elementRect.top + scrollTop;
-      const yOffset = offset - 300;
+  //   if (element) {
+  //     const elementRect = element.getBoundingClientRect();
+  //     const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  //     const offset = elementRect.top + scrollTop;
+  //     const yOffset = offset - 300;
 
-      window.scrollTo({ top: yOffset, behavior: "smooth" });
-    }
-  };
+  //     window.scrollTo({ top: yOffset, behavior: "smooth" });
+  //   }
+  // };
 
   const getSubs = async () => {
     const response = await getSubCategories(selectedCategory?.category_id);
@@ -180,7 +180,7 @@ const DripListing = () => {
 
   const getNavLink = (service_name: string, category_name: string) => {
     if (service_name) {
-      return `/${getSlug(selectedCategory?.category_name || '')}/${getSlug(selectedSubCategory ?subCategories?.[parseInt(selectedSubCategory)]?.name || '' : category_name)}/${getSlug(service_name)}`
+      return `/${getSlug(selectedCategory?.category_name || '')}/${getSlug(selectedSubCategory ? subCategories?.[parseInt(selectedSubCategory)]?.name || '' : category_name)}/${getSlug(service_name)}`
     }
   }
   const handleSubCategorySelect = async (subCategory: string) => {
@@ -209,7 +209,7 @@ const DripListing = () => {
               <Swiper
                 freeMode={true}
                 spaceBetween={10}
-                slidesPerView={2.8}
+                slidesPerView={3.40}
                 modules={[FreeMode]}
                 onSlideChange={(swiper) => {
                   if (swiper.activeIndex === 0) {
@@ -226,7 +226,7 @@ const DripListing = () => {
                   >
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex flex-col items-center justify-center cursor-pointer gap-1 py-2 px-3 rounded-lg ${selectedCategory?.category_id === category.category_id
+                      className={`w-full flex items-center justify-center cursor-pointer gap-2 py-2 rounded-lg ${selectedCategory?.category_id === category.category_id
                         ? "text-white"
                         : "text-black"
                         }`}
@@ -239,7 +239,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-center font-semibold text-[10px] whitespace-nowrap px-2">
+                      <span className="text-left font-semibold text-[10px] md:whitespace-nowrap w-[64px]">
                         {category.category_name}
                       </span>
                     </div>
@@ -248,7 +248,7 @@ const DripListing = () => {
               </Swiper>
             )}
           </div>
-          <div className="w-full block sm:hidden py-2.5">
+          {/* <div className="w-full block sm:hidden py-2.5">
             {subLoading ? (
               <Swiper
                 freeMode={true}
@@ -300,7 +300,7 @@ const DripListing = () => {
                 ))}
               </Swiper>
             )}
-          </div>
+          </div> */}
           <div className="w-full hidden sm:block md:hidden py-2.5 px-5 shadow-md">
             {isLoading ? (
               <Swiper
@@ -477,7 +477,10 @@ const DripListing = () => {
               {subCategories?.map((sub, idx) => (
                 <div
                   key={idx}
-                  onClick={() => handleSubCategorySelect(sub?.name)}
+                  onClick={() => {
+                    setHoveredSubCat(sub?.id)
+                    handleSubCategorySelect(sub?.name)
+                  }}
                   className={`w-full cursor-pointer flex items-center justify-start gap-4 p-3 hover:bg-primary hover:text-white ${selectedSubCategory === idx.toString() &&
                     "bg-primary text-white"
                     }`}
@@ -643,7 +646,107 @@ const DripListing = () => {
           </div>
         )}
       </div>
-      <div className="w-full sm:hidden mt-[230.25px] mb-24 px-5">
+      <div className="flex items-start justify-center w-full sm:hidden mt-[140.25px] sm:mb-24 px-5 gap-2">
+        <div className="py-2.5 space-y-2">
+          {subLoading ? (
+            [...Array(subCategories?.length)].map((_, idx) => (
+              <div key={idx} className="w-full flex flex-col items-center mb-1 justify-start p-3 rounded-lg bg-gray-200 animate-pulse">
+                <PiMountainsFill className="text-gray-400 animate-pulse" />
+              </div>
+            ))
+          ) : (
+            subCategories?.map((sub, idx) => (
+              <div
+                key={idx}
+                // onClick={() => {
+                //   scrollToElement(idx.toString());
+                //   setActiveCategory(idx.toString());
+                // }}
+                onClick={() => handleSubCategorySelect(sub?.name)}
+                className={`flex items-start justify-start cursor-pointer py-2 px-4 rounded-md w-[115px] ${selectedSubCategory === idx.toString()
+                  ? "bg-primary text-white"
+                  : "bg-[#F7F7F7] text-black"
+                  }`}
+              >
+                <span className="text-left font-semibold text-xs break-words">
+                  {sub.name}
+                </span>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="">
+          {subLoading ? (
+            <div className="w-full xl:w-[85%] 3xl:w-[70%] xl:mx-auto grid grid-cols-1 xl:grid-cols-2 gap-4">
+              <div className="col-span-1 xl:col-span-2 w-full">
+                <HeaderSkeleton />
+              </div>
+              <div className="col-span-1 xl:col-span-2 w-full grid grid-cols-2 gap-5">
+                {[...Array(10)].map((_, idx) => (
+                  <ServiceCardSkeleton key={idx} />
+                ))}
+              </div>
+            </div>
+          ) : subCategories?.length === 0 ? (
+            <div className="w-full flex flex-col items-center justify-center h-[calc(100vh-272.75px)]">
+              <Image
+                src={EmptyResults}
+                alt="empty-wishlist"
+                className="size-24"
+              />
+              <p className="w-full text-center font-semibold mt-3">
+                Sorry, Unfortunately the Product
+                <br />
+                you were Looking for wasn&apos;t found!!
+              </p>
+              <p className="w-full text-center font-semibold text-xs lg:text-base text-[#707070]">
+                Explore more and shortlist some services
+              </p>
+              <Link
+                href="/home"
+                className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
+              >
+                Continue Shopping
+              </Link>
+            </div>
+          ) : (
+            // selectedSubCategory
+            //           ? subCategories?.[parseInt(selectedSubCategory)]?.services
+            //           : subCategories?.flatMap((item) => item?.services)
+            (selectedSubCategory ? subCategories?.[parseInt(selectedSubCategory)]?.services : subCategories?.flatMap((item) => item?.services))?.map((sub, idx) => (
+              <div
+                key={idx}
+                id={idx.toString()}
+                className="w-full xl:w-[85%] 3xl:w-[70%] mt-2.5 xl:mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 xl:mb-20"
+              >
+                {/* <div className="col-span-1 md:col-span-2 w-full flex flex-col items-center space-y-4 mb-4">
+                <h1 className="w-full text-left text-xl xl:text-2xl font-bold">
+                  {sub?.name}
+                </h1>
+                {sub?.cover_image && (
+                  <Image
+                    src={`${imageBase(sub?.cover_image)}`}
+                    alt="cover-image"
+                    width={1000}
+                    height={1000}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                )}
+              </div> */}
+                {/* {sub?.services.map((service) => ( */}
+                <DoctorVisitListingCard
+                  key={sub.service_id}
+                  drip={sub}
+                  navLink={getNavLink(sub.name || '', sub?.category_name)}
+                />
+                {/* ))} */}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* <div className="w-full sm:hidden mt-[230.25px] mb-24 px-5">
         {subLoading ? (
           <div className="w-full xl:w-[85%] 3xl:w-[70%] xl:mx-auto grid grid-cols-1 xl:grid-cols-2 gap-4">
             <div className="col-span-1 xl:col-span-2 w-full">
@@ -708,8 +811,8 @@ const DripListing = () => {
             </div>
           ))
         )}
-      </div>
-      {path === 'doctor-home-visit' ? <DoctorHomeVisit /> : path === 'iv-drip-therapy' ? <IVDrip /> : path === 'lab-tests-&-checkups' ? <LabText /> : (path === 'physio-&-chiropractic' || path==='physiotherapy ') ? <Physiotherapy /> : null}
+      </div> */}
+      {path === 'doctor-home-visit' ? <DoctorHomeVisit /> : path === 'iv-drip-therapy' ? <IVDrip /> : path === 'lab-tests-&-checkups' ? <LabText /> : (path === 'physio-&-chiropractic' || path === 'physiotherapy ') ? <Physiotherapy /> : null}
     </>
   );
 };

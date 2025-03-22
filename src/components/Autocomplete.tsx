@@ -5,12 +5,12 @@ import { LuLoader2 } from "react-icons/lu";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { imageBase } from "@/utils/helpers";
+import { getSlug, imageBase } from "@/utils/helpers";
 import MagnifyerIcon from "@/assets/icons/MagnifyerIcon";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useFetchServicesListMutation } from "@/store/services/service";
 
-const AutoComplete = () => {
+const AutoComplete = ({ handleClose }: { handleClose: () => void }) => {
   const dropRef = useRef(null);
   const [query, setQuery] = useState("");
   useOnClickOutside(dropRef, () => setQuery(""));
@@ -65,7 +65,7 @@ const AutoComplete = () => {
       </div>
       <div
         ref={dropRef}
-        className={`absolute -bottom-[310px] z-10 left-0 w-full h-[300px] flex-col divide-y overflow-auto custom-scrollbar rounded-lg border bg-white ${
+        className={`md:absolute md:-bottom-[310px] h-[70vh] mt-1 md:mt-0 md:h-[300px] z-10 left-0 w-full flex-col divide-y overflow-auto custom-scrollbar rounded-lg border bg-white ${
           query === "" ? "hidden" : "flex"
         } ${
           results?.length === 0 || isLoading
@@ -89,20 +89,26 @@ const AutoComplete = () => {
             .map((result, idx) => (
               <Link
                 key={idx}
-                onClick={() => setQuery("")}
-                href={`/drips/${result.service_id}`}
+                onClick={() => {
+                  handleClose();
+                  setQuery("");
+                }}
+                href={`/home/${getSlug(result.category_name)}/${getSlug(result.name || '')}`}
                 className="w-full flex items-center justify-start gap-2 p-1.5 cursor-pointer hover:bg-gray-100"
               >
                 <Image
-                  src={`${imageBase(`${result.cover_image}`)}`}
+                  src={`${imageBase(`${result.thumbnail}`)}`}
                   alt="image-drip"
                   className="size-10 rounded-md object-cover"
                   width={40}
                   height={40}
                 />
-                <span className="w-full text-left font-semibold text-xs xl:text-sm overflow-hidden truncate">
-                  {result.name}
-                </span>
+                <div className="flex flex-col gap-1">
+                  <span className="w-full text-left font-semibold text-xs xl:text-sm overflow-hidden truncate">
+                    {result.name}jb
+                  </span>
+                  <span className="text-xs text-gray-500">AED {result.price_without_vat}</span>
+                </div>
               </Link>
             ))
         )}

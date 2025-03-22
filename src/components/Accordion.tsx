@@ -11,6 +11,7 @@ import he from 'he';
 const Accordion = ({
   children,
   section,
+  index
 }: {
   children?: React.ReactNode;
   section: {
@@ -19,9 +20,10 @@ const Accordion = ({
     question?: string;
     answer?: string;
   };
+  index?: number;
 }) => {
   return (
-    <Disclosure as="div" className="w-full" defaultOpen={false}>
+    <Disclosure as="div" className="w-full" defaultOpen={index === 0}>
       {({ open }) => (
         <>
           <DisclosureButton

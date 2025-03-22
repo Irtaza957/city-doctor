@@ -73,11 +73,11 @@ const Home = () => {
           );
         })       
       )}
-      <div className="flex flex-col items-center text-center justify-center gap-5 sm:w-[70%] md:w-[45%] my-7">
+      <div className="flex flex-col items-center text-center justify-center gap-5 px-2 sm:w-[70%] md:w-[45%] my-7">
         <p className="text-xl sm:text-2xl font-bold md:whitespace-nowrap">City Doctor – Trusted Home Healthcare Services in Dubai</p>
         <div className={`space-y-3 ${showMore && 'border-b pb-5'}`}>
           <p className="text-lg sm:text-xl font-bold md:whitespace-nowrap">Bringing Quality Medical Care to Your Home</p>
-          <p className="text-xs sm:text-sm">At City Doctor, we provide expert home healthcare services across Dubai, ensuring you receive professional medical care without leaving your home. Whether you need a doctor on call, IV therapy, lab tests, or physiotherapy, our dedicated team is available 24/7, delivering medical services at home in Dubai with convenience, care, and efficiency.</p>
+          <p className="text-xs sm:text-sm px-8">At City Doctor, we provide expert home healthcare services across Dubai, ensuring you receive professional medical care without leaving your home. Whether you need a doctor on call, IV therapy, lab tests, or physiotherapy, our dedicated team is available 24/7, delivering medical services at home in Dubai with convenience, care, and efficiency.</p>
         </div>
         {showMore &&
         <div className="w-full">

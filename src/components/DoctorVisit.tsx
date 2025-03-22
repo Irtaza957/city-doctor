@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 // @ts-ignore
 import { Grid, Navigation, FreeMode } from "swiper/modules";
+import he from "he";
 
 const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
   const dispatch = useDispatch();
@@ -37,9 +38,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
         className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto h-full pt-7 pb-8"
       >
         <div className="w-full h-full flex items-center justify-between mb-5 px-5 md:px-0">
-          <h1 className="text-left text-xl xl:text-2xl font-bold">
-            {section.section}
-          </h1>
+          <h1 className="text-left text-xl xl:text-2xl font-bold" dangerouslySetInnerHTML={{ __html: he.decode(section.section) }}/>
           <Link
             onClick={clearCategory}
             className="text-sm text-primary font-medium"
