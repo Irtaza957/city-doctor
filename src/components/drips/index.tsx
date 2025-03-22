@@ -239,7 +239,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-left font-bold text-[10px] md:whitespace-nowrap w-[64px]">
+                      <span className="text-left font-bold text-[10px] md:whitespace-nowrap w-[64px] line-clamp-2">
                         {category.category_name}
                       </span>
                     </div>

@@ -99,7 +99,7 @@ const Categories = () => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className={"w-full text-black flex items-center justify-center gap-2 cursor-pointer py-2 rounded-lg"}
+                    className={"w-full text-black flex items-center justify-center gap-2 cursor-pointer py-2 px-2 rounded-lg"}
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
