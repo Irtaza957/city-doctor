@@ -113,7 +113,7 @@ const CheckoutBar = () => {
                     AED {item.price}
                   </span>
                 </div>
-                <div className="col-span-1 w-full flex items-center justify-between place-self-end">
+                <div className="col-span-1 w-full flex items-center justify-between place-self-end gap-2">
                   <button
                     type="button"
                     onClick={() => {  

@@ -123,7 +123,7 @@ const DoctorVisitCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
             <div className="w-full flex items-center justify-between space-x-2.5">
               <Link
                 href={navLink || `/drips/${drip.service_id}`}
-                className="w-full text-left break-words font-semibold xl:font-bold text-base line-clamp-2"
+                className="w-full text-left break-words font-semibold xl:font-bold text-base line-clamp-2 !leading-[1.2]"
               >
                 {drip.name}
               </Link>

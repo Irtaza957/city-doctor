@@ -208,7 +208,7 @@ const DripListing = () => {
             ) : (
               <Swiper
                 freeMode={true}
-                spaceBetween={10}
+                spaceBetween={7}
                 slidesPerView={3.40}
                 modules={[FreeMode]}
                 onSlideChange={(swiper) => {
@@ -226,7 +226,7 @@ const DripListing = () => {
                   >
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex items-center justify-center cursor-pointer gap-2 py-2 rounded-lg ${selectedCategory?.category_id === category.category_id
+                      className={`w-full flex items-center justify-center cursor-pointer gap-1 py-2 px-2 rounded-lg ${selectedCategory?.category_id === category.category_id
                         ? "text-white"
                         : "text-black"
                         }`}
@@ -646,7 +646,7 @@ const DripListing = () => {
           </div>
         )}
       </div>
-      <div className="flex h-[calc(100vh-400px)] items-start justify-center w-full sm:hidden mt-[140.25px] sm:mb-24 px-5 gap-2">
+      <div className="flex h-[calc(100vh-300px)] items-start justify-center w-full sm:hidden mt-[140.25px] sm:mb-24 px-5 gap-2">
         <div className="py-2.5 space-y-2">
           {subLoading ? (
             [...Array(subCategories?.length)].map((_, idx) => (

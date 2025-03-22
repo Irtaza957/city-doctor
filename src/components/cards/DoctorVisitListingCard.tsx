@@ -113,12 +113,12 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
   return (
     <div className="grid shadow-sm sm:h-[180px] grid-cols-8 items-start justify-start rounded-xl border border-[#EAEAEA] bg-white">
       <Link href={navLink || `/drips/${drip.service_id}`} className="col-span-3 w-full">
-        <div className="relative w-full h-[120px] sm:h-[178px] rounded-l-xl bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
+        <div className="relative w-full h-[125px] sm:h-[178px] rounded-l-xl bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
           <div
             style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
             className="rounded-l-xl size-full bg-top bg-cover flex items-center justify-center"
           >
-            <span className="absolute bottom-1 bg-tagline text-white py-0.5 px-3 rounded-full font-semibold text-xs">
+            <span className="absolute bottom-1 bg-tagline text-white py-0.5 px-1.5 sm:px-3 rounded-full font-semibold text-xs text-center">
               {drip.response_time}*
             </span>
           </div>
@@ -130,7 +130,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
             <div className="w-full flex items-center justify-between space-x-2.5">
               <Link
                 href={navLink || `/drips/${drip.service_id}`}
-                className="w-full text-left overflow-hidden truncate font-semibold xl:font-bold text-base"
+                className="w-full text-left font-semibold xl:font-bold text-base line-clamp-2 !leading-[1.2]"
               >
                 {drip.name}
               </Link>
@@ -149,7 +149,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
             </div>
             <Link href={navLink || `/drips/${drip.service_id}`} className="w-full">
               <p className="text-left text-xs overflow-hidden truncate text-[#555555] font-medium mt-0.5 flex sm:hidden">
-                {drip.description}
+                {truncateString(drip.description, 20)}
               </p>
               <p className="w-full text-left text-xs overflow-hidden text-[#555555] font-medium mt-0.5 hidden sm:flex md:hidden">
                 {asPath.includes("section")
@@ -165,7 +165,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
             </Link>
           </div>
         </div>
-        <div className="w-full sm:h-full flex items-end justify-between">
+        <div className="w-full sm:h-full flex items-end justify-between gap-1.5">
           <Link
             href={navLink || `/drips/${drip.service_id}`}
             className="flex flex-col items-start justify-start space-y-1 md:space-y-0"

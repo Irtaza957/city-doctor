@@ -160,7 +160,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             {data?.description}
           </p>
           <div className="w-full flex items-center justify-start space-x-5 px-5">
-            {!data?.size &&
+            {data?.size &&
               <div className="flex items-center justify-center space-x-1.5">
                 <Image src={SizeIcon} alt="size" className="w-4 h-4" />
                 <span className="text-[#535763] text-base">{data?.size}ml</span>
@@ -431,7 +431,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 ))}
               </div>
             </div> : null}
-          <div className={`fixed w-full z-20 bottom-[68px] left-0 p-3 bg-white border-t ${cart?.length > 0 ? 'pb-[75px]' : ''}`}>
+          <div className={`fixed w-full z-20 bottom-[68px] left-0 p-3 bg-white border-t ${cart?.length > 0 ? 'pb-[85px]' : ''}`}>
             {quantity === 0 ? (
               <button
                 onClick={() => handleIncrement()}

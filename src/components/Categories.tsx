@@ -240,15 +240,15 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("col-span-1 w-full h-full flex items-center justify-center gap-4 space-y-2 rounded-2xl bg-gray-100 text-black p-3")}
+                className={cn("col-span-1 w-full h-full flex items-center justify-center gap-2 space-y-2 rounded-2xl bg-gray-100 text-black p-3")}
                 style={{ backgroundColor: category?.color || "#F5F5F5" }}
               >
                 <Image
                   src={`${imageBase(category.icon)}`}
-                  width={50}
-                  height={96}
+                  width={40}
+                  height={40}
                   alt="category"
-                  className="w-12 h-14"
+                  className="w-11 h-11"
                 />
                 <span className="w-[74px] text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
