@@ -10,7 +10,7 @@ import MagnifyerIcon from "@/assets/icons/MagnifyerIcon";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useFetchServicesListMutation } from "@/store/services/service";
 
-const AutoComplete = ({ handleClose }: { handleClose: () => void }) => {
+const AutoComplete = ({ handleClose }: { handleClose?: () => void }) => {
   const dropRef = useRef(null);
   const [query, setQuery] = useState("");
   useOnClickOutside(dropRef, () => setQuery(""));
@@ -90,7 +90,7 @@ const AutoComplete = ({ handleClose }: { handleClose: () => void }) => {
               <Link
                 key={idx}
                 onClick={() => {
-                  handleClose();
+                  handleClose && handleClose();
                   setQuery("");
                 }}
                 href={`/home/${getSlug(result.category_name)}/${getSlug(result.name || '')}`}
