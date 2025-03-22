@@ -239,7 +239,7 @@ const DripListing = () => {
                         height={56}
                         className="w-7 h-7"
                       />
-                      <span className="text-left font-semibold text-[10px] md:whitespace-nowrap w-[64px]">
+                      <span className="text-left font-bold text-[10px] md:whitespace-nowrap w-[64px]">
                         {category.category_name}
                       </span>
                     </div>
@@ -646,7 +646,7 @@ const DripListing = () => {
           </div>
         )}
       </div>
-      <div className="flex items-start justify-center w-full sm:hidden mt-[140.25px] sm:mb-24 px-5 gap-2">
+      <div className="flex h-[calc(100vh-400px)] items-start justify-center w-full sm:hidden mt-[140.25px] sm:mb-24 px-5 gap-2">
         <div className="py-2.5 space-y-2">
           {subLoading ? (
             [...Array(subCategories?.length)].map((_, idx) => (
@@ -675,7 +675,7 @@ const DripListing = () => {
             ))
           )}
         </div>
-        <div className="">
+        <div className="overflow-auto custom-scrollbar h-full">
           {subLoading ? (
             <div className="w-full xl:w-[85%] 3xl:w-[70%] xl:mx-auto grid grid-cols-1 xl:grid-cols-2 gap-4">
               <div className="col-span-1 xl:col-span-2 w-full">

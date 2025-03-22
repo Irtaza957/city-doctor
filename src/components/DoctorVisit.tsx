@@ -50,7 +50,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
             View All
           </Link>
         </div>
-        <div className="w-full block sm:hidden px-5">
+        <div className="w-full block sm:hidden px-3">
           <Swiper
             modules={[Grid, FreeMode]}
             slidesPerView={1.05}
@@ -59,7 +59,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
               fill: "row",
             }}
             freeMode={true}
-            style={{ boxShadow: "5px 0 5px -5px lightgray" }}
+            // style={{ boxShadow: "5px 0 5px -5px lightgray" }}
             // onSlideChange={(swiper) => {
             //   if (swiper.activeIndex === 0) {
             //     setStartSlide(true);

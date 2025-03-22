@@ -62,7 +62,7 @@ const BottomNav = () => {
               width={22}
               height={22}
             />}
-          <span className="w-full text-center text-xs">Home</span>
+          <span className="w-full text-center text-xs font-semibold">Home</span>
         </Link>
         <div
           onClick={() => {
@@ -90,7 +90,7 @@ const BottomNav = () => {
               width={22}
               height={22}
             />}
-          <span className="w-full text-center text-xs">Bookings</span>
+          <span className="w-full text-center text-xs font-semibold">Bookings</span>
         </div>
         <div
           onClick={() => {
@@ -120,7 +120,7 @@ const BottomNav = () => {
               width={22}
               height={22}
             />}
-          <span className="w-full text-center text-xs">Offers</span>
+          <span className="w-full text-center text-xs font-semibold">Offers</span>
         </div>
         <div
           onClick={() => {
@@ -150,7 +150,7 @@ const BottomNav = () => {
               width={18}
               height={18}
             />}
-          <span className="w-full text-center text-xs">Account</span>
+          <span className="w-full text-center text-xs font-semibold">Account</span>
         </div>
         <Link
           href="/cart"
@@ -172,7 +172,7 @@ const BottomNav = () => {
               width={22}
               height={22}
             />}
-          <span className="w-full text-center text-xs">Cart</span>
+          <span className="w-full text-center text-xs font-semibold">Cart</span>
           <span className="absolute -top-4 -right-1.5 text-white w-4 h-4 flex items-center justify-center bg-[#38ADA0] font-semibold rounded-full text-xs">
             {cart.length}
           </span>
