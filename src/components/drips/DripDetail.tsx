@@ -41,7 +41,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
   const [addToWishlist] = useAddToWishlistMutation();
   const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
   const [tab, setTab] = useState<string>(data?.sections?.[0]?.name);
-  const { user, cart } = useSelector((state: RootState) => state.global);
+  const { user, cart, isMenuVisible } = useSelector((state: RootState) => state.global);
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -431,7 +431,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 ))}
               </div>
             </div> : null}
-          <div className={`fixed w-full z-20 bottom-[68px] left-0 p-3 bg-white border-t ${cart?.length > 0 ? 'pb-[85px]' : ''}`}>
+          <div className={`fixed w-full z-20 bottom-[${isMenuVisible ? '68px' : '0px'}] left-0 p-3 bg-white border-t ${cart?.length > 0 ? 'pb-[85px]' : ''}`}>
             {quantity === 0 ? (
               <button
                 onClick={() => handleIncrement()}

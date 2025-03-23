@@ -51,6 +51,7 @@ declare type GLOBAL_STATE = {
   wishlistCount: number;
   sidebarToggle: boolean;
   selectedCategory: CATEGORY | null;
+  isMenuVisible: boolean;
 };
 
 declare type DRIP_CARD = {

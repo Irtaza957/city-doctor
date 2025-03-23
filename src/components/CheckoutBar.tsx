@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { IoClose } from "react-icons/io5";
 import { usePathname } from "next/navigation";
@@ -11,9 +11,9 @@ import { FaArrowRight, FaChevronDown, FaMinus, FaPlus } from "react-icons/fa6";
 import { RootState } from "@/store";
 import LoginDrawer from "./drawers/LoginDrawer";
 import { calculateTotalCost, imageBase } from "@/utils/helpers";
-import { addToCart, removeFromCart, setCart } from "@/store/global";
+import { addToCart, removeFromCart, setCart, setIsMenuVisible } from "@/store/global";
 
-const CheckoutBar = () => {
+const CheckoutBar = ({isMenuVisible}: {isMenuVisible: boolean}) => {
   const { push } = useRouter();
   const dispatch = useDispatch();
   const pathname = usePathname();
@@ -58,11 +58,15 @@ const CheckoutBar = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(setIsMenuVisible(isMenuVisible));
+  }, [isMenuVisible]);
+
   return (
     <>
       <LoginDrawer open={openLogin} onClose={closeLogin} />
       <div
-        className={`fixed bottom-[68px] left-0 z-50 w-full ${
+        className={`fixed bottom-[${isMenuVisible ? '68px' : '0px'}] left-0 z-50 w-full ${
           openCart && "bg-black/30 h-full"
         } ${shouldHide ? "hidden" : "flex sm:hidden"} ${
           cart.length === 0 ? "hidden" : "flex"
