@@ -28,7 +28,7 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
     return (
         <>
             <div className="flex h-screen overflow-hidden pb-5 items-start justify-center w-full sm:hidden mt-[136.25px] sm:mb-24 pr-3 gap-2">
-                <div className="w-[34%] bg-[#F7F7F7] space-y overflow-auto custom-scrollbar h-screen">
+                <div className="w-[40%] xs:w-[35%] bg-[#F7F7F7] space-y overflow-auto custom-scrollbar h-screen">
                     {subLoading ?
                         <div className='space-y-3'>
                             {[...Array(10)].map((_, idx) => (
