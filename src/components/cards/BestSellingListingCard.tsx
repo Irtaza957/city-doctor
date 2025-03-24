@@ -144,7 +144,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
             {drip.description}
           </p>
         </Link>
-        <div className="w-full sm:grid flex grid-cols-2 items-end justify-between">
+        <div className="w-full sm:grid flex grid-cols-2 gap-1 items-end justify-between">
           <Link
             href={navLink || `/drips/${drip.service_id}`}
             className="sm:col-span-1 w-full flex flex-col items-center justify-start space-y-2"
@@ -160,7 +160,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
               <span className="sm:hidden w-full text-left text-[10px] whitespace-nowrap">
                 AED <span className="line-through">{(Number(drip.discount_value))?.toFixed(2)}</span>
               </span>
-              <span className="w-full text-left text-sm sm:text-base sm:font-semibold xl:font-bold">
+              <span className="w-full text-left text-xs xs:text-sm sm:text-base sm:font-semibold xl:font-bold">
                 AED {Math.round(Number(drip.price_without_vat || drip.price_with_vat))}
               </span>
             </div>
@@ -206,7 +206,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
                       drip.thumbnail
                     );
                   }}
-                  className="block md:hidden h-[24px] w-[60px] bg-primary rounded-md text-white font-semibold text-sm"
+                  className="block md:hidden h-[24px] w-[50px] xs:w-[60px] bg-primary rounded-md text-white font-semibold text-xs xs:text-sm"
                 >
                   Add
                 </button>
