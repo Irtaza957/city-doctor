@@ -160,7 +160,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
               <span className="sm:hidden w-full text-left text-[10px] whitespace-nowrap">
                 AED <span className="line-through">{(Number(drip.discount_value))?.toFixed(2)}</span>
               </span>
-              <span className="w-full text-left text-xs xs:text-sm sm:text-base sm:font-semibold xl:font-bold">
+              <span className="w-full text-left text-xs sm:text-sm sm:font-semibold xl:font-bold">
                 AED {Math.round(Number(drip.price_without_vat || drip.price_with_vat))}
               </span>
             </div>
