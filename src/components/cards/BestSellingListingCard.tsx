@@ -49,9 +49,9 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
 
   const remove = (item: DRIP_CARD) => {
     if (item) {
-      if(Number(quantity) === 1){
+      if (Number(quantity) === 1) {
         dispatch(removeFromCart(Number(item.service_id)));
-      }else{
+      } else {
         const updatedCart = cart.map(i => i.id === Number(item.service_id) ? { ...i, quantity: i.quantity - 1 } : i);
         dispatch(setCart(updatedCart));
       }
@@ -109,10 +109,10 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
     <div className="w-full flex flex-col items-center justify-center border rounded-xl shadow-sm">
       <div className="relative w-full">
         <Link href={navLink || `/drips/${drip.service_id}`}>
-          <div className="relative w-full h-48 xl:h-60 3xl:h-52 rounded-t-xl bg-[#E8E8E8]">
+          <div className="relative w-full h-48 xl:h-60 3xl:h-52 rounded-xl bg-[#E8E8E8]">
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
-              className="size-full rounded-t-xl bg-top bg-cover"
+              className="size-full rounded-xl bg-top bg-cover"
             />
           </div>
         </Link>
@@ -128,44 +128,48 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
             )}
           </div>
         )}
-        <span className="absolute bottom-2 left-2 bg-tagline text-white py-0.5 px-3 rounded-full font-semibold text-xs">
+        <span className="hidden sm:block absolute bottom-2 left-2 bg-tagline text-white py-0.5 px-3 rounded-full font-semibold text-xs">
           {drip.response_time}*
         </span>
       </div>
-      <div className="w-full p-3 bg-white rounded-b-xl flex flex-col items-start justify-start space-y-4">
+      <div className="w-full p-2 bg-white rounded-b-xl flex flex-col items-start justify-start space-y-4">
         <Link
           href={navLink || `/drips/${drip.service_id}`}
           className="w-full flex flex-col items-center justify-center space-y-1.5"
         >
-          <h1 className="w-full text-left text-base overflow-hidden truncate font-semibold xl:font-bold">
+          <h1 className="w-full text-left text-sm sm:text-base line-clamp-2 sm:line-clamp-none sm:overflow-hidden sm:truncate sm:font-semibold xl:font-bold">
             {drip.name || drip.service_name}
           </h1>
-          <p className="w-full text-left overflow-hidden font-medium truncate text-xs text-[#555555]">
+          <p className="hidden sm:block w-full text-left overflow-hidden font-medium truncate text-xs text-[#555555]">
             {drip.description}
           </p>
         </Link>
-        <div className="w-full grid grid-cols-2 items-end justify-between">
+        <div className="w-full sm:grid flex grid-cols-2 items-end justify-between">
           <Link
             href={navLink || `/drips/${drip.service_id}`}
-            className="col-span-1 w-full flex flex-col items-center justify-start space-y-2"
+            className="sm:col-span-1 w-full flex flex-col items-center justify-start space-y-2"
           >
-            <div className="w-full flex items-center justify-start gap-1">
+            <div className="w-full hidden sm:flex items-center justify-start gap-1">
               <FaStar className="w-4 h-4 text-accent" />
               <span className="font-bold text-[10px]">
                 {drip.rating}&nbsp;
                 <span className="font-medium">({drip.total_reviews})</span>
               </span>
             </div>
-            <span className="w-full text-left text-base font-semibold xl:font-bold">
-              AED {Math.round(Number(drip.price_without_vat || drip.price_with_vat))}
-            </span>
+            <div className="flex flex-col w-full">
+              <span className="sm:hidden w-full text-left text-[10px] whitespace-nowrap">
+                AED <span className="line-through">{(Number(drip.discount_value))?.toFixed(2)}</span>
+              </span>
+              <span className="w-full text-left text-sm sm:text-base sm:font-semibold xl:font-bold">
+                AED {Math.round(Number(drip.price_without_vat || drip.price_with_vat))}
+              </span>
+            </div>
           </Link>
           <div
-            className={`col-span-1 ml-auto w-[114px] ${
-              asPath.includes("section")
+            className={`sm:col-span-1 ml-auto sm:w-[114px] ${asPath.includes("section")
                 ? "sm:w-[100px] xl:w-[115px]"
                 : "xl:w-[135px]"
-            } md:w-[100px] flex items-center justify-between`}
+              } md:w-[100px] flex items-center justify-between`}
           >
             {quantity === 0 ? (
               <>
@@ -202,7 +206,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
                       drip.thumbnail
                     );
                   }}
-                  className="w-full block md:hidden h-[36px] py-2 bg-primary rounded-md text-white font-semibold text-sm"
+                  className="block md:hidden h-[24px] w-[60px] bg-primary rounded-md text-white font-semibold text-sm"
                 >
                   Add
                 </button>
@@ -214,11 +218,11 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
                     handleDecrement();
                     remove(drip);
                   }}
-                  className="size-[36px] rounded-lg p-3 border border-primary flex items-center justify-center cursor-pointer"
+                  className="size-5 sm:size-[36px] rounded-lg p-1 sm:p-3 border border-primary flex items-center justify-center cursor-pointer"
                 >
                   <FaMinus />
                 </span>
-                <span className="text-xl font-semibold">{quantity}</span>
+                <span className="sm:text-xl sm:font-semibold mx-1.5 sm:mx-0">{quantity}</span>
                 <span
                   onClick={() => {
                     setQuantity((prev) => prev + 1);
@@ -234,7 +238,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
                       true
                     );
                   }}
-                  className="size-[36px] rounded-lg p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"
+                  className="size-5 sm:size-[36px] rounded-lg p-1 sm:p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"
                 >
                   <FaPlus />
                 </span>

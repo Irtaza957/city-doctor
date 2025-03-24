@@ -16,20 +16,18 @@ import {
 } from "@/store/services/category";
 import { getCategoryLink, getSlug, imageBase, sort } from "@/utils/helpers";
 import EmptyResults from "@/assets/img/empty-results.svg";
-import HeaderSkeleton from "@/components/cards/skeleton/HeaderSkeleton";
 import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
 import BestSellingListingCard from "@/components/cards/BestSellingListingCard";
-import ServiceCardSkeleton from "@/components/cards/skeleton/ServiceCardSkeleton";
-import DoctorVisitSkeleton from "@/components/cards/skeleton/DoctorVisitSkeleton";
 import CategorySliderSkeleton from "@/components/cards/skeleton/CategorySliderSkeleton";
 import he from "he";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
-import DoctorHomeVisit from "./CategoriesContent/DoctorHomeVisit";
-import IVDrip from "./CategoriesContent/IVDrip";
-import LabText from "./CategoriesContent/LabText";
-import Physiotherapy from "./CategoriesContent/Physiotherapy";
-import { PiMountainsFill } from "react-icons/pi";
+// import DoctorHomeVisit from "./CategoriesContent/DoctorHomeVisit";
+// import IVDrip from "./CategoriesContent/IVDrip";
+// import LabText from "./CategoriesContent/LabText";
+// import Physiotherapy from "./CategoriesContent/Physiotherapy";
+import MobileViewListing from "./MobileViewListing";
+import DoctorVisitSkeleton from "../cards/skeleton/DoctorVisitSkeleton";
 
 export const sortingOptions = [
   {
@@ -65,7 +63,7 @@ const DripListing = () => {
   );
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("");
   const pathname = usePathname()
-  const path = pathname?.split('/')?.[1]
+  // const path = pathname?.split('/')?.[1]
   const router = useRouter()
 
   // const scrollToElement = (elementId: string) => {
@@ -184,6 +182,10 @@ const DripListing = () => {
     }
   }
   const handleSubCategorySelect = async (subCategory: string) => {
+    if(subCategory==='all'){
+      router.push(`/${(selectedCategory?.category_name || '').toLowerCase().replace(/\s+/g, "-")}`)
+      return
+    }
     router.push(`/${(selectedCategory?.category_name || '').toLowerCase().replace(/\s+/g, "-")}/${getSlug(subCategory || '')}`)
   }
 
@@ -646,105 +648,7 @@ const DripListing = () => {
           </div>
         )}
       </div>
-      <div className="flex h-[calc(100vh-300px)] items-start justify-center w-full sm:hidden mt-[140.25px] sm:mb-24 px-5 gap-2">
-        <div className="py-2.5 space-y-2">
-          {subLoading ? (
-            [...Array(subCategories?.length)].map((_, idx) => (
-              <div key={idx} className="w-full flex flex-col items-center mb-1 justify-start p-3 rounded-lg bg-gray-200 animate-pulse">
-                <PiMountainsFill className="text-gray-400 animate-pulse" />
-              </div>
-            ))
-          ) : (
-            subCategories?.map((sub, idx) => (
-              <div
-                key={idx}
-                // onClick={() => {
-                //   scrollToElement(idx.toString());
-                //   setActiveCategory(idx.toString());
-                // }}
-                onClick={() => handleSubCategorySelect(sub?.name)}
-                className={`flex items-start justify-start cursor-pointer py-2 px-4 rounded-md w-[115px] ${selectedSubCategory === idx.toString()
-                  ? "bg-primary text-white"
-                  : "bg-[#F7F7F7] text-black"
-                  }`}
-              >
-                <span className="text-left font-semibold text-xs break-words">
-                  {sub.name}
-                </span>
-              </div>
-            ))
-          )}
-        </div>
-        <div className="overflow-auto custom-scrollbar h-full">
-          {subLoading ? (
-            <div className="w-full xl:w-[85%] 3xl:w-[70%] xl:mx-auto grid grid-cols-1 xl:grid-cols-2 gap-4">
-              <div className="col-span-1 xl:col-span-2 w-full">
-                <HeaderSkeleton />
-              </div>
-              <div className="col-span-1 xl:col-span-2 w-full grid grid-cols-2 gap-5">
-                {[...Array(10)].map((_, idx) => (
-                  <ServiceCardSkeleton key={idx} />
-                ))}
-              </div>
-            </div>
-          ) : subCategories?.length === 0 ? (
-            <div className="w-full flex flex-col items-center justify-center h-[calc(100vh-272.75px)]">
-              <Image
-                src={EmptyResults}
-                alt="empty-wishlist"
-                className="size-24"
-              />
-              <p className="w-full text-center font-semibold mt-3">
-                Sorry, Unfortunately the Product
-                <br />
-                you were Looking for wasn&apos;t found!!
-              </p>
-              <p className="w-full text-center font-semibold text-xs lg:text-base text-[#707070]">
-                Explore more and shortlist some services
-              </p>
-              <Link
-                href="/home"
-                className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
-              >
-                Continue Shopping
-              </Link>
-            </div>
-          ) : (
-            // selectedSubCategory
-            //           ? subCategories?.[parseInt(selectedSubCategory)]?.services
-            //           : subCategories?.flatMap((item) => item?.services)
-            (selectedSubCategory ? subCategories?.[parseInt(selectedSubCategory)]?.services : subCategories?.flatMap((item) => item?.services))?.map((sub, idx) => (
-              <div
-                key={idx}
-                id={idx.toString()}
-                className="w-full xl:w-[85%] 3xl:w-[70%] mt-2.5 xl:mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 xl:mb-20"
-              >
-                {/* <div className="col-span-1 md:col-span-2 w-full flex flex-col items-center space-y-4 mb-4">
-                <h1 className="w-full text-left text-xl xl:text-2xl font-bold">
-                  {sub?.name}
-                </h1>
-                {sub?.cover_image && (
-                  <Image
-                    src={`${imageBase(sub?.cover_image)}`}
-                    alt="cover-image"
-                    width={1000}
-                    height={1000}
-                    className="w-full h-full object-cover rounded-xl"
-                  />
-                )}
-              </div> */}
-                {/* {sub?.services.map((service) => ( */}
-                <DoctorVisitListingCard
-                  key={sub.service_id}
-                  drip={sub}
-                  navLink={getNavLink(sub.name || '', sub?.category_name)}
-                />
-                {/* ))} */}
-              </div>
-            ))
-          )}
-        </div>
-      </div>
+      <MobileViewListing sortingOptions={sortingOptions} subCategories={subCategories} handleSubCategorySelect={handleSubCategorySelect} selectedSubCategory={selectedSubCategory} subLoading={subLoading} getNavLink={getNavLink} />
 
       {/* <div className="w-full sm:hidden mt-[230.25px] mb-24 px-5">
         {subLoading ? (
@@ -812,7 +716,7 @@ const DripListing = () => {
           ))
         )}
       </div> */}
-      {path === 'doctor-home-visit' ? <DoctorHomeVisit /> : path === 'iv-drip-therapy' ? <IVDrip /> : path === 'lab-tests-&-checkups' ? <LabText /> : (path === 'physio-&-chiropractic' || path === 'physiotherapy ') ? <Physiotherapy /> : null}
+      {/* {path === 'doctor-home-visit' ? <DoctorHomeVisit /> : path === 'iv-drip-therapy' ? <IVDrip /> : path === 'lab-tests-&-checkups' ? <LabText /> : (path === 'physio-&-chiropractic' || path === 'physiotherapy ') ? <Physiotherapy /> : null} */}
     </>
   );
 };

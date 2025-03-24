@@ -240,7 +240,7 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("col-span-1 w-full h-full flex items-center justify-center gap-2 space-y-2 rounded-2xl bg-gray-100 text-black p-3")}
+                className={cn("col-span-1 w-full h-[70px] flex items-center justify-start gap-2 space-y-2 rounded-xl bg-gray-100 text-black p-3")}
                 style={{ backgroundColor: category?.color || "#F5F5F5" }}
               >
                 <Image

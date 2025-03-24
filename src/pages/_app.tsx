@@ -15,11 +15,12 @@ import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { PersistGate } from "redux-persist/integration/react";
 import BottomNav from "@/components/BottomNav";
+import MobileFooter from "@/components/MobileFooter";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
-  const [showBottomNav, setShowBottomNav] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  // const [showBottomNav, setShowBottomNav] = useState(true);
+  // const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
@@ -36,20 +37,20 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < lastScrollY) {
-        setShowBottomNav(true); // Show when scrolling up
-      } else {
-        setShowBottomNav(false); // Hide when scrolling down
-      }
-      setLastScrollY(currentScrollY);
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollY = window.scrollY;
+  //     if (currentScrollY < lastScrollY) {
+  //       setShowBottomNav(true); // Show when scrolling up
+  //     } else {
+  //       setShowBottomNav(false); // Hide when scrolling down
+  //     }
+  //     setLastScrollY(currentScrollY);
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [lastScrollY]);
 
   return (
     <>
@@ -67,9 +68,11 @@ export default function App({ Component, pageProps }: AppProps) {
           <Navbar />
           {loading && <Loader />}
           <Component {...pageProps} />
-          <CheckoutBar isMenuVisible={showBottomNav} />
-          {showBottomNav && <BottomNav />} {/* Conditionally render BottomNav */}
+          <CheckoutBar isMenuVisible={true} />
+          <BottomNav />
+          {/* {showBottomNav && <BottomNav />} */}
           <Footer />
+          <MobileFooter />
           <CartBar />
         </PersistGate>
       </Provider>
