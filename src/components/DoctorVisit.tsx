@@ -41,7 +41,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
           <h1 className="text-left text-xl xl:text-2xl font-bold" dangerouslySetInnerHTML={{ __html: he.decode(section.section) }}/>
           <Link
             onClick={clearCategory}
-            className="text-sm text-primary font-medium"
+            className="text-sm text-primary font-medium whitespace-nowrap"
             href={`/home/${section.section
               .toLowerCase()
               .split(" ")

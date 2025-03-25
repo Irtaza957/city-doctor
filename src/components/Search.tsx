@@ -212,7 +212,7 @@ const Search = () => {
                     <Link
                       onClick={() => setShowMenu(false)}
                       href={getCategoryLink(category.toString(), list?.find(item=>item.id===String(category))?.name!)}
-                      className="px-6 py-2 rounded-md bg-primary text-white text-xs text-center"
+                      className="px-6 py-2 rounded-md bg-primary text-white text-xs text-center whitespace-nowrap"
                     >
                       View All
                     </Link>
