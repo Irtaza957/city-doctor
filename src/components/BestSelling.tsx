@@ -3,7 +3,7 @@
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import { formatString, getSlug } from "@/utils/helpers";
+import { cn, formatString, getSlug } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import BestSellingCard from "./cards/BestSellingCard";
 import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
@@ -32,7 +32,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
           <h1 className="text-xl xl:text-2xl font-bold" dangerouslySetInnerHTML={{ __html: he.decode(section.section) }}/>
           <Link
             onClick={clearCategory}
-            className="text-sm text-primary font-medium"
+            className="text-sm text-primary font-medium whitespace-nowrap"
             href={`/home/${section.section
               .toLowerCase()
               .split(" ")
@@ -42,7 +42,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
           </Link>
         </div>
         <div className="flex items-center justify-center">
-        <div className="block sm:hidden w-[92%]">
+        <div className="block sm:hidden w-full">
           <Swiper
             slidesPerView={1.5}
             spaceBetween={10}
@@ -52,7 +52,7 @@ const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
             {section.section_data.map((drip, idx) => (
               <SwiperSlide
                 key={idx}
-                // className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
+                className={cn(idx === 0 && 'ml-3', idx === section.section_data?.length-1 && 'pr-6')}
               >
                 <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
               </SwiperSlide>

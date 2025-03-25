@@ -39,8 +39,8 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                             <div
                                 onClick={() => handleSubCategorySelect('all')}
                                 className={cn(
-                                    "text-xs break-words text-center border-b border-l-4 border-l-[#F7F7F7] p-3",
-                                    !selectedSubCategory ? 'border-l-primary text-primary bg-white' : ''
+                                    "text-xs break-words text-center border-b border-l-4 border-l-[#F7F7F7] p-3 h-[60px] flex items-center justify-center",
+                                    !selectedSubCategory ? 'border-l-primary text-primary bg-white font-semibold' : ''
                                 )}>
                                 All Drips
                             </div>
@@ -48,8 +48,8 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                                 <div key={idx}
                                     onClick={() => handleSubCategorySelect(sub?.name)}
                                     className={cn(
-                                        "text-xs text-center border-b border-l-4 border-l-[#F7F7F7] py-3 px-1",
-                                        selectedSubCategory === idx.toString() ? 'border-l-primary text-primary bg-white' : ''
+                                        "text-xs text-center border-b border-l-4 border-l-[#F7F7F7] py-3 px-1 h-[60px] flex items-center justify-center",
+                                        selectedSubCategory === idx.toString() ? 'border-l-primary text-primary bg-white font-semibold' : ''
                                     )}>
                                     {sub.name}
                                 </div>
@@ -60,14 +60,14 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                     <div className='sticky mt-2 z-10 mb-3 w-full'>
                         <div className="flex items-center justify-between">
                             <div className="flex items-center justify-start gap-2">
-                                <button type="button" onClick={() => setViewType(false)} className='border border-[#E1E1E1] rounded-lg w-[32px] h-[32px] flex items-center justify-center'>
+                                <button type="button" onClick={() => setViewType(false)} className='border border-[#E1E1E1] rounded-[9px] w-[32px] h-[32px] flex items-center justify-center'>
                                     {viewType ? <CiGrid41
                                         className={`size-5 font-semibold text-black`}
                                     /> : <IoGrid
                                         className={`size-5 text-primary`}
                                     />}
                                 </button>
-                                <button type="button" onClick={() => setViewType(true)} className='border border-[#E1E1E1] rounded-lg w-[32px] h-[32px] flex items-center justify-center'>
+                                <button type="button" onClick={() => setViewType(true)} className='border border-[#E1E1E1] rounded-[9px] w-[32px] h-[32px] flex items-center justify-center'>
                                     <GiHamburgerMenu
                                         className={`size-5 ${viewType ? "text-primary" : "text-black"
                                             }`}
@@ -77,7 +77,7 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                             <div className="w-full flex items-center justify-end gap-6">
                                 <div className="flex items-center justify-center gap-2">
                                     {/* <span className="text-xs">Sort By</span> */}
-                                    <div className="bg-white pr-2.5 rounded-xl border border-[#E1E1E1]">
+                                    <div className="bg-white pr-2.5 rounded-[9px] border border-[#E1E1E1]">
                                         <select
                                             onChange={(e) => setSorting(e.target.value)}
                                             className="text-xs p-2 rounded-md bg-transparent"

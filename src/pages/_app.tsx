@@ -51,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
-console.log(showBottomNav, 'showBottomNavshowBottomNav')
+  
   return (
     <>
       <noscript>

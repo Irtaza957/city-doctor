@@ -39,7 +39,7 @@ const Wishlist = () => {
   return (
     <>
     <GoogleAnalytics />
-    <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto mt-[45.25px] sm:mt-[71.25px] md:mt-[120px] mb-10 pt-5 px-5 md:px-0">
+    <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto mt-[65.25px] sm:mt-[71.25px] md:mt-[120px] mb-10 pt-5 px-5 md:px-0">
       <h1 className="w-full text-left text-xl xl:text-2xl font-bold mb-5">
         My Wishlist
       </h1>

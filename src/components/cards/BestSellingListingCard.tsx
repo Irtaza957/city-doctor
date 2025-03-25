@@ -109,10 +109,10 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
     <div className="w-full flex flex-col items-center justify-center border rounded-xl shadow-sm">
       <div className="relative w-full">
         <Link href={navLink || `/drips/${drip.service_id}`}>
-          <div className="relative w-full h-48 xl:h-60 3xl:h-52 rounded-xl bg-[#E8E8E8]">
+          <div className="relative w-full h-[136px] sm:h-48 xl:h-60 3xl:h-52 rounded-xl bg-[#E8E8E8]">
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
-              className="size-full rounded-xl bg-top bg-cover"
+              className="size-full rounded-xl bg-top bg-cover h-[136px] sm:h-auto"
             />
           </div>
         </Link>
@@ -132,12 +132,12 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
           {drip.response_time}*
         </span>
       </div>
-      <div className="w-full p-2 bg-white rounded-b-xl flex flex-col items-start justify-start space-y-4">
+      <div className="w-full p-2 bg-white rounded-b-xl flex flex-col items-start justify-start space-y-1">
         <Link
           href={navLink || `/drips/${drip.service_id}`}
           className="w-full flex flex-col items-center justify-center space-y-1.5"
         >
-          <h1 className="w-full text-left text-sm sm:text-base line-clamp-2 sm:line-clamp-none sm:overflow-hidden sm:truncate sm:font-semibold xl:font-bold">
+          <h1 className="w-full text-left text-sm sm:text-base line-clamp-2 sm:line-clamp-none sm:overflow-hidden sm:truncate font-semibold xl:font-bold">
             {drip.name || drip.service_name}
           </h1>
           <p className="hidden sm:block w-full text-left overflow-hidden font-medium truncate text-xs text-[#555555]">
@@ -160,7 +160,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
               <span className="sm:hidden w-full text-left text-[10px] whitespace-nowrap">
                 AED <span className="line-through">{(Number(drip.discount_value))?.toFixed(2)}</span>
               </span>
-              <span className="w-full text-left text-xs sm:text-sm sm:font-semibold xl:font-bold">
+              <span className="w-full text-left text-xs sm:text-sm font-semibold xl:font-bold">
                 AED {Math.round(Number(drip.price_without_vat || drip.price_with_vat))}
               </span>
             </div>

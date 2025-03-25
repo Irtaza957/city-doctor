@@ -128,7 +128,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
               <div className="w-full flex items-center justify-between space-x-2.5">
                 <Link
                   href={navLink || `/drips/${drip.service_id}`}
-                  className="w-full text-left text-sm line-clamp-2 !leading-[1.2] min-h-[36px]"
+                  className="w-full text-left text-sm font-semibold line-clamp-2 !leading-[1.2] min-h-[36px]"
                 >
                   {drip.name}
                 </Link>
@@ -179,7 +179,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                 <span className="sm:hidden w-full text-left text-[10px] whitespace-nowrap">
                   AED <span className="line-through">{(Number(drip.discount_value))?.toFixed(2)}</span>
                 </span>
-                <span className="w-full text-left text-xs sm:text-sm lg:text-base text-black xl:font-bold whitespace-nowrap">
+                <span className="w-full text-left text-xs sm:text-sm font-semibold lg:text-base text-black xl:font-bold whitespace-nowrap">
                   AED {Math.round(Number(drip.price_without_vat))}
                 </span>
               </div>

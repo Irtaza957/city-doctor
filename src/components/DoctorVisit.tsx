@@ -50,7 +50,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
             View All
           </Link>
         </div>
-        <div className="w-full block sm:hidden px-3">
+        <div className="w-full block sm:hidden">
           <Swiper
             modules={[Grid, FreeMode]}
             slidesPerView={1.05}
@@ -67,7 +67,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
             //     setStartSlide(false);
             //   }
             // }}
-            className="mx-5 px-5"
+            className="!pl-3 !pr-2"
           >
             {section.section_data.map((drip, idx) => (
               <SwiperSlide

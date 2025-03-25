@@ -228,10 +228,10 @@ const Categories = () => {
             ))}
         </div>
       </div>
-      <div ref={categoryRef} className="flex md:hidden w-full px-5 pb-5">
+      <div ref={categoryRef} className="flex md:hidden w-full px-3 pb-5">
         <div
           className={`w-full h-full ${showSlider && "invisible"
-            } grid grid-cols-2 sm:grid-cols-3 items-center justify-center gap-3`}
+            } grid grid-cols-2 sm:grid-cols-3 items-center justify-center gap-2.5`}
         >
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
@@ -240,7 +240,7 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("col-span-1 w-full h-[70px] flex items-center justify-start gap-2 space-y-2 rounded-xl bg-gray-100 text-black p-3")}
+                className={cn("col-span-1 w-full h-[70px] flex items-center justify-start gap-3 space-y-2 rounded-xl bg-gray-100 text-black pl-3.5 pr-2")}
                 style={{ backgroundColor: category?.color || "#F5F5F5" }}
               >
                 <Image
@@ -248,9 +248,9 @@ const Categories = () => {
                   width={40}
                   height={40}
                   alt="category"
-                  className="w-11 h-11"
+                  className="w-[38px] h-11"
                 />
-                <span className="w-[74px] text-left font-bold text-xs" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                <span className="w-[80px] text-left font-bold text-[13px]" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>
