@@ -257,6 +257,7 @@ declare type DRIP_DETAIL_RESPONSE = {
     answer: string;
   }[];
   similar_services: DRIP_CARD[];
+  bundles: {bundle: string, price_without_vat: string, price_with_vat: string}[]
 };
 
 declare type REVIEW = {

@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "swiper/css";
 import { RootState } from "@/store";
-import { imageBase } from "@/utils/helpers";
+import { cn, imageBase } from "@/utils/helpers";
 import Accordion from "@/components/Accordion";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import DropletIcon from "@/assets/icons/DropletIcon";
@@ -42,6 +42,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
   const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
   const [tab, setTab] = useState<string>(data?.sections?.[0]?.name);
   const { user, cart, isMenuVisible } = useSelector((state: RootState) => state.global);
+  const [selectedBundle,setSelectedBundle]=useState<number | null>(null)
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -163,21 +164,52 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             {data?.size &&
               <div className="flex items-center justify-center space-x-1.5">
                 <Image src={SizeIcon} alt="size" className="w-4 h-4" />
-                <span className="text-[#535763] text-base">{data?.size}ml</span>
+                <span className="text-[#535763] text-sm sm:text-base">{data?.size}ml</span>
               </div>
             }
             <div className="flex items-center justify-center space-x-1.5">
               <FaRegClock className="w-4 h-4 text-primary" />
-              <span className="text-[#535763] text-base">
+              <span className="text-[#535763] text-sm sm:text-base">
                 {data?.response_time}
               </span>
             </div>
           </div>
-          <p className="w-full text-left font-bold text-xl px-5">
+          <p className="w-full text-left font-semibold sm:font-bold text-[18px] sm:text-xl px-5">
             AED {data?.price ? Math.round(Number(data?.price)) : '-'}
           </p>
+          {data?.bundles?.length ?
+          <div className="space-y-2.5 w-full px-5">
+            {data?.bundles?.map((item, index) => (
+              <div key={index} onClick={()=>setSelectedBundle(index)} className="flex items-center justify-between cursor-pointer h-[54px] px-4 bg-[#F7F7F7] border border-[#DEDEDE] rounded-[10px] w-full">
+                <div className="flex items-center gap-4 w-full">
+                  {selectedBundle!==index ?
+                  <div className="border border-[#DEDEDE] rounded-full h-[22px] w-[22px]" />:
+                  <div
+                  className={`rounded-full border border-primary p-[3px] size-[22px] flex`}
+                >
+                  <div className="rounded-full bg-primary w-full h-full" />
+                </div>
+                  }
+                  <p className="text-black text-sm">{item?.bundle}</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="w-full text-left text-[10px] whitespace-nowrap line-through">
+                    AED 0.00
+                  </span>
+                  <span className="w-full text-left text-xs sm:text-sm sm:font-semibold xl:font-bold whitespace-nowrap">
+                    AED {Math.round(Number(item.price_without_vat || item.price_with_vat))}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>: null}
+          {data?.sections?.length ?
+            <div className="flex flex-col gap-1.5 !mb-2.5 !mt-5 pl-5 pr-10">
+              <p className="text-black font-medium text-sm">{data?.sections?.[0]?.name}</p>
+              <p className="text-xs text-[#535763]" dangerouslySetInnerHTML={{ __html: he.decode(data?.sections?.[0]?.description || '') }} />
+            </div> : null}
           <div className="w-full flex flex-col items-center justify-center space-y-2.5 px-5">
-            {data?.sections?.map((section, idx) => (
+            {data?.sections?.filter((_, index) => index !== 0)?.map((section, idx) => (
               <Accordion section={section} key={idx} index={idx} />
             ))}
             {/* <Accordion section={{ name: 'Service Ratings & Reviews' }} >
@@ -262,11 +294,12 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               ))}
             </Accordion> */}
           </div>
-          <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 mb-3">
-            <h1 className="w-full text-left text-lg md:text-xl font-bold">
-              Service Ratings & Reviews
-            </h1>
-            {/* <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
+          <div className="w-full mt-2 !mb-4">
+            <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 my-3">
+              <h1 className="w-full text-left text-lg md:text-xl font-medium sm:font-bold">
+                Service Ratings & Reviews
+              </h1>
+              {/* <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
               <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
                 <p className="w-full text-left text-xl font-bold">
                   {data?.rating}
@@ -308,49 +341,53 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 ))}
               </div>
             </div> */}
-          </div>
-          <Swiper
-            spaceBetween={20}
-            slidesPerView={1}
-            navigation
-            modules={[Navigation]}
-            className="w-full"
-          >
-            {data?.reviews?.map((review, idx) => (
-              <SwiperSlide key={idx}>
-                <div
-              key={idx}
-              className="w-full flex flex-col items-center justify-center space-x-5 px-5"
-            >
-              <div className="w-full flex items-center justify-start space-x-6">
-                <Image
-                  src="https://ui.shadcn.com/avatars/04.png"
-                  alt="user"
-                  width={40}
-                  height={40}
-                  className="rounded-full bg-gray-200 size-10"
-                />
-                <div className="w-full flex flex-col items-center justify-start space-y-1">
-                  <div className="w-full flex items-center justify-start space-x-10">
-                    <p className="font-bold text-xs">{review.customer}</p>
-                    <div className="flex items-center justify-center space-x-1.5">
-                      {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
-                        <FaStar key={idx} className="text-accent" />
-                      ))}
-                    </div>
-                  </div>
-                  <span className="w-full text-left text-xs text-gray-400">
-                    {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
-                  </span>
-                </div>
-              </div>
-              <p className="w-full pl-[52.5px] text-left text-xs text-[#535763] font-medium pt-3">
-                {numberSentences(1, review.description)}
-              </p>
             </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+            <Swiper
+              spaceBetween={1}
+              slidesPerView={1.2}
+              navigation
+              modules={[Navigation]}
+              className="w-full"
+            >
+              {data?.reviews?.map((review, idx) => (
+                <SwiperSlide key={idx}>
+                  <div
+                    key={idx}
+                    className={cn(
+                      "flex flex-col items-center justify-center space-x-5 px-5 bg-[#FAFAFA] rounded-md gap-3 py-3.5 ml-4",
+                      idx === data?.reviews?.length - 1 ? 'mr-4' : '',
+                    )}
+                  >
+                    <div className="w-full flex items-center justify-start space-x-6">
+                      <Image
+                        src="https://ui.shadcn.com/avatars/04.png"
+                        alt="user"
+                        width={40}
+                        height={40}
+                        className="rounded-full bg-gray-200 size-10"
+                      />
+                      <div className="w-full flex flex-col items-center justify-start space-y-1">
+                        <div className="w-full flex items-center justify-start space-x-10">
+                          <p className="font-bold text-xs">{review.customer}</p>
+                          <div className="flex items-center justify-center space-x-1.5">
+                            {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
+                              <FaStar key={idx} className="text-accent" />
+                            ))}
+                          </div>
+                        </div>
+                        <span className="w-full text-left text-xs text-gray-400">
+                          {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="w-full pl-[52.5px] text-left text-xs text-[#535763] font-medium">
+                      {numberSentences(1, review.description)}
+                    </p>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
           {/* {data?.reviews?.map((review, idx) => (
             <div
               key={idx}
@@ -424,7 +461,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div> : null}
           {data?.faqs?.length ?
             <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
-              <h1 className="w-full text-left text-xl font-bold">FAQs</h1>
+              <h1 className="w-full text-left text-xl font-medium sm:font-bold">FAQs</h1>
               <div className="w-full flex flex-col items-center justify-center space-y-2.5">
                 {data?.faqs?.map((section, idx) => (
                   <Accordion section={section} key={idx} />

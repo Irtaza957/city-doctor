@@ -22,7 +22,7 @@ interface MobileViewListingProps {
 }
 
 const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySelect, selectedSubCategory, subLoading, getNavLink }: MobileViewListingProps) => {
-    const [viewType, setViewType] = useState(false);
+    const [viewType, setViewType] = useState(true);
     const [sorting, setSorting] = useState("");
 
     return (
