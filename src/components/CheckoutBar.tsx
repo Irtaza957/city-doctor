@@ -10,7 +10,7 @@ import { FaArrowRight, FaChevronDown, FaMinus, FaPlus } from "react-icons/fa6";
 
 import { RootState } from "@/store";
 import LoginDrawer from "./drawers/LoginDrawer";
-import { calculateTotalCost, imageBase } from "@/utils/helpers";
+import { calculateTotalCost, cn, imageBase } from "@/utils/helpers";
 import { addToCart, removeFromCart, setCart, setIsMenuVisible } from "@/store/global";
 
 const CheckoutBar = ({isMenuVisible}: {isMenuVisible: boolean}) => {
@@ -66,11 +66,12 @@ const CheckoutBar = ({isMenuVisible}: {isMenuVisible: boolean}) => {
     <>
       <LoginDrawer open={openLogin} onClose={closeLogin} />
       <div
-        className={`fixed bottom-[${isMenuVisible ? '68px' : '0px'}] left-0 z-50 w-full ${
-          openCart && "bg-black/30 h-full"
-        } ${shouldHide ? "hidden" : "flex sm:hidden"} ${
-          cart.length === 0 ? "hidden" : "flex"
-        } flex-col items-end justify-end`}
+        className={cn("fixed bottom-0 left-0 z-50 w-full flex sm:hidden flex-col items-end justify-end",
+        openCart && "bg-black/30 h-full",
+        shouldHide && "hidden",
+        cart.length === 0 && 'hidden',
+        isMenuVisible && 'bottom-[68px]'
+      )}
       >
         <div
           className={`w-full flex flex-col items-center justify-center bg-white border-y ${

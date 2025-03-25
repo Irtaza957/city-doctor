@@ -9,6 +9,7 @@ import {
   calculateWithoutVAT,
   calculateDiscountValue,
   calculateVAT,
+  cn,
 } from "@/utils/helpers";
 import { RootState } from "@/store";
 import { emptyCart } from "@/store/global";
@@ -54,7 +55,7 @@ const CheckoutDetails = () => {
   const [postBooking, { isLoading }] = usePostBookingMutation();
   const [openCancelModal, setOpenCancelModal] = useState(false);
   const [openAddressModal, setOpenAddressModal] = useState(false);
-  const { cart, user } = useSelector((state: RootState) => state.global);
+  const { cart, user, isMenuVisible } = useSelector((state: RootState) => state.global);
   const [finalAddress, setFinalAddress] = useState<ADDRESS | null>(null);
 
   const slots = generateTimeSlots(convertToDateString(selectedDate));
@@ -759,7 +760,9 @@ const CheckoutDetails = () => {
           </div>
         </div>
       </div>
-      <div className="w-full fixed z-20 bottom-[68px] left-0 p-2.5 bg-white flex sm:hidden border-t">
+      <div className={cn("w-full fixed z-20 bottom-0 left-0 p-2.5 bg-white flex sm:hidden border-t",
+        isMenuVisible && 'bottom-[68px]'
+      )}>
         <button
           type="button"
           disabled={isLoading}

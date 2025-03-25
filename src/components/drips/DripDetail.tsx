@@ -468,7 +468,11 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                 ))}
               </div>
             </div> : null}
-          <div className={`fixed w-full z-20 bottom-[${isMenuVisible ? '68px' : '0px'}] left-0 p-3 bg-white border-t ${cart?.length > 0 ? 'pb-[85px]' : ''}`}>
+          <div className={cn(
+            `fixed w-full z-20 bottom-0 left-0 p-3 bg-white border-t`,
+            cart?.length > 0 && 'pb-[85px]',
+            isMenuVisible && 'bottom-[68px]'
+            )}>
             {quantity === 0 ? (
               <button
                 onClick={() => handleIncrement()}
