@@ -9,11 +9,12 @@ import { FaStar, FaPlus, FaMinus } from "react-icons/fa6";
 
 import { RootState } from "@/store";
 import HeartIcon from "@/assets/icons/HeartIcon";
-import { imageBase, truncateString } from "@/utils/helpers";
+import { cn, imageBase, truncateString } from "@/utils/helpers";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 import Image from "next/image";
 import BgTagline from "@/assets/icons/bgTagline.svg";
+import { usePathname } from "next/navigation";
 
 interface DoctorVisitCardProps {
   drip: DRIP_CARD;
@@ -23,6 +24,7 @@ interface DoctorVisitCardProps {
 const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
   const dispatch = useDispatch();
   const { asPath } = useRouter();
+  const pathname=usePathname()
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
   const [addToWishlist] = useAddToWishlistMutation();
@@ -180,7 +182,10 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
               </Link>
             </div>
           </div>
-          <div className="w-full sm:h-full flex items-end justify-between gap-1.5">
+          <div className={cn(
+            "w-full sm:h-full flex justify-between gap-1.5",
+            asPath.includes("home") && pathname?.split('/')?.length===3 ? "items-center" : 'items-end'
+            )}>
             <Link
               href={navLink || `/drips/${drip.service_id}`}
               className="flex flex-col items-start justify-start space-y-1 sm:space-y-0"
@@ -192,7 +197,10 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                   <span className="font-medium">({drip.total_reviews})</span>
                 </span>
               </div>
-              <div className="flex flex-col">
+              <div className={cn(
+                "flex flex-col",
+                asPath.includes("home") && pathname?.split('/')?.length===3 && '!mb-1'
+                )}>
                 <span className="sm:hidden w-full text-left text-[10px] whitespace-nowrap">
                   AED <span className="line-through">{(Number(drip.discount_value))?.toFixed(2)}</span>
                 </span>
@@ -216,7 +224,9 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                     drip.thumbnail
                   );
                 }}
-                className="h-[24px] w-[60px] px-3 bg-primary rounded-md text-white font-semibold text-xs place-self-end"
+                className={cn("h-[24px] w-[60px] px-3 bg-primary rounded-md text-white font-semibold text-xs",
+                  !(asPath.includes("home") && pathname?.split('/')?.length===3) && "place-self-end"
+                )}
               >
                 Add
               </button>
