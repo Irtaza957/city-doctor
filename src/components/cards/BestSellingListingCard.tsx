@@ -183,7 +183,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
             </div>
           </Link>
           <div
-            className={`sm:col-span-1 ml-auto sm:w-[114px] ${asPath.includes("section")
+            className={`sm:col-span-1 xs:ml-auto sm:w-[114px] ${asPath.includes("section")
                 ? "sm:w-[100px] xl:w-[115px]"
                 : "xl:w-[135px]"
               } md:w-[100px] flex items-center justify-between`}

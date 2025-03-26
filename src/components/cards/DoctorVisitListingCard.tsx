@@ -221,17 +221,17 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                 Add
               </button>
             ) : (
-              <div className="w-[95px] flex items-center justify-between ml-1">
+              <div className="flex items-center justify-between gap-2 ml-1">
                 <span
                   onClick={() => {
                     remove(drip);
                     handleDecrement();
                   }}
-                  className="border border-primary p-1 text-black rounded-lg size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
+                  className="border border-primary p-1 text-black rounded-lg size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
                 >
                   <FaMinus />
                 </span>
-                <span className="font-semibold text-sm sm:text-lg w-[10px]">{quantity}</span>
+                <span className="font-semibold text-sm text-center sm:text-lg w-[10px]">{quantity}</span>
                 <span
                   onClick={() => {
                     setQuantity((prev) => prev + 1);
@@ -247,7 +247,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                       true
                     );
                   }}
-                  className="bg-primary text-white p-1 rounded-lg size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
+                  className="bg-primary text-white p-1 rounded-lg size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
                 >
                   <FaPlus />
                 </span>
