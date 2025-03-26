@@ -7,10 +7,12 @@ import { cn, sort } from '@/utils/helpers'
 import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
 import EmptyResults from "@/assets/img/empty-results.svg";
 import DripBanner from "@/assets/icons/mobileDripBanner.svg";
-import { IoGrid } from 'react-icons/io5'
+import arrowDown from "@/assets/icons/arrowDown.svg";
+import { IoClose, IoGrid } from 'react-icons/io5'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { CiGrid41 } from 'react-icons/ci'
 import BestSellingListingCard from '../cards/BestSellingListingCard'
+import { Drawer } from 'vaul'
 
 interface MobileViewListingProps {
     subCategories: SERVICE_LIST[] | null,
@@ -24,6 +26,16 @@ interface MobileViewListingProps {
 const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySelect, selectedSubCategory, subLoading, getNavLink }: MobileViewListingProps) => {
     const [viewType, setViewType] = useState(true);
     const [sorting, setSorting] = useState("");
+    const [openSortDrawer, setOpenSortDrawer] = useState(false)
+
+    const handleClose = () => {
+        setOpenSortDrawer(false)
+    }
+
+    const handleSelectSort = (value: string) => {
+        setSorting(value)
+        handleClose()
+    }
 
     return (
         <>
@@ -77,8 +89,44 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                             <div className="w-full flex items-center justify-end gap-6">
                                 <div className="flex items-center justify-center gap-2">
                                     {/* <span className="text-xs">Sort By</span> */}
-                                    <div className="bg-white pr-2.5 rounded-[9px] border border-[#E1E1E1]">
-                                        <select
+                                    <div onClick={() => setOpenSortDrawer(true)} className="bg-white h-[30px] flex items-center justify-between gap-5 cursor-pointer w-full px-2.5 rounded-[9px] border border-[#E1E1E1] text-sm">
+                                        <p>{sorting || 'Sort'}</p>
+                                        <Image
+                                            src={arrowDown}
+                                            alt="home"
+                                            className="rounded-md object-cover"
+                                            width={15}
+                                            height={15}
+                                        />
+                                    </div>
+                                    <Drawer.Root open={openSortDrawer} onClose={handleClose}>
+                                        <Drawer.Portal>
+                                            <Drawer.Overlay
+                                                onClick={() => handleClose()}
+                                                className="fixed inset-0 bg-black/40 z-50"
+                                            />
+                                            <Drawer.Content className="bg-white h-[40vh] flex flex-col rounded-t-xl fixed bottom-0 left-0 right-0 z-50 focus-visible:outline-none">
+                                                <Drawer.Title className="font-medium flex items-center justify-center px-3 py-4 border-b">
+                                                    <p className="w-full text-left text-lg font-bold">
+                                                        Sort
+                                                    </p>
+                                                    <button onClick={() => handleClose()}>
+                                                        <IoClose className="w-7 h-7" />
+                                                    </button>
+                                                </Drawer.Title>
+                                                <div className="w-full px-3">
+                                                    {sortingOptions?.map((item, index) => {
+                                                        return <p key={index} onClick={() => handleSelectSort(item?.name)} className={cn(
+                                                            'border-b py-4 hover:bg-[#F7F7F7] last:border-none text-sm',
+                                                            item?.name===sorting && 'bg-[#F7F7F7]'
+                                                            )}>
+                                                                {item.name}</p>
+                                                    })}
+                                                </div>
+                                            </Drawer.Content>
+                                        </Drawer.Portal>
+                                    </Drawer.Root>
+                                    {/* <select
                                             onChange={(e) => setSorting(e.target.value)}
                                             className="text-xs p-2 rounded-md bg-transparent"
                                         >
@@ -87,8 +135,8 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                                                     {item.name}
                                                 </option>
                                             ))}
-                                        </select>
-                                    </div>
+                                        </select> */}
+
                                 </div>
                             </div>
                         </div>

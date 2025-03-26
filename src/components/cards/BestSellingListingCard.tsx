@@ -12,6 +12,8 @@ import { imageBase } from "@/utils/helpers";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
+import Image from "next/image";
+import BgTagline from "@/assets/icons/bgTagline.svg";
 
 const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string }) => {
   const dispatch = useDispatch();
@@ -104,9 +106,24 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
       }
     }
   }, [drip]);
-
+  
   return (
-    <div className="w-full flex flex-col items-center justify-center border rounded-xl shadow-sm">
+    <div className="w-full relative flex flex-col items-center justify-center border rounded-xl shadow-sm">
+      {drip?.tagline &&
+      <div className="absolute top-0 left-0 z-10">
+          <div className="relative">
+            <Image
+              src={BgTagline}
+              alt="home"
+              className="rounded-md object-cover"
+              width={33}
+              height={33}
+            />
+            <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 line-clamp-2 w-[22px] text-[10px] font-semibold text-white !leading-[12px]">
+              {drip?.tagline}
+            </p>
+          </div>
+        </div>}
       <div className="relative w-full">
         <Link href={navLink || `/drips/${drip.service_id}`}>
           <div className="relative w-full h-[136px] sm:h-48 xl:h-60 3xl:h-52 rounded-xl bg-[#E8E8E8]">

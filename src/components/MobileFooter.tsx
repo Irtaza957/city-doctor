@@ -9,6 +9,11 @@ import { useRouter } from "next/router";
 import Logo from "@/assets/icons/mobileFooterLogo.svg"
 import Tiktok from "@/assets/icons/tiktok.svg"
 import X from "@/assets/icons/X.svg"
+import tabby from "@/assets/icons/tabby.svg"
+import tamara from "@/assets/icons/tamara.svg"
+import visa from "@/assets/icons/visa.svg"
+import mastercard from "@/assets/icons/mastercard.svg"
+import americanExress from "@/assets/icons/americanExpress.svg"
 
 const MobileFooter = () => {
     const router = useRouter();
@@ -38,11 +43,52 @@ const MobileFooter = () => {
                     <Link href="/refund-policy">Refund Policy</Link>
                     <Link href="/privacy-policy">Privacy Policy</Link>
                 </div>
-                <div className="w-full !mt-6 flex flex-col items-center justify-center gap-2">
+                <div className="w-full !mt-5 flex flex-col items-center justify-center gap-3">
+                    <div className="flex flex-col justify-center items-center gap-2">
+                        <div className="flex items-center gap-3">
+                            <Image
+                                src={tabby}
+                                alt="home"
+                                className="object-cover"
+                                width={74}
+                                height={30}
+                            />
+                            <Image
+                                src={tamara}
+                                alt="home"
+                                className="object-cover"
+                                width={92}
+                                height={30}
+                            />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Image
+                                src={visa}
+                                alt="home"
+                                className="object-cover rounded-[2px]"
+                                width={40}
+                                height={25}
+                            />
+                            <Image
+                                src={mastercard}
+                                alt="home"
+                                className="object-cover rounded-[2px]"
+                                width={40}
+                                height={25}
+                            />
+                            <Image
+                                src={americanExress}
+                                alt="home"
+                                className="object-cover rounded-[2px]"
+                                width={40}
+                                height={25}
+                            />
+                        </div>
+                    </div>
                     <p className="text-xs mb-2 text-center">Secure payment powered by encrypted SSL
                         <br />We accept all major credit cards</p>
                     <p className="text-sm">Connect With Us</p>
-                    <div className="w-full flex items-center justify-center space-x-5 pb-6 border-b border-[#A4A4A4]">
+                    <div className="w-full flex items-center justify-center space-x-5 pb-[22px] border-b border-[#A4A4A4]">
                         <FaFacebook className="w-5 h-5 text-black" />
                         <FaInstagram className="w-5 h-5 text-black" />
                         <FaYoutube className="w-5 h-5 text-black" />

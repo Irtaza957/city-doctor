@@ -12,6 +12,8 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 import { imageBase, truncateString } from "@/utils/helpers";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
+import Image from "next/image";
+import BgTagline from "@/assets/icons/bgTagline.svg";
 
 interface DoctorVisitCardProps {
   drip: DRIP_CARD;
@@ -112,7 +114,22 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
 
   return (
     <>
-      <div className="md:hidden flex shadow-sm sm:h-[180px] items-start justify-start gap-1 rounded-lg border border-[#EAEAEA] bg-white">
+      <div className="md:hidden relative flex shadow-sm sm:h-[180px] items-start justify-start gap-1 rounded-[9px] border border-[#EAEAEA] bg-white">
+        {drip?.tagline &&
+        <div className="absolute top-0 left-0 z-10">
+          <div className="relative">
+            <Image
+              src={BgTagline}
+              alt="home"
+              className="rounded-md object-cover"
+              width={33}
+              height={33}
+            />
+            <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-semibold text-white !leading-[12px]">
+              {drip?.tagline}
+            </p>
+          </div>
+        </div>}
         <Link href={navLink || `/drips/${drip.service_id}`}>
           <div className="relative h-[98px] w-20 rounded-l-lg bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
             <div
