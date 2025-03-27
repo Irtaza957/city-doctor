@@ -90,7 +90,9 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
         // @ts-ignore
         toast.error(response.error.data.error);
       } else {
-        await getData()
+        if(getData){
+          await getData()
+        }
         if (data?.wishlist_id) {
           toast.success("Removed from Wishlist!");
           setWishlist(false);
