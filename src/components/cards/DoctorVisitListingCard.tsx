@@ -133,7 +133,10 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
           </div>
         </div>}
         <Link href={navLink || `/drips/${drip.service_id}`}>
-          <div className="relative h-[98px] w-20 rounded-l-lg bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover">
+          <div className={cn(
+            "relative h-[102px] rounded-l-lg bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover",
+            asPath.includes("home") && pathname?.split('/')?.length===3 ? 'w-28 h-[102px]' : 'w-20 h-[98px]'
+            )}>
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
               className="rounded-l-lg size-full bg-top bg-cover flex items-center justify-center"
@@ -184,7 +187,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
           </div>
           <div className={cn(
             "w-full sm:h-full flex justify-between gap-1.5",
-            asPath.includes("home") && pathname?.split('/')?.length===3 ? "items-center" : 'items-end'
+            asPath.includes("home") && pathname?.split('/')?.length===3 ? "items-center mb-1" : 'items-end'
             )}>
             <Link
               href={navLink || `/drips/${drip.service_id}`}
@@ -237,7 +240,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                     remove(drip);
                     handleDecrement();
                   }}
-                  className="border border-primary p-1 text-black rounded-lg size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
+                  className="border border-primary p-1 text-black rounded-md size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
                 >
                   <FaMinus />
                 </span>
@@ -257,7 +260,7 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
                       true
                     );
                   }}
-                  className="bg-primary text-white p-1 rounded-lg size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
+                  className="bg-primary text-white p-1 rounded-md size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
                 >
                   <FaPlus />
                 </span>

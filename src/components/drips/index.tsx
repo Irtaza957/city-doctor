@@ -193,7 +193,7 @@ const DripListing = () => {
     <>
       <div className="fixed w-full z-20 top-[69px] sm:top-[75.75px] md:top-[108px] lg:top-[113px] left-0 bg-white md:border-b xl:border-none">
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto">
-          <div className="w-full block sm:hidden pb-2.5 pt-2.5 shadow-sm">
+          <div className="w-full block sm:hidden pb-2.5 pt-2.5 shadow-md">
             {isLoading ? (
               <Swiper
                 freeMode={true}

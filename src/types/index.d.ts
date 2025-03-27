@@ -82,6 +82,9 @@ declare type DRIP_CARD = {
 declare type DRIP = {
   section: string;
   rows: string;
+  category_id: string;
+  category_name: string;
+  page_type: string;
   section_data: DRIP_CARD[];
 };
 

@@ -3,43 +3,51 @@
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import { cn, formatString, getSlug } from "@/utils/helpers";
+import { cn, formatString, getCategoryLink, getSlug } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import BestSellingCard from "./cards/BestSellingCard";
 import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
 
-import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 // @ts-ignore
 import { FreeMode, Navigation } from "swiper/modules";
 import he from "he";
+import { useRouter } from "next/router";
 
 const BestSelling = ({ bg, section }: { bg: string; section: DRIP }) => {
   const dispatch = useDispatch();
+  const router=useRouter()
 
   const clearCategory = () => {
-    dispatch(setSelectedCategory(null));
+    if(section?.page_type==='Sections'){
+      dispatch(setSelectedCategory(null));
+      router.push(`/home/${section.section
+        .toLowerCase()
+        .split(" ")
+        .join("-")}`)
+    }else{
+      dispatch(setSelectedCategory(section?.category_id));
+      router.push(`/${getCategoryLink('', section?.category_name || '')}`)
+    }
+    
   };
 
   const getNavLink = (name: string, category_name: string='') => {
     return `/${getSlug(section.section)}/${getSlug(category_name)}/${getSlug(name)}`;
   };
+
   return (
     <div className={`w-full flex items-center justify-center ${bg}`}>
       <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto h-full pt-7 pb-8">
         <div className="w-full h-full flex items-center justify-between mb-5 px-5 md:px-0">
           <h1 className="text-xl xl:text-2xl font-bold" dangerouslySetInnerHTML={{ __html: he.decode(section.section) }}/>
-          <Link
+          <div
             onClick={clearCategory}
             className="text-sm text-primary font-medium whitespace-nowrap"
-            href={`/home/${section.section
-              .toLowerCase()
-              .split(" ")
-              .join("-")}`}
           >
             View All
-          </Link>
+          </div>
         </div>
         <div className="flex items-center justify-center">
         <div className="block sm:hidden w-full">

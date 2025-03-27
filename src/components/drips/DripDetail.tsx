@@ -32,7 +32,7 @@ import { addToCart, removeFromCart, toggleSidebar } from "@/store/global";
 import he from "he";
 import SizeIcon from "@/assets/icons/size.svg";
 
-const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
+const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData: ()=>void }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
@@ -90,7 +90,8 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
         // @ts-ignore
         toast.error(response.error.data.error);
       } else {
-        if (wishlist) {
+        await getData()
+        if (data?.wishlist_id) {
           toast.success("Removed from Wishlist!");
           setWishlist(false);
         } else {
@@ -122,7 +123,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
       }
     }
   }, [data]);
-
+console.log(data, 'datadata')
   return (
     <>
       <LoginModal open={openLogin} setOpen={setOpenLogin} />
@@ -153,11 +154,13 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                   }
                 }}
               >
-                <HeartIcon className="size-6" />
+                {data?.wishlist_id ?
+                <HeartIcon fillColor="#38ADA0" className="text-secondary" /> :
+                <HeartIcon className="size-6" />}
               </button>
             </div>
           </div>
-          <p className="w-full text-left text-[#535763] text-xs font-medium my-2 px-5">
+          <p className="w-full text-left text-[#535763] text-sm font-medium my-2 px-5">
             {data?.description}
           </p>
           <div className="w-full flex items-center justify-start space-x-5 px-5">
@@ -174,7 +177,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
               </span>
             </div>
           </div>
-          <p className="w-full text-left font-semibold sm:font-bold text-[18px] sm:text-xl px-5">
+          <p className="w-full text-[18px] px-5 text-left font-bold text-xl">
             AED {data?.price ? Math.round(Number(data?.price)) : '-'}
           </p>
           {data?.bundles?.length ?
@@ -205,8 +208,8 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
           </div>: null}
           {data?.sections?.length ?
             <div className="flex flex-col gap-1.5 !mb-2.5 !mt-5 pl-5 pr-10">
-              <p className="text-black font-medium text-sm">{data?.sections?.[0]?.name}</p>
-              <p className="text-xs text-[#535763]" dangerouslySetInnerHTML={{ __html: he.decode(data?.sections?.[0]?.description || '') }} />
+              <p className="text-black text-left text-lg md:text-xl font-medium">{data?.sections?.[0]?.name}</p>
+              <p className="text-[#535763] text-sm font-medium" dangerouslySetInnerHTML={{ __html: he.decode(data?.sections?.[0]?.description || '') }} />
             </div> : null}
           <div className="w-full flex flex-col items-center justify-center space-y-2.5 px-5">
             {data?.sections?.filter((_, index) => index !== 0)?.map((section, idx) => (
@@ -296,8 +299,8 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
           </div>
           <div className="w-full mt-2 !mb-4">
             <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 my-3">
-              <h1 className="w-full text-left text-lg md:text-xl font-medium sm:font-bold">
-                Service Ratings & Reviews
+              <h1 className="w-full text-left text-lg md:text-xl font-medium">
+                Reviews
               </h1>
               {/* <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
               <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
@@ -358,7 +361,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                       idx === data?.reviews?.length - 1 ? 'mr-4' : '',
                     )}
                   >
-                    <div className="w-full flex items-center justify-start space-x-6">
+                    <div className="w-full flex items-center justify-start space-x-4">
                       <Image
                         src="https://ui.shadcn.com/avatars/04.png"
                         alt="user"
@@ -367,20 +370,20 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
                         className="rounded-full bg-gray-200 size-10"
                       />
                       <div className="w-full flex flex-col items-center justify-start space-y-1">
-                        <div className="w-full flex items-center justify-start space-x-10">
-                          <p className="font-bold text-xs">{review.customer}</p>
-                          <div className="flex items-center justify-center space-x-1.5">
+                        <div className="w-full flex items-center justify-between">
+                          <p className="text-left text-lg md:text-xl font-medium">{review.customer}</p>
+                          <div className="flex items-center w-[35%] justify-center space-x-1.5">
                             {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
-                              <FaStar key={idx} className="text-accent" />
+                              <FaStar key={idx} className="text-accent size-4" />
                             ))}
                           </div>
                         </div>
-                        <span className="w-full text-left text-xs text-gray-400">
+                        {/* <span className="w-full text-left text-xs text-gray-400">
                           {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
-                        </span>
+                        </span> */}
                       </div>
                     </div>
-                    <p className="w-full pl-[52.5px] text-left text-xs text-[#535763] font-medium">
+                    <p className="w-full text-left line-clamp-3 h-[40px] text-[#535763] text-sm font-medium">
                       {numberSentences(1, review.description)}
                     </p>
                   </div>
@@ -461,7 +464,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             </div> : null}
           {data?.faqs?.length ?
             <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
-              <h1 className="w-full text-left text-xl font-medium sm:font-bold">FAQs</h1>
+              <h1 className="w-full text-left text-xl font-medium">FAQs</h1>
               <div className="w-full flex flex-col items-center justify-center space-y-2.5">
                 {data?.faqs?.map((section, idx) => (
                   <Accordion section={section} key={idx} />
@@ -476,7 +479,7 @@ const DripDetailPage = ({ data }: { data: DRIP_DETAIL_RESPONSE }) => {
             {quantity === 0 ? (
               <button
                 onClick={() => handleIncrement()}
-                className="w-full h-[40px] rounded-lg bg-primary border border-primary text-white text-[18px] font-semibold"
+                className="w-full py-4 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
               >
                 Add to Cart
               </button>

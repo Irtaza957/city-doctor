@@ -9,18 +9,22 @@ import store, { persistor } from "@/store";
 import CartBar from "@/components/CartBar";
 import CheckoutBar from "@/components/CheckoutBar";
 
-import { Router } from "next/router";
+import { Router, useRouter } from "next/router";
 import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { PersistGate } from "redux-persist/integration/react";
 import BottomNav from "@/components/BottomNav";
 import MobileFooter from "@/components/MobileFooter";
+import { usePathname } from "next/navigation";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
   const [showBottomNav, setShowBottomNav] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const pathname=usePathname()
+  const { asPath } = useRouter();
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
@@ -72,7 +76,8 @@ export default function App({ Component, pageProps }: AppProps) {
           {/* <BottomNav /> */}
           {showBottomNav && <BottomNav />}
           <Footer />
-          <MobileFooter />
+          {}
+          {pathname?.split('/')?.length!==2 && <MobileFooter />}
           <CartBar />
         </PersistGate>
       </Provider>

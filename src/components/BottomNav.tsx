@@ -51,14 +51,14 @@ const BottomNav = () => {
             <Image
               src={SelectedHome}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             /> :
             <Image
               src={HomeIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             />}
@@ -80,13 +80,13 @@ const BottomNav = () => {
             <Image
               src={SelectedBookingCalendarIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             /> : <Image
               src={BookingCalendarIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             />}
@@ -109,14 +109,14 @@ const BottomNav = () => {
             <Image
               src={SelectedOfferIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             /> :
             <Image
               src={OfferIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             />}
@@ -139,14 +139,14 @@ const BottomNav = () => {
             <Image
               src={SelectedUserIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={18}
               height={18}
             /> :
             <Image
               src={UserIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={18}
               height={18}
             />}
@@ -161,14 +161,14 @@ const BottomNav = () => {
             <Image
               src={SelectedCartIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             /> :
             <Image
               src={CartIcon}
               alt="home"
-              className="rounded-md object-cover"
+              className="object-cover"
               width={22}
               height={22}
             />}

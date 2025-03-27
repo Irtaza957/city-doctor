@@ -126,10 +126,10 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
         </div>}
       <div className="relative w-full">
         <Link href={navLink || `/drips/${drip.service_id}`}>
-          <div className="relative w-full h-[136px] sm:h-48 xl:h-60 3xl:h-52 rounded-xl bg-[#E8E8E8]">
+          <div className="relative w-full h-[120px] sm:h-48 xl:h-60 3xl:h-52 rounded-xl bg-[#E8E8E8]">
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
-              className="size-full rounded-xl bg-top bg-cover h-[136px] sm:h-auto"
+              className="size-full rounded-xl bg-top bg-cover h-[120px] sm:h-auto"
             />
           </div>
         </Link>

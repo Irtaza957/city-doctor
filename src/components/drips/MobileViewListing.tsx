@@ -52,13 +52,13 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                                     "text-xs break-words text-center border-b border-l-4 border-l-[#F7F7F7] p-3 h-[60px] flex items-center justify-center",
                                     !selectedSubCategory ? 'border-l-primary text-primary bg-white font-semibold' : ''
                                 )}>
-                                All Drips
+                                All Services
                             </div>
                             {subCategories?.map((sub, idx) => (
                                 <div key={idx}
                                     onClick={() => handleSubCategorySelect(sub?.name)}
                                     className={cn(
-                                        "text-xs text-center border-b border-l-4 border-l-[#F7F7F7] py-3 px-1 h-[60px] flex items-center justify-center",
+                                        "text-xs text-center border-b border-l-4 font-medium border-l-[#F7F7F7] py-3 px-1 h-[60px] flex items-center justify-center",
                                         selectedSubCategory === idx.toString() ? 'border-l-primary text-primary bg-white font-semibold' : ''
                                     )}>
                                     {sub.name}
@@ -67,7 +67,7 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                         </>}
                 </div>
                 <div className="w-full relative h-screen overflow-hidden pb-36">
-                    <div className='sticky mt-2 z-10 mb-3 w-full'>
+                    <div className='sticky mt-2 z-10 mb-2.5 w-full'>
                         <div className="flex items-center justify-between gap-3">
                             <div className="flex items-center justify-start gap-1 xs:gap-2">
                                 <button type="button" onClick={() => setViewType(false)} className='border border-[#E1E1E1] rounded-[9px] w-[30px] h-[30px] flex items-center justify-center'>
@@ -102,7 +102,7 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                                 <div className="flex items-center justify-center gap-2">
                                     {/* <span className="text-xs">Sort By</span> */}
                                     <div onClick={() => setOpenSortDrawer(true)} className="bg-white h-[30px] flex items-center justify-between gap-5 cursor-pointer w-full px-2.5 rounded-[9px] border border-[#E1E1E1] text-sm">
-                                        <p  className='truncate'>{sorting || 'Sort'}</p>
+                                        <p className='truncate'>{sorting || 'Sort'}</p>
                                         <Image
                                             src={arrowDown}
                                             alt="home"
@@ -141,7 +141,10 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                                 </div>
                             </div>
                         </div>
-                        <div className='relative w-full h-[80px] mt-2'>
+
+                    </div>
+                    <div className='overflow-auto custom-scrollbar h-full '>
+                        <div className='relative w-full h-[80px] mb-3'>
                             <Image
                                 src={DripBanner}
                                 alt="home"
@@ -149,62 +152,62 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                                 fill
                             />
                         </div>
-                    </div>
-                    <div className={`overflow-auto custom-scrollbar h-full mt-1 grid ${!viewType ? 'grid-cols-2' : 'grid-cols-1'} gap-2`}>
-                        {subLoading ? (
-                            <div className="w-full xl:w-[85%] 3xl:w-[70%] xl:mx-auto grid grid-cols-1 xl:grid-cols-2 gap-4">
-                                <div className="col-span-1 xl:col-span-2 w-full">
-                                    <HeaderSkeleton />
+                        <div className={`grid ${!viewType ? 'grid-cols-2' : 'grid-cols-1'} gap-2`}>
+                            {subLoading ? (
+                                <div className="w-full xl:w-[85%] 3xl:w-[70%] xl:mx-auto grid grid-cols-1 xl:grid-cols-2 gap-4">
+                                    <div className="col-span-1 xl:col-span-2 w-full">
+                                        <HeaderSkeleton />
+                                    </div>
+                                    <div className="col-span-1 xl:col-span-2 w-full grid grid-cols-2 gap-5">
+                                        {[...Array(10)].map((_, idx) => (
+                                            <ServiceCardSkeleton key={idx} />
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="col-span-1 xl:col-span-2 w-full grid grid-cols-2 gap-5">
-                                    {[...Array(10)].map((_, idx) => (
-                                        <ServiceCardSkeleton key={idx} />
-                                    ))}
+                            ) : subCategories?.length === 0 ? (
+                                <div className="w-full flex flex-col items-center justify-center h-[calc(100vh-272.75px)]">
+                                    <Image
+                                        src={EmptyResults}
+                                        alt="empty-wishlist"
+                                        className="size-24"
+                                    />
+                                    <p className="w-full text-center font-semibold mt-3">
+                                        Sorry, Unfortunately the Product
+                                        <br />
+                                        you were Looking for wasn&apos;t found!!
+                                    </p>
+                                    <p className="w-full text-center font-semibold text-xs lg:text-base text-[#707070]">
+                                        Explore more and shortlist some services
+                                    </p>
+                                    <Link
+                                        href="/home"
+                                        className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
+                                    >
+                                        Continue Shopping
+                                    </Link>
                                 </div>
-                            </div>
-                        ) : subCategories?.length === 0 ? (
-                            <div className="w-full flex flex-col items-center justify-center h-[calc(100vh-272.75px)]">
-                                <Image
-                                    src={EmptyResults}
-                                    alt="empty-wishlist"
-                                    className="size-24"
-                                />
-                                <p className="w-full text-center font-semibold mt-3">
-                                    Sorry, Unfortunately the Product
-                                    <br />
-                                    you were Looking for wasn&apos;t found!!
-                                </p>
-                                <p className="w-full text-center font-semibold text-xs lg:text-base text-[#707070]">
-                                    Explore more and shortlist some services
-                                </p>
-                                <Link
-                                    href="/home"
-                                    className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
-                                >
-                                    Continue Shopping
-                                </Link>
-                            </div>
-                        ) : (
-                            sort(sorting, selectedSubCategory ? subCategories?.[parseInt(selectedSubCategory)]?.services : subCategories?.flatMap((item) => item?.services))?.map((sub, idx) => (
-                                <div
-                                    key={idx}
-                                    id={idx.toString()}
-                                    className={`w-full mt-`}
-                                >
-                                    {viewType ?
-                                        <DoctorVisitListingCard
-                                            key={sub.service_id}
-                                            drip={sub}
-                                            navLink={getNavLink(sub.name || '', sub?.category_name) || '#'}
-                                        /> :
-                                        <BestSellingListingCard
-                                            key={sub.service_id}
-                                            drip={sub}
-                                            navLink={getNavLink(sub.name || '', sub?.category_name) || '#'}
-                                        />}
-                                </div>
-                            ))
-                        )}
+                            ) : (
+                                sort(sorting, selectedSubCategory ? subCategories?.[parseInt(selectedSubCategory)]?.services : subCategories?.flatMap((item) => item?.services))?.map((sub, idx) => (
+                                    <div
+                                        key={idx}
+                                        id={idx.toString()}
+                                        className={`w-full`}
+                                    >
+                                        {viewType ?
+                                            <DoctorVisitListingCard
+                                                key={sub.service_id}
+                                                drip={sub}
+                                                navLink={getNavLink(sub.name || '', sub?.category_name) || '#'}
+                                            /> :
+                                            <BestSellingListingCard
+                                                key={sub.service_id}
+                                                drip={sub}
+                                                navLink={getNavLink(sub.name || '', sub?.category_name) || '#'}
+                                            />}
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

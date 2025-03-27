@@ -43,7 +43,7 @@ const ServiceDetail = () => {
     if(loading){
       return <div className='h-screen'><Loader/></div>
     }
-  return <DripDetailPage data={dripData as DRIP_DETAIL_RESPONSE} />;
+  return <DripDetailPage data={dripData as DRIP_DETAIL_RESPONSE} getData={()=>getData({ params: { id: id?.[id.length - 1] as string } })} />;
 }
 
 export default ServiceDetail

@@ -158,7 +158,7 @@ const CheckoutBar = ({isMenuVisible}: {isMenuVisible: boolean}) => {
                   </span>
                   <FaChevronDown
                     className={`w-3 h-3 ${
-                      openCart && "rotate-180"
+                      !openCart && "rotate-180"
                     } transition-all duration-150 ease-linear`}
                   />
                 </div>

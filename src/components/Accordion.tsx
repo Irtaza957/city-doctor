@@ -11,7 +11,6 @@ import he from 'he';
 const Accordion = ({
   children,
   section,
-  index
 }: {
   children?: React.ReactNode;
   section: {
@@ -23,7 +22,7 @@ const Accordion = ({
   index?: number;
 }) => {
   return (
-    <Disclosure as="div" className="w-full" defaultOpen={index === 0}>
+    <Disclosure as="div" className="w-full">
       {({ open }) => (
         <>
           <DisclosureButton
@@ -33,7 +32,7 @@ const Accordion = ({
                 : "rounded-lg bg-[#FAFAFA] text-gray-500"
             }`}
           >
-            <span className="w-full text-left font-medium text-sm overflow-hidden truncate">
+            <span className="w-full text-left text-lg md:text-xl  font-medium overflow-hidden truncate">
               {section?.name ? section?.name : section?.question}
             </span>
             <FaChevronDown
@@ -53,7 +52,7 @@ const Accordion = ({
           >
             <DisclosurePanel className="w-full p-3 rounded-b-lg bg-[#FAFAFA] text-gray-400 flex flex-col space-y-3">
               {children ? children : (
-                <p className="text-xs md:text-sm text-gray-500" dangerouslySetInnerHTML={{ __html: he.decode(section?.description ? section?.description : section?.answer ?? '') }} />
+                <p className="text-[#535763] text-sm font-medium" dangerouslySetInnerHTML={{ __html: he.decode(section?.description ? section?.description : section?.answer ?? '') }} />
               )}
             </DisclosurePanel>
           </Transition>

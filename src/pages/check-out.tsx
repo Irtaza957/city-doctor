@@ -767,7 +767,7 @@ const CheckoutDetails = () => {
           type="button"
           disabled={isLoading}
           onClick={handleSubmit}
-          className="w-full h-[40px] rounded-lg bg-primary border border-primary text-white text-[18px] font-semibold"
+          className="w-full py-4 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
         >
           {isLoading ? (
             <div className="w-full flex items-center justify-center space-x-3">

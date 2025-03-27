@@ -29,13 +29,15 @@ const Categories = () => {
 
   useEffect(() => {
     let hasUserInteracted = false;
-
+    setShowSlider(false); // Ensure showSlider resets on mount
+  
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       if (!hasUserInteracted) return;
-
+  
       entries.forEach((entry) => {
         const adjustedTop = entry.boundingClientRect.top - 120;
-
+        console.log(entry.intersectionRatio, adjustedTop, "adjustedTopadjustedTop");
+  
         if (entry.intersectionRatio === 0 && adjustedTop <= 0) {
           setShowSlider(true);
         } else {
@@ -43,38 +45,39 @@ const Categories = () => {
         }
       });
     };
-
+  
     const handleScroll = () => {
       hasUserInteracted = true;
     };
-
+  
     const observerOptions = {
       root: null,
       threshold: [0, 1],
     };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
-    );
-
+  
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+  
     if (categoryRef.current) observer.observe(categoryRef.current);
     if (categoryDRef.current) observer.observe(categoryDRef.current);
-
+  
     window.addEventListener("scroll", handleScroll);
-
+  
     return () => {
       if (categoryRef.current) observer.unobserve(categoryRef.current);
       if (categoryDRef.current) observer.unobserve(categoryDRef.current);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isLoading]);
+  }, [isLoading]); // Keep dependencies minimal
+  
+  
 
   return (
     <>
       <div
-        className={`fixed ${showSlider ? "flex" : "hidden"
-          } w-full shadow-md z-40 top-[69px] sm:top-[71.75px] md:top-[116px] 3xl:top-[115px] left-0 bg-white md:border-b xl:border-none`}
+        className={cn(
+          `fixed w-full shadow-md z-40 top-[69px] sm:top-[71.75px] md:top-[116px] 3xl:top-[115px] left-0 bg-white md:border-b xl:border-none`,
+          showSlider ? "flex" : "hidden"
+        )}
       >
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto sm:px-5 md:px-0">
           <div className="block sm:hidden py-2.5">
@@ -240,7 +243,7 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("col-span-1 w-full h-[70px] flex items-center justify-start gap-3 space-y-2 rounded-xl bg-gray-100 text-black pl-3.5 pr-2")}
+                className={cn("col-span-1 w-full h-[70px] flex items-center justify-start gap-4 space-y-2 rounded-xl bg-gray-100 text-black pl-4 pr-2")}
                 style={{ backgroundColor: category?.color || "#F5F5F5" }}
               >
                 <Image

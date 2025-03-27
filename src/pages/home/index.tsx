@@ -73,7 +73,7 @@ const Home = () => {
           );
         })       
       )}
-      <div className="flex flex-col items-center text-left md:text-center justify-center gap-5 px-4 md:px-2 sm:w-[70%] md:w-[45%] my-7">
+      <div className="flex flex-col items-center text-left md:text-center justify-center gap-5 px-4 md:px-2 sm:w-[70%] md:w-[45%] my-7 pb-5">
         <p className="text-xl sm:text-2xl font-bold md:whitespace-nowrap">City Doctor – Trusted Home Healthcare Services in Dubai</p>
         <div className={`space-y-3 ${showMore && 'border-b pb-5'}`}>
           <p className="text-lg sm:text-xl font-bold md:whitespace-nowrap">Bringing Quality Medical Care to Your Home</p>
@@ -118,7 +118,9 @@ const Home = () => {
             <p className="text-xs sm:text-sm md:text-center w-full">Call us now at <span className="font-bold">8005060</span> to book your home medical service in Dubai!</p>
           </div>
         </div>}
+        <div className="flex items-start justify-start w-full">
         <button onClick={handleShowMore} className="h-[36px] px-8 py-2 bg-primary rounded-md text-white mt-1 font-semibold text-sm">Read {showMore ? 'Less' : 'More'}</button>
+        </div>
       </div>
     </div>
   );
