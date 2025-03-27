@@ -32,7 +32,7 @@ import { addToCart, removeFromCart, toggleSidebar } from "@/store/global";
 import he from "he";
 import SizeIcon from "@/assets/icons/size.svg";
 
-const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData: ()=>void }) => {
+const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData?: ()=>void }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
