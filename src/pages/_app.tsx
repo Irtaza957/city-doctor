@@ -9,7 +9,7 @@ import store, { persistor } from "@/store";
 import CartBar from "@/components/CartBar";
 import CheckoutBar from "@/components/CheckoutBar";
 
-import { Router, useRouter } from "next/router";
+import { Router } from "next/router";
 import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -24,7 +24,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const pathname=usePathname()
-  const { asPath } = useRouter();
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
