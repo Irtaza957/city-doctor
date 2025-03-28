@@ -31,6 +31,7 @@ import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, toggleSidebar } from "@/store/global";
 import he from "he";
 import SizeIcon from "@/assets/icons/size.svg";
+import avatar from "@/assets/icons/avatar.svg";
 
 const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData?: ()=>void }) => {
   const dispatch = useDispatch();
@@ -366,7 +367,7 @@ console.log(data, 'datadata')
                   >
                     <div className="w-full flex items-center justify-start space-x-4">
                       <Image
-                        src="https://ui.shadcn.com/avatars/04.png"
+                        src={avatar}
                         alt="user"
                         width={40}
                         height={40}
