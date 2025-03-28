@@ -90,7 +90,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex items-center justify-center cursor-pointer gap-1 px-1 xs:px-2 py-2 rounded-lg text-black"
+                    className="w-full flex items-center justify-center cursor-pointer gap-1 px-2 py-2 rounded-lg text-black"
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
@@ -98,9 +98,9 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                       alt="icon"
                       width={56}
                       height={56}
-                      className="w-7 h-7"
+                      className="w-[26px] h-[26px]"
                     />
-                    <span className="text-left font-semibold text-[10px] h-[30px] w-[64px]">
+                    <span className="text-left font-bold text-[10px] h-[30px] w-[64px] line-clamp-2 md:whitespace-nowrap">
                       {category.category_name}
                     </span>
                   </Link>

@@ -83,7 +83,7 @@ const Categories = () => {
           <div className="block sm:hidden py-2.5">
             <Swiper
               freeMode={true}
-              spaceBetween={8}
+              spaceBetween={7}
               slidesPerView={3.40}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
@@ -102,7 +102,7 @@ const Categories = () => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className={"w-full text-black flex items-center justify-center gap-2 cursor-pointer py-2 px-2 rounded-lg"}
+                    className={"w-full text-black flex items-center justify-center gap-1 cursor-pointer py-2 px-2 rounded-lg"}
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
@@ -110,9 +110,9 @@ const Categories = () => {
                       alt="icon"
                       width={56}
                       height={56}
-                      className="w-7 h-7"
+                      className="w-[26px] h-[26px]"
                     />
-                    <span className="text-left w-[64px] break-words font-bold text-[10px] md:whitespace-nowrap line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-left font-bold text-[10px] h-[30px] w-[64px] line-clamp-2 md:whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
