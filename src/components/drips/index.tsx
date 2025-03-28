@@ -210,7 +210,7 @@ const DripListing = () => {
             ) : (
               <Swiper
                 freeMode={true}
-                spaceBetween={6}
+                spaceBetween={5}
                 slidesPerView={3.40}
                 modules={[FreeMode]}
                 onSlideChange={(swiper) => {

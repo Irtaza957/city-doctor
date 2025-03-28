@@ -71,7 +71,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
           <div className="w-full block sm:hidden pb-2.5">
             <Swiper
               freeMode={true}
-              spaceBetween={7}
+              spaceBetween={5}
               slidesPerView={3.40}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
