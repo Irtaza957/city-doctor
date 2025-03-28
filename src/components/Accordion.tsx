@@ -32,7 +32,7 @@ const Accordion = ({
                 : "rounded-lg bg-[#FAFAFA] text-gray-500"
             }`}
           >
-            <span className="w-full text-left text-lg md:text-xl  font-medium overflow-hidden truncate">
+            <span className="w-full text-left md:text-xl  font-medium overflow-hidden truncate">
               {section?.name ? section?.name : section?.question}
             </span>
             <FaChevronDown

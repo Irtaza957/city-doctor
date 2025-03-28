@@ -154,7 +154,7 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
           href={navLink || `/drips/${drip.service_id}`}
           className="w-full flex flex-col items-center justify-center space-y-1.5"
         >
-          <h1 className="w-full text-left text-sm sm:text-base line-clamp-2 sm:line-clamp-none sm:overflow-hidden sm:truncate font-semibold xl:font-bold">
+          <h1 className="w-full text-left text-sm sm:text-base h-10 line-clamp-2 sm:line-clamp-none sm:overflow-hidden sm:truncate font-semibold xl:font-bold">
             {drip.name || drip.service_name}
           </h1>
           <p className="hidden sm:block w-full text-left overflow-hidden font-medium truncate text-xs text-[#555555]">

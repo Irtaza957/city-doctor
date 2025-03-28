@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [showBottomNav, setShowBottomNav] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const pathname=usePathname()
+  const pathname=usePathname()?.split('/')
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
@@ -54,6 +54,9 @@ export default function App({ Component, pageProps }: AppProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
+
+  const isTwoChars = pathname?.length === 2;
+  const isThreeCharsButNotHome = pathname?.length === 3 && pathname?.[1] !== 'home'
   
   return (
     <>
@@ -76,7 +79,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {showBottomNav && <BottomNav />}
           <Footer />
           {}
-          {pathname?.split('/')?.length!==2 && <MobileFooter />}
+          {!isTwoChars && !isThreeCharsButNotHome && <MobileFooter />}
           <CartBar />
         </PersistGate>
       </Provider>

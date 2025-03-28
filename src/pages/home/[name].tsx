@@ -3,8 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { IoGrid } from "react-icons/io5";
-import { FaThList } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 // @ts-ignore
 import { FreeMode } from "swiper/modules";
@@ -19,6 +17,7 @@ import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
 import BestSellingListingCard from "@/components/cards/BestSellingListingCard";
 import he from "he";
 import GoogleAnalytics from "../../components/GoogleAnalytics";
+import SortHeader from "@/components/drips/SortHeader";
 
 const sortingOptions = [
   {
@@ -37,8 +36,7 @@ const sortingOptions = [
 
 const SectionListing = ({ data }: { data: DRIP }) => {
   const dispatch = useDispatch();
-  const [limit, setLimit] = useState("All");
-  const [viewType, setViewType] = useState(false);
+  const [viewType, setViewType] = useState(true);
   const [startSlide, setStartSlide] = useState(true);
   const { data: categories } = useFetchCategoriesQuery({});
   const [sorting, setSorting] = useState("Price (Low to High)");
@@ -53,6 +51,17 @@ const SectionListing = ({ data }: { data: DRIP }) => {
       .split(" ")
       .join("-")}/${getSlug(name)}`;
   };
+
+  const [openSortDrawer, setOpenSortDrawer] = useState(false)
+
+  const handleClose = () => {
+      setOpenSortDrawer(false)
+  }
+
+  const handleSelectSort = (value: string) => {
+      setSorting(value)
+      handleClose()
+  }
 
   return (
     <>
@@ -206,7 +215,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
           />
         </div>
         <div className="w-full flex flex-col items-start justify-start gap-4">
-          <div className="w-full flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
+          {/* <div className="w-full flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
             <div className="flex items-center justify-start gap-2">
               <button type="button" onClick={() => setViewType(false)}>
                 <FaThList
@@ -271,27 +280,20 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                 </div>
               </div>
             </div>
+          </div> */}
+          <div className="w-full flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-3">
+          <SortHeader viewType={viewType} setViewType={setViewType} setOpenSortDrawer={setOpenSortDrawer} handleClose={handleClose} sorting={sorting} openSortDrawer={openSortDrawer} handleSelectSort={handleSelectSort} sortingOptions={sortingOptions} />
           </div>
           <h1 className="w-full text-left font-bold text-xl">{data?.section}</h1>
           <div
             className={`w-full grid pb-5 ${
-              viewType
-                ? "grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
+              !viewType
+                ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
                 : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2"
             }`}
           >
-            {limit === "All"
-              ? sort(sorting, data?.section_data)?.map((service, idx) => {
-                  if (!viewType) {
-                    return <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />;
-                  } else {
-                    return <BestSellingListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />;
-                  }
-                })
-              : data?.section_data
-                  .slice(0, parseInt(limit))
-                  .map((service, idx) => {
-                    if (!viewType) {
+            {sort(sorting, data?.section_data)?.map((service, idx) => {
+                    if (viewType) {
                       return (
                         <DoctorVisitListingCard key={idx} drip={service} navLink={getNavLink(service.name || '')} />
                       );

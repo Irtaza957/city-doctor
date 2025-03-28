@@ -299,6 +299,7 @@ console.log(data, 'datadata')
               ))}
             </Accordion> */}
           </div>
+          {data?.reviews?.length ?
           <div className="w-full mt-2 !mb-4">
             <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 my-3">
               <h1 className="w-full text-left text-lg md:text-xl font-medium">
@@ -373,7 +374,7 @@ console.log(data, 'datadata')
                       />
                       <div className="w-full flex flex-col items-center justify-start space-y-1">
                         <div className="w-full flex items-center justify-between">
-                          <p className="text-left text-lg md:text-xl font-medium">{review.customer}</p>
+                          <p className="text-left md:text-xl font-medium">{review.customer}</p>
                           <div className="flex items-center w-[35%] justify-center space-x-1.5">
                             {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
                               <FaStar key={idx} className="text-accent size-4" />
@@ -392,7 +393,7 @@ console.log(data, 'datadata')
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div>
+          </div>: null}
           {/* {data?.reviews?.map((review, idx) => (
             <div
               key={idx}
@@ -481,7 +482,7 @@ console.log(data, 'datadata')
             {quantity === 0 ? (
               <button
                 onClick={() => handleIncrement()}
-                className="w-full py-4 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
+                className="w-full py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
               >
                 Add to Cart
               </button>
