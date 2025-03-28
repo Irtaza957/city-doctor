@@ -83,7 +83,7 @@ const Categories = () => {
           <div className="block sm:hidden py-2.5">
             <Swiper
               freeMode={true}
-              spaceBetween={7}
+              spaceBetween={6}
               slidesPerView={3.40}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
