@@ -71,7 +71,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
           <div className="w-full block sm:hidden pb-2.5">
             <Swiper
               freeMode={true}
-              spaceBetween={10}
+              spaceBetween={7}
               slidesPerView={3.40}
               modules={[FreeMode]}
               onSlideChange={(swiper) => {
@@ -90,7 +90,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex items-center justify-center cursor-pointer gap-3 py-2 rounded-lg text-black"
+                    className="w-full flex items-center justify-center cursor-pointer gap-1 px-1 xs:px-2 py-2 rounded-lg text-black"
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image
