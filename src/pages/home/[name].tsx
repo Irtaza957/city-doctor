@@ -90,7 +90,7 @@ const SectionListing = ({ data }: { data: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id,category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex items-center justify-center cursor-pointer gap-1 px-2 py-2 rounded-lg text-black"
+                    className="w-full flex items-center justify-center cursor-pointer gap-1 px-1.5 py-2 rounded-lg text-black"
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     <Image

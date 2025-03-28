@@ -228,7 +228,7 @@ const DripListing = () => {
                   >
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex items-center justify-center cursor-pointer gap-1 py-2 px-2 rounded-lg ${selectedCategory?.category_id === category.category_id
+                      className={`w-full flex items-center justify-center cursor-pointer gap-1 py-2 px-1.5 rounded-lg ${selectedCategory?.category_id === category.category_id
                         ? "text-white"
                         : "text-black"
                         }`}
