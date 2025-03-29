@@ -321,9 +321,9 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
               </div>
             </div>
           </div>
-          <div className="sm:hidden w-full flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-3">
+          {/* <div className="sm:hidden w-full flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-3"> */}
             <SortHeader viewType={viewType} setViewType={setViewType} setOpenSortDrawer={setOpenSortDrawer} handleClose={handleClose} sorting={sorting} openSortDrawer={openSortDrawer} handleSelectSort={handleSelectSort} sortingOptions={sortingOptions} />
-          </div>
+          {/* </div> */}
           <h1 className="w-full text-left font-bold text-xl">{data?.section}</h1>
           <div
             className={`sm:hidden w-full grid pb-5 ${!viewType

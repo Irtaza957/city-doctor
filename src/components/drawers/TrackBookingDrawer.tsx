@@ -14,6 +14,7 @@ import TickIcon from "@/assets/icons/track-booking/TickIcon";
 import { useTrackBookingQuery } from "@/store/services/booking";
 import LoadingIcon from "@/assets/icons/track-booking/LoadingIcon";
 import CircleCheckIcon from "@/assets/icons/track-booking/CircleCheckIcon";
+import { cn } from "@/utils/helpers";
 
 const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
   const [active, setActive] = useState("1");
@@ -59,7 +60,10 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
             </div>
           ) : (
             <div className="w-full flex flex-col items-center justify-center pr-5 pl-10 pt-3 pb-5">
-              <div className="w-full flex flex-col items-start justify-start relative pb-3 pl-8 pr-3 border-l-2 border-dashed">
+              <div className={cn(
+                "w-full flex flex-col items-start justify-start relative pl-8 pr-3 border-l-2 border-dashed",
+                active >= "1" ? 'pb-7' : 'pb-3'
+                )}>
                 <div
                   className={`${
                     active >= "1"
@@ -75,7 +79,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
                   />
                 </div>
                 <p
-                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-3.5 pl-3 ${
+                  className={`w-full text-left text-[18px] font-semibold pb-.50.5 mt-2 sm:mt-3.5 pl-3 ${
                     active >= "1" ? "text-secondary" : "text-black"
                   }`}
                 >
@@ -103,7 +107,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
                   />
                 </div>
                 <p
-                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-3.5 pl-3 ${
+                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-2.5 sm:mt-3.5 pl-3 ${
                     active >= "2" ? "text-secondary" : "text-black"
                   }`}
                 >
@@ -132,7 +136,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
                   />
                 </div>
                 <p
-                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-3.5 pl-3 ${
+                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-2.5 sm:mt-3.5 pl-3 ${
                     active >= "3" ? "text-secondary" : "text-black"
                   }`}
                 >
@@ -162,7 +166,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
                   />
                 </div>
                 <p
-                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-3.5 pl-3 ${
+                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-2.5 sm:mt-3.5 pl-3 ${
                     active >= "5" ? "text-secondary" : "text-black"
                   }`}
                 >
@@ -191,7 +195,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
                   />
                 </div>
                 <p
-                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-3.5 pl-3 ${
+                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-2.5 sm:mt-3.5 pl-3 ${
                     active >= "7" ? "text-secondary" : "text-black"
                   }`}
                 >
@@ -219,7 +223,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
                   />
                 </div>
                 <p
-                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-3.5 pl-3 ${
+                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-2.5 sm:mt-3.5 pl-3 ${
                     active >= "8" ? "text-secondary" : "text-black"
                   }`}
                 >
@@ -246,7 +250,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
                   />
                 </div>
                 <p
-                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-3.5 pl-3 ${
+                  className={`w-full text-left text-[18px] font-semibold pb-0.5 mt-2.5 sm:mt-3.5 pl-3 ${
                     active >= "9" ? "text-secondary" : "text-black"
                   }`}
                 >

@@ -207,7 +207,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white px-5 py-2.5 w-full h-[69px] flex sm:hidden items-center justify-between gap-4 shadow-sm">
+        <div className="bg-white px-3 py-2.5 w-full h-[69px] flex sm:hidden items-center justify-between gap-4 shadow-sm">
           <Link href="/home">
             <Image
               priority

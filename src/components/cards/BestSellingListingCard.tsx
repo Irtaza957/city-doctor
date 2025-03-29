@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaStar, FaPlus, FaMinus } from "react-icons/fa6";
 
 import { RootState } from "@/store";
-import { imageBase } from "@/utils/helpers";
+import { cn, imageBase } from "@/utils/helpers";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 import Image from "next/image";
 import BgTagline from "@/assets/icons/bgTagline.svg";
+import { usePathname } from "next/navigation";
 
 const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRIP_CARD, navLink?: string, showResponseTime?: boolean }) => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
   const [wishlist, setWishlist] = useState(false);
   const [addToWishlist] = useAddToWishlistMutation();
   const { user, cart } = useSelector((state: RootState) => state.global);
+  const pathname=usePathname()
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -126,10 +128,15 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
         </div>}
       <div className="relative w-full">
         <Link href={navLink || `/drips/${drip.service_id}`}>
-          <div className="relative w-full h-[120px] sm:h-48 xl:h-60 3xl:h-52 rounded-xl bg-[#E8E8E8]">
+          <div className={cn(
+            "relative w-full sm:h-48 xl:h-60 3xl:h-52 rounded-t-xl bg-[#E8E8E8]",
+            asPath.includes("home") && pathname?.split('/')?.length===3 ? 'h-[140px]' : 'h-[120px]'
+            )}>
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
-              className="size-full rounded-xl bg-top bg-cover h-[120px] sm:h-auto"
+              className={cn("size-full rounded-t-xl bg-top bg-cover sm:h-auto",
+                asPath.includes("home") && pathname?.split('/')?.length===3 ? 'h-[140px]' : 'h-[120px]'
+              )}
             />
             {showResponseTime &&
               <div className="flex items-center justify-center w-full">
@@ -241,7 +248,7 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
                     handleDecrement();
                     remove(drip);
                   }}
-                  className="size-5 sm:size-[36px] rounded-lg p-1 sm:p-3 border border-primary flex items-center justify-center cursor-pointer"
+                  className="size-5 sm:size-[36px] rounded-md p-1 sm:p-3 border border-primary flex items-center justify-center cursor-pointer"
                 >
                   <FaMinus />
                 </span>
@@ -261,7 +268,7 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
                       true
                     );
                   }}
-                  className="size-5 sm:size-[36px] rounded-lg p-1 sm:p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"
+                  className="size-5 sm:size-[36px] rounded-md p-1 sm:p-3 border-primary bg-primary flex items-center justify-center text-white cursor-pointer"
                 >
                   <FaPlus />
                 </span>

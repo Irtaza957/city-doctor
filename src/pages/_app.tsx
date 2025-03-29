@@ -20,8 +20,8 @@ import { usePathname } from "next/navigation";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
-  const [showBottomNav, setShowBottomNav] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  // const [showBottomNav, setShowBottomNav] = useState(true);
+  // const [lastScrollY, setLastScrollY] = useState(0);
 
   const pathname=usePathname()?.split('/')
 
@@ -40,24 +40,24 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < lastScrollY) {
-        setShowBottomNav(true); // Show when scrolling up
-      } else {
-        setShowBottomNav(false); // Hide when scrolling down
-      }
-      setLastScrollY(currentScrollY);
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollY = window.scrollY;
+  //     if (currentScrollY < lastScrollY) {
+  //       setShowBottomNav(true); // Show when scrolling up
+  //     } else {
+  //       setShowBottomNav(false); // Hide when scrolling down
+  //     }
+  //     setLastScrollY(currentScrollY);
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [lastScrollY]);
 
   const isTwoChars = pathname?.length === 2;
   const isThreeCharsButNotHome = pathname?.length === 3 && pathname?.[1] !== 'home'
-  
+
   return (
     <>
       <noscript>
@@ -74,12 +74,12 @@ export default function App({ Component, pageProps }: AppProps) {
           <Navbar />
           {loading && <Loader />}
           <Component {...pageProps} />
-          <CheckoutBar isMenuVisible={showBottomNav} />
-          {/* <BottomNav /> */}
-          {showBottomNav && <BottomNav />}
+          <CheckoutBar isMenuVisible={pathname?.length!==4} />
+          {pathname?.length!==4 && <BottomNav />}
+          {/* {showBottomNav && <BottomNav />} */}
           <Footer />
           {}
-          {!isTwoChars && !isThreeCharsButNotHome && <MobileFooter />}
+          {(!isTwoChars && !isThreeCharsButNotHome) && <MobileFooter />}
           <CartBar />
         </PersistGate>
       </Provider>

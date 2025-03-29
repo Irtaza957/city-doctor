@@ -76,10 +76,10 @@ const SortHeader = ({viewType, setViewType, setOpenSortDrawer, handleClose, sort
                                         <IoClose className="w-7 h-7" />
                                     </button>
                                 </Drawer.Title>
-                                <div className="w-full px-3">
+                                <div className="w-full">
                                     {sortingOptions?.map((item: any, index) => {
                                         return <p key={index} onClick={() => handleSelectSort(item?.name)} className={cn(
-                                            'border-b py-4 hover:bg-[#F7F7F7] last:border-none text-sm',
+                                            'border-b py-4 hover:bg-[#F7F7F7] last:border-none text-sm px-3',
                                             item?.name === sorting && 'bg-[#F7F7F7]'
                                         )}>
                                             {item.name}</p>

@@ -33,7 +33,7 @@ import he from "he";
 import SizeIcon from "@/assets/icons/size.svg";
 import avatar from "@/assets/icons/avatar.svg";
 
-const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData?: ()=>void }) => {
+const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData?: () => void }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
@@ -43,7 +43,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
   const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
   const [tab, setTab] = useState<string>(data?.sections?.[0]?.name);
   const { user, cart, isMenuVisible } = useSelector((state: RootState) => state.global);
-  const [selectedBundle,setSelectedBundle]=useState<number | null>(null)
+  const [selectedBundle, setSelectedBundle] = useState<number | null>(null)
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -91,7 +91,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
         // @ts-ignore
         toast.error(response.error.data.error);
       } else {
-        if(getData){
+        if (getData) {
           await getData()
         }
         if (data?.wishlist_id) {
@@ -126,7 +126,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
       }
     }
   }, [data]);
-console.log(data, 'datadata')
+  console.log(data, 'datadata')
   return (
     <>
       <LoginModal open={openLogin} setOpen={setOpenLogin} />
@@ -158,8 +158,8 @@ console.log(data, 'datadata')
                 }}
               >
                 {data?.wishlist_id ?
-                <HeartIcon fillColor="#38ADA0" className="text-secondary" /> :
-                <HeartIcon className="size-6" />}
+                  <HeartIcon fillColor="#38ADA0" className="text-secondary" /> :
+                  <HeartIcon className="size-6" />}
               </button>
             </div>
           </div>
@@ -184,31 +184,31 @@ console.log(data, 'datadata')
             AED {data?.price ? Math.round(Number(data?.price)) : '-'}
           </p>
           {data?.bundles?.length ?
-          <div className="space-y-2.5 w-full px-5">
-            {data?.bundles?.map((item, index) => (
-              <div key={index} onClick={()=>setSelectedBundle(index)} className="flex items-center justify-between cursor-pointer h-[54px] px-4 bg-[#F7F7F7] border border-[#DEDEDE] rounded-[10px] w-full">
-                <div className="flex items-center gap-4 w-full">
-                  {selectedBundle!==index ?
-                  <div className="border border-[#DEDEDE] rounded-full h-[22px] w-[22px]" />:
-                  <div
-                  className={`rounded-full border border-primary p-[3px] size-[22px] flex`}
-                >
-                  <div className="rounded-full bg-primary w-full h-full" />
+            <div className="space-y-2.5 w-full px-5">
+              {data?.bundles?.map((item, index) => (
+                <div key={index} onClick={() => setSelectedBundle(index)} className="flex items-center justify-between cursor-pointer h-[54px] px-4 bg-[#F7F7F7] border border-[#DEDEDE] rounded-[10px] w-full">
+                  <div className="flex items-center gap-4 w-full">
+                    {selectedBundle !== index ?
+                      <div className="border border-[#DEDEDE] rounded-full h-[22px] w-[22px]" /> :
+                      <div
+                        className={`rounded-full border border-primary p-[3px] size-[22px] flex`}
+                      >
+                        <div className="rounded-full bg-primary w-full h-full" />
+                      </div>
+                    }
+                    <p className="text-black text-sm">{item?.bundle}</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="w-full text-left text-[10px] whitespace-nowrap line-through">
+                      AED 0.00
+                    </span>
+                    <span className="w-full text-left text-xs sm:text-sm sm:font-semibold xl:font-bold whitespace-nowrap">
+                      AED {Math.round(Number(item.price_without_vat || item.price_with_vat))}
+                    </span>
+                  </div>
                 </div>
-                  }
-                  <p className="text-black text-sm">{item?.bundle}</p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="w-full text-left text-[10px] whitespace-nowrap line-through">
-                    AED 0.00
-                  </span>
-                  <span className="w-full text-left text-xs sm:text-sm sm:font-semibold xl:font-bold whitespace-nowrap">
-                    AED {Math.round(Number(item.price_without_vat || item.price_with_vat))}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>: null}
+              ))}
+            </div> : null}
           {data?.sections?.length ?
             <div className="flex flex-col gap-1.5 !mb-2.5 !mt-5 pl-5 pr-10">
               <p className="text-black text-left text-lg md:text-xl font-medium">{data?.sections?.[0]?.name}</p>
@@ -301,12 +301,12 @@ console.log(data, 'datadata')
             </Accordion> */}
           </div>
           {data?.reviews?.length ?
-          <div className="w-full mt-2 !mb-4">
-            <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 my-3">
-              <h1 className="w-full text-left text-lg md:text-xl font-medium">
-                Reviews
-              </h1>
-              {/* <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
+            <div className="w-full mt-2 !mb-4">
+              <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 my-3">
+                <h1 className="w-full text-left text-lg md:text-xl font-medium">
+                  Reviews
+                </h1>
+                {/* <div className="w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
               <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
                 <p className="w-full text-left text-xl font-bold">
                   {data?.rating}
@@ -348,53 +348,53 @@ console.log(data, 'datadata')
                 ))}
               </div>
             </div> */}
-            </div>
-            <Swiper
-              spaceBetween={1}
-              slidesPerView={1.2}
-              navigation
-              modules={[Navigation]}
-              className="w-full"
-            >
-              {data?.reviews?.map((review, idx) => (
-                <SwiperSlide key={idx}>
-                  <div
-                    key={idx}
-                    className={cn(
-                      "flex flex-col items-center justify-center space-x-5 px-5 bg-[#FAFAFA] rounded-md gap-3 py-3.5 ml-4",
-                      idx === data?.reviews?.length - 1 ? 'mr-4' : '',
-                    )}
-                  >
-                    <div className="w-full flex items-center justify-start space-x-4">
-                      <Image
-                        src={avatar}
-                        alt="user"
-                        width={40}
-                        height={40}
-                        className="rounded-full bg-gray-200 size-10"
-                      />
-                      <div className="w-full flex flex-col items-center justify-start space-y-1">
-                        <div className="w-full flex items-center justify-between">
-                          <p className="text-left md:text-xl font-medium">{review.customer}</p>
-                          <div className="flex items-center w-[35%] justify-center space-x-1.5">
-                            {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
-                              <FaStar key={idx} className="text-accent size-4" />
-                            ))}
+              </div>
+              <Swiper
+                spaceBetween={1}
+                slidesPerView={1.2}
+                navigation
+                modules={[Navigation]}
+                className="w-full"
+              >
+                {data?.reviews?.map((review, idx) => (
+                  <SwiperSlide key={idx}>
+                    <div
+                      key={idx}
+                      className={cn(
+                        "flex flex-col items-center justify-center space-x-5 px-5 bg-[#FAFAFA] rounded-md gap-3 py-3.5 ml-4",
+                        idx === data?.reviews?.length - 1 ? 'mr-4' : '',
+                      )}
+                    >
+                      <div className="w-full flex items-center justify-start space-x-4">
+                        <Image
+                          src={avatar}
+                          alt="user"
+                          width={40}
+                          height={40}
+                          className="rounded-full bg-gray-200 size-10"
+                        />
+                        <div className="w-full flex flex-col items-center justify-start space-y-1">
+                          <div className="w-full flex items-center justify-between">
+                            <p className="text-left md:text-xl font-medium">{review.customer}</p>
+                            <div className="flex items-center w-[35%] justify-center space-x-1.5">
+                              {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
+                                <FaStar key={idx} className="text-accent size-4" />
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                        {/* <span className="w-full text-left text-xs text-gray-400">
+                          {/* <span className="w-full text-left text-xs text-gray-400">
                           {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
                         </span> */}
+                        </div>
                       </div>
+                      <p className="w-full text-left line-clamp-3 h-[40px] text-[#535763] text-sm font-medium">
+                        {numberSentences(1, review.description)}
+                      </p>
                     </div>
-                    <p className="w-full text-left line-clamp-3 h-[40px] text-[#535763] text-sm font-medium">
-                      {numberSentences(1, review.description)}
-                    </p>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>: null}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div> : null}
           {/* {data?.reviews?.map((review, idx) => (
             <div
               key={idx}
@@ -479,14 +479,25 @@ console.log(data, 'datadata')
             `fixed w-full z-20 bottom-0 left-0 p-3 bg-white border-t`,
             cart?.length > 0 && 'pb-[85px]',
             isMenuVisible && 'bottom-[68px]'
-            )}>
+          )}>
             {quantity === 0 ? (
-              <button
-                onClick={() => handleIncrement()}
-                className="w-full py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
-              >
-                Add to Cart
-              </button>
+              <div className="flex items-center justify-between">
+                <div className="">
+                  <p className="text-[18px] font-bold">AED {data?.price ? Math.round(Number(data?.price)) : '-'}</p>
+                  <div className="flex items-center justify-center space-x-2.5">
+                <FaRegClock className="w-4 h-4 text-primary" />
+                <span className="text-[#A3A3A3] font-medium text-sm">
+                  {data?.response_time}
+                </span>
+              </div>
+                </div>
+                <button
+                  onClick={() => handleIncrement()}
+                  className="w-[35%] py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
+                >
+                  Add to Cart
+                </button>
+              </div>
             ) : (
               <div className="w-full flex items-center justify-center gap-6">
                 <span

@@ -65,7 +65,7 @@ const AutoComplete = ({ handleClose }: { handleClose?: () => void }) => {
       </div>
       <div
         ref={dropRef}
-        className={`md:absolute md:-bottom-[310px] h-[70vh] mt-1 md:mt-0 md:h-[300px] z-10 left-0 w-full flex-col divide-y overflow-auto custom-scrollbar rounded-lg border bg-white ${
+        className={`md:absolute md:-bottom-[310px] h-[70vh] mt-1 md:mt-0 md:h-[300px] z-10 left-0 w-full flex-col divide-y overflow-auto custom-scrollbar rounded-lg bg-white ${
           query === "" ? "hidden" : "flex"
         } ${
           results?.length === 0 || isLoading
@@ -105,7 +105,7 @@ const AutoComplete = ({ handleClose }: { handleClose?: () => void }) => {
                 />
                 <div className="flex flex-col gap-1">
                   <span className="w-full text-left font-semibold text-xs xl:text-sm overflow-hidden truncate">
-                    {result.name}jb
+                    {result.name}
                   </span>
                   <span className="text-xs text-gray-500">AED {result.price_without_vat}</span>
                 </div>

@@ -2,7 +2,6 @@
 
 import dayjs from "dayjs";
 import Link from "next/link";
-import Image from "next/image";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { LuLoader2 } from "react-icons/lu";
@@ -44,14 +43,14 @@ const Upcoming = ({ booking }: { booking: BOOKING }) => {
           href={`/bookings/${booking.booking_id}`}
           className="w-full grid grid-cols-4 gap-3.5 items-center justify-center py-3.5 border-b"
         >
-          <Image
+          {/* <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdpNrnYYLZDH-r1-maYvATvVuImvEaqE00w&s"
             alt="drip"
             width={70}
             height={70}
             className="col-span-1 w-[70px] h-[70px] bg-gray-200 border rounded-full"
-          />
-          <div className="col-span-3 w-full flex flex-col items-center justify-center space-y-1">
+          /> */}
+          <div className="col-span-4 w-full flex flex-col items-center justify-center space-y-1">
             <div className="w-full flex items-center justify-between">
               <p className="text-left text-[16px] font-semibold">
                 REF:&nbsp;{booking.reference}
@@ -167,14 +166,14 @@ const Completed = ({ booking }: { booking: BOOKING }) => {
           href={`/bookings/${booking.booking_id}`}
           className="w-full grid grid-cols-4 gap-3.5 items-center justify-center py-3.5 border-b"
         >
-          <Image
+          {/* <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdpNrnYYLZDH-r1-maYvATvVuImvEaqE00w&s"
             alt="drip"
             width={70}
             height={70}
             className="col-span-1 w-[70px] h-[70px] bg-gray-200 border rounded-full"
-          />
-          <div className="col-span-3 w-full flex flex-col items-center justify-center space-y-1">
+          /> */}
+          <div className="col-span-4 w-full flex flex-col items-center justify-center space-y-1">
             <p className="w-full text-left text-[16px] font-semibold">
               REF:&nbsp;{booking.reference}
             </p>
@@ -275,14 +274,14 @@ const Cancelled = ({ booking }: { booking: BOOKING }) => {
         {booking.schedule_slot}
       </Link>
       <Link href={`/bookings/${booking.booking_id}`} className="w-full grid grid-cols-4 gap-3.5 items-center justify-center py-3.5 border-b">
-        <Image
+        {/* <Image
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdpNrnYYLZDH-r1-maYvATvVuImvEaqE00w&s"
           alt="drip"
           width={70}
           height={70}
           className="col-span-1 w-[70px] h-[70px] bg-gray-200 border rounded-full"
-        />
-        <div className="col-span-3 w-full flex flex-col items-center justify-center space-y-1">
+        /> */}
+        <div className="col-span-4 w-full flex flex-col items-center justify-center space-y-1">
           <p className="w-full text-left text-[16px] font-semibold">
             REF:&nbsp;{booking.reference}
           </p>

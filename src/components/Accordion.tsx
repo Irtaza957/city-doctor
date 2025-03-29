@@ -29,10 +29,10 @@ const Accordion = ({
             className={`w-full flex items-center justify-center space-x-3 p-3 transition-all duration-300 ease-linear ${
               open
                 ? "rounded-t-lg bg-primary text-white"
-                : "rounded-lg bg-[#FAFAFA] text-gray-500"
+                : "rounded-lg bg-[#FAFAFA] text-[#535763]"
             }`}
           >
-            <span className="w-full text-left md:text-xl  font-medium overflow-hidden truncate">
+            <span className="w-full text-left md:text-xl font-medium overflow-hidden truncate">
               {section?.name ? section?.name : section?.question}
             </span>
             <FaChevronDown

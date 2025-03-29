@@ -11,18 +11,13 @@ import WishlistCard from "@/components/cards/WishlistCard";
 import EmptyWishlist from "@/assets/img/empty-wishlist.svg";
 import { useGetWishlistQuery } from "@/store/services/wishlist";
 import ServiceCardSkeleton from "@/components/cards/skeleton/ServiceCardSkeleton";
-import { FaThList } from "react-icons/fa";
-import { IoGrid } from "react-icons/io5";
-import { sortingOptions } from "@/components/drips";
-import { sortWishlist } from "@/utils/helpers";
-import BestSellingListingCard from "@/components/cards/BestSellingListingCard";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState<WISHLIST[]>([]);
-  const [viewType, setViewType] = useState(false);
-  const [limit, setLimit] = useState("All");
-  const [sorting, setSorting] = useState("Price (Low to High)");
+  // const [viewType, setViewType] = useState(false);
+  // const [limit, setLimit] = useState("All");
+  // const [sorting, setSorting] = useState("Price (Low to High)");
   const { user } = useSelector((state: RootState) => state.global);
 
   const { data, isLoading } = useGetWishlistQuery({
@@ -74,7 +69,7 @@ const Wishlist = () => {
           </div>
         ) : (
           <div className="relative w-full max-h-screen flex flex-col gap-4">
-            <div className="sticky top-5 z-10 flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
+            {/* <div className="sticky top-5 z-10 flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-4">
               <div className="flex items-center justify-start gap-2">
                 <button type="button" onClick={() => setViewType(false)}>
                   <FaThList
@@ -137,10 +132,10 @@ const Wishlist = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="w-full overflow-auto custom-scrollbar grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-start justify-start gap-2">
-              {(limit === "All" ? sortWishlist(sorting, wishlist) : sortWishlist(sorting, wishlist)?.slice(0, parseInt(limit)))?.map((item, idx) => (
-                !viewType ? <WishlistCard key={idx} service={item as WISHLIST} /> : <BestSellingListingCard key={idx} drip={item as DRIP_CARD} />
+              {wishlist?.map((item, idx) => (
+                <WishlistCard key={idx} service={item as WISHLIST} />
               ))}
             </div>
           </div>

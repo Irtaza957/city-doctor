@@ -115,17 +115,17 @@ const Checkout = () => {
       <LoginModal open={open} setOpen={setOpen} />
       <div className="w-full flex flex-col items-center justify-center gap-5 pb-10 mt-[69px] md:mt-[108px]">
         {cart.length === 0 ? (
-          <div className="w-full h-[calc(100vh-76px)] p-5 flex flex-col items-center justify-center">
-            <Image src={EmptyCart} alt="empty-wishlist" className="size-44" />
+          <div className="w-full h-[calc(100vh-76px)] flex flex-col items-center justify-center">
+            <Image src={EmptyCart} alt="empty-wishlist" className="size-44 -ml-10 sm:-ml-0" />
             <p className="w-full text-center text-lg font-semibold mb-2">
               Your Cart is Empty!!
             </p>
-            <p className="w-full text-center font-semibold text-base text-[#707070]">
+            <p className="w-full text-center font-semibold text-sm sm:text-base text-[#707070]">
               Explore more and shortlist some services
             </p>
             <Link
               href="/home"
-              className="mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
+              className="mt-6 sm:mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
             >
               Explore More
             </Link>
@@ -151,7 +151,7 @@ const Checkout = () => {
                         alt="card"
                         width={500}
                         height={500}
-                        className="size-16 rounded-full object-cover"
+                        className="size-16 rounded-md object-cover"
                       />
                       <div className="w-full flex items-center justify-center">
                         <div className="w-[60%] flex flex-col items-center justify-center gap-1 pl-3">

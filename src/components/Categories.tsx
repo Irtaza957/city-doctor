@@ -19,7 +19,7 @@ const Categories = () => {
   const dispatch = useDispatch();
   const categoryRef = useRef<HTMLDivElement>(null);
   const categoryDRef = useRef<HTMLDivElement>(null);
-  const [startSlide, setStartSlide] = useState(true);
+  // const [startSlide, setStartSlide] = useState(true);
   const [showSlider, setShowSlider] = useState(false);
   const { data, isLoading } = useFetchCategoriesQuery({});
 
@@ -86,18 +86,19 @@ const Categories = () => {
               spaceBetween={5}
               slidesPerView={3.40}
               modules={[FreeMode]}
-              onSlideChange={(swiper) => {
-                if (swiper.activeIndex === 0) {
-                  setStartSlide(true);
-                } else {
-                  setStartSlide(false);
-                }
-              }}
+              // onSlideChange={(swiper) => {
+              //   if (swiper.activeIndex === 0) {
+              //     setStartSlide(true);
+              //   } else {
+              //     setStartSlide(false);
+              //   }
+              // }}
+               className="!pl-3 !pr-2"
             >
               {data?.map((category, idx) => (
                 <SwiperSlide
                   key={idx}
-                  className={`${startSlide && idx === 0 ? "ml-5" : ""}`}
+                  // className={`${startSlide && idx === 0 ? "ml-3" : ""}`}
                 >
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
@@ -253,7 +254,7 @@ const Categories = () => {
                   alt="category"
                   className="w-[38px] h-11"
                 />
-                <span className="w-[80px] text-left font-bold text-[13px]" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                <span className="w-[80px] text-left font-bold text-[13px] !mb-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>
