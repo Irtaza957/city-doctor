@@ -43,10 +43,10 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
   const [startSlide, setStartSlide] = useState(true);
   const { data: categories } = useFetchCategoriesQuery({});
   const [sorting, setSorting] = useState("Price (Low to High)");
-  const [data, setData] = useState<DRIP | null>(null)
+  const [data, setData] = useState<any>(null)
   const router = useRouter();
   const { name } = router.query
-  console.log(sectionData, 'sectionDatasectionData')
+
   const selectCategory = (value: CATEGORY) => {
     dispatch(setSelectedCategory(value));
   };
@@ -94,9 +94,8 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
       console.log(err)
     }
   }
-console.log(data, 'datadata')
+  
   useEffect(() => {
-    console.log(sectionData, 'useEffectuseEffect')
     if(sectionData){
       setData({section_data: sectionData, section: 'Banner', page_type: 'Sections', rows: '1'})
     }else{
