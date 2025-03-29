@@ -50,7 +50,7 @@ const DoctorVisit = ({ bg, section }: { bg: string; section: DRIP }) => {
           <h1 className="text-left text-xl xl:text-2xl font-bold" dangerouslySetInnerHTML={{ __html: he.decode(section.section) }}/>
           <div
             onClick={clearCategory}
-            className="text-sm text-primary font-medium whitespace-nowrap"
+            className="text-sm text-primary font-medium whitespace-nowrap cursor-pointer"
           >
             View All
           </div>

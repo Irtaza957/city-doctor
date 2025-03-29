@@ -176,11 +176,11 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
                 <p className="text-left text-xs overflow-hidden truncate text-[#555555] font-medium mt-0.5 flex sm:hidden">
                   {truncateString(drip.description, 20)}
                 </p>
-                <p className="w-full text-left text-xs overflow-hidden text-[#555555] font-medium mt-0.5">
+                {/* <p className="w-full text-left text-xs overflow-hidden text-[#555555] font-medium mt-0.5">
                   {asPath.includes("section")
                     ? truncateString(drip.description, 90)
                     : truncateString(drip.description, 175)}
-                </p>
+                </p> */}
                 <p className="w-full text-left text-xs overflow-hidden text-[#555555] font-medium mt-0.5 hidden sm:flex lg:hidden">
                   {truncateString(drip.description, 70)}
                 </p>

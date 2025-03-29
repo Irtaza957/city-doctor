@@ -10,6 +10,8 @@ import { cn, getCategoryLink, imageBase } from "@/utils/helpers";
 import HeaderSkeleton from "./cards/skeleton/HeaderSkeleton";
 import { useFetchHomeBannersQuery } from "@/store/services/home";
 import { useRouter } from "next/router";
+import { setSelectedBanner } from "@/store/global";
+import { useDispatch } from "react-redux";
 
 interface HeaderProps {
   position: string
@@ -17,9 +19,10 @@ interface HeaderProps {
 
 const Header = ({ position }: HeaderProps) => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const { data, isLoading } = useFetchHomeBannersQuery({});
 
-  const handleBannerClick = (banner: any) => {
+  const handleBannerClick = (banner: any, index: number) => {
     console.log(banner, 'bannerbanner')
     if (banner?.link_to === 'categories_page') {
       router.push(`/${getCategoryLink('', banner?.data?.category_name || '')}`)
@@ -27,6 +30,9 @@ const Header = ({ position }: HeaderProps) => {
       router.push(`/${getCategoryLink('', banner?.data?.category_name || '')}/${getCategoryLink('', banner?.data?.sub_category || '')}`)
     }else if (banner?.link_to === 'service_detail_page'){
       router.push(`/${getCategoryLink('', banner?.data?.category_name || '')}/${getCategoryLink('', banner?.data?.sub_category_name || '')}/${getCategoryLink('', banner?.data?.service_name || '')}`)
+    }else if (banner?.link_to === 'services_page'){
+      dispatch(setSelectedBanner({place: banner?.place, index }))
+      router.push(`/home/banners`)
     }
 
   }
@@ -72,7 +78,7 @@ const Header = ({ position }: HeaderProps) => {
                   src={imageBase(window.innerWidth < 640 ? (banner.mobile_banner || '') : banner.image)}
                   alt="banner"
                   className="w-[95%] rounded-xl md:rounded-none md:w-full"
-                  onClick={() => handleBannerClick(banner)}
+                  onClick={() => handleBannerClick(banner, idx)}
                 />
               </div>
             </SwiperSlide>

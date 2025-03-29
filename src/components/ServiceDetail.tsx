@@ -5,12 +5,13 @@ import DripDetailPage from './drips/DripDetail';
 import Loader from './Loader';
 
 const ServiceDetail = () => {
-    const [dripData, setDripData] = useState<DRIP_DETAIL_RESPONSE | null>(null);
-    const [loading, setLoading]=useState(false)
-    const router = useRouter();
-    const { id } = router.query;
+  const [dripData, setDripData] = useState<DRIP_DETAIL_RESPONSE | null>(null);
+  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const { id } = router.query;
 
-    async function getData({ params }: { params: { id: string | string[] | undefined } }) {
+  async function getData({ params }: { params: { id: string | string[] | undefined } }) {
+    try {
       setLoading(true)
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_API_URL}services?slug=${params.id}`,
@@ -24,26 +25,29 @@ const ServiceDetail = () => {
         }
       );
       setLoading(false)
-      
+
       if (!response.ok) {
         return {
           notFound: true, // Show 404 if API call fails
         };
       }
-  
+
       const service: { status: number; error: string; data: DRIP_DETAIL_RESPONSE } = await response.json();
       setDripData(service.data);
+    } catch (err) {
+      console.log(err)
     }
-  
-    useEffect(() => {
-      if (id) {
-        getData({ params: { id: id[id.length - 1] as string } });
-      }
-    }, [id]);
-    if(loading){
-      return <div className='h-screen'><Loader/></div>
+  }
+
+  useEffect(() => {
+    if (id) {
+      getData({ params: { id: id[id.length - 1] as string } });
     }
-  return <DripDetailPage data={dripData as DRIP_DETAIL_RESPONSE} getData={()=>getData({ params: { id: id?.[id.length - 1] as string } })} />;
+  }, [id]);
+  if (loading) {
+    return <div className='h-screen'><Loader /></div>
+  }
+  return <DripDetailPage data={dripData as DRIP_DETAIL_RESPONSE} getData={() => getData({ params: { id: id?.[id.length - 1] as string } })} />;
 }
 
 export default ServiceDetail

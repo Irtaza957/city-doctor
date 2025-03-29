@@ -9,6 +9,7 @@ const initialState: GLOBAL_STATE = {
   sidebarToggle: false,
   accountTab: "profile",
   selectedCategory: null,
+  selectedBanner: null,
   isMenuVisible: true,
 };
 
@@ -75,6 +76,9 @@ const globalSlice = createSlice({
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload;
     },
+    setSelectedBanner: (state, action) => {
+      state.selectedBanner = action.payload;
+    },
     setWishListCount: (state, action) => {
       state.wishlistCount = action.payload;
     },
@@ -98,5 +102,6 @@ export const {
   setWishListCount,
   setSelectedCategory,
   setIsMenuVisible,
+  setSelectedBanner
 } = globalSlice.actions;
 export default globalSlice.reducer;

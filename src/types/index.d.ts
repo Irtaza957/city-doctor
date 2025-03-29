@@ -52,6 +52,7 @@ declare type GLOBAL_STATE = {
   wishlistCount: number;
   sidebarToggle: boolean;
   selectedCategory: CATEGORY | null;
+  selectedBanner: {index: number, place: top} | null;
   isMenuVisible: boolean;
 };
 
