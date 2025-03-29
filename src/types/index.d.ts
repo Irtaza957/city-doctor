@@ -3,6 +3,7 @@ declare type CATEGORY = {
   category_name: string;
   icon: string;
   color?: string;
+  show_response_time?: string
 };
 
 declare type CART = {

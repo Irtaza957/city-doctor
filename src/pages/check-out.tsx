@@ -262,9 +262,9 @@ const CheckoutDetails = () => {
         setSelectedSlot={setSelectedSlot}
       />
       <CancellationModal open={openCancelModal} setOpen={setOpenCancelModal} />
-      <div className="w-full flex flex-col items-center justify-center gap-5 px-5 md:px-0 pt-7 sm:pt-14 pb-20 mt-[69px] md:mt-[108px] bg-gray-100">
+      <div className="w-full flex flex-col items-center justify-center gap-5 px-5 md:px-0 pt-7 sm:pt-14 pb-20 mt-[69px] md:mt-[108px] sm:bg-gray-100">
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-          <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl p-5">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
             <h1 className="w-full text-left text-xl flex font-bold sm:font-semibold mb-2.5 items-center justify-start">
               Checkout
             </h1>
@@ -653,9 +653,9 @@ const CheckoutDetails = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-1 w-full h-fit flex flex-col items-start justify-start bg-white rounded-xl p-5">
+          <div className="col-span-1 w-full h-fit flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
             <h1 className="w-full text-left text-xl flex font-semibold mb-2.5 items-center justify-start">
-              Order Summary
+              Payment Summary
             </h1>
             <div className="w-full flex flex-col items-center justify-center gap-5">
               <h1 className="w-full text-sm lg:text-base text-left font-bold">

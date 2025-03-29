@@ -188,7 +188,7 @@ const DripListing = () => {
     }
     router.push(`/${(selectedCategory?.category_name || '').toLowerCase().replace(/\s+/g, "-")}/${getSlug(subCategory || '')}`)
   }
-
+console.log(selectedCategory, 'selectedCategoryselectedCategory')
   return (
     <>
       <div className="fixed w-full z-20 top-[69px] sm:top-[75.75px] md:top-[108px] lg:top-[113px] left-0 bg-white md:border-b xl:border-none">
@@ -648,7 +648,7 @@ const DripListing = () => {
           </div>
         )}
       </div>
-      <MobileViewListing sortingOptions={sortingOptions} subCategories={subCategories} handleSubCategorySelect={handleSubCategorySelect} selectedSubCategory={selectedSubCategory} subLoading={subLoading} getNavLink={getNavLink} />
+      <MobileViewListing showResponseTime={selectedCategory?.show_response_time==='1'} sortingOptions={sortingOptions} subCategories={subCategories} handleSubCategorySelect={handleSubCategorySelect} selectedSubCategory={selectedSubCategory} subLoading={subLoading} getNavLink={getNavLink} />
 
       {/* <div className="w-full sm:hidden mt-[230.25px] mb-24 px-5">
         {subLoading ? (

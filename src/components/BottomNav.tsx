@@ -95,12 +95,7 @@ const BottomNav = () => {
         <div
           onClick={() => {
             setTab();
-
-            if (user) {
-              push("/offers");
-            } else {
-              setOpenLogin((prev) => (prev = !prev));
-            }
+            push("/offers");
           }}
           className={`flex flex-col items-center justify-center space-y-2 cursor-pointer ${pathname === "/offers" && "text-primary"
             }`}

@@ -24,7 +24,7 @@ import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
 import { useApplyPromoMutation } from "@/store/services/booking";
 import BestSellingCard from "@/components/cards/BestSellingCard";
 import { addToCart, removeFromCart, setCart, setPromo } from "@/store/global";
-import { calculateDiscount, calculateDiscountValue, calculateVAT, calculateWithoutVAT, getSlug, imageBase } from "@/utils/helpers";
+import { calculateDiscount, calculateDiscountValue, calculateVAT, calculateWithoutVAT, cn, getSlug, imageBase } from "@/utils/helpers";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const Checkout = () => {
@@ -131,11 +131,11 @@ const Checkout = () => {
             </Link>
           </div>
         ) : (
-          <div className="w-full bg-gray-100 px-5 md:px-0">
+          <div className="w-full sm:bg-gray-100 px-5 md:px-0">
             <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 py-7 sm:pt-14 sm:pb-24">
-              <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl p-5">
+              <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
                 <h1 className="w-full text-left text-xl flex font-semibold mb-2.5 items-center justify-start">
-                  Cart&nbsp;
+                  My Cart&nbsp;
                   <span className="text-[#A3A3A3] font-normal text-base">
                     ({cart.length} Items)
                   </span>
@@ -233,11 +233,8 @@ const Checkout = () => {
                   </>
                 ))}
               </div>
-              <div className="col-span-1 w-full h-fit flex flex-col items-start justify-start bg-white rounded-xl p-5">
-                <h1 className="w-full text-left text-xl flex font-semibold mb-5 items-center justify-start">
-                  Order Summary
-                </h1>
-                <div className="w-full flex items-center text-xs justify-center mb-5 bg-[#F5F5F5] rounded-lg px-3 py-2">
+              <div className="col-span-1 w-full h-fit flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
+                <div className="w-full flex items-center text-xs justify-center mt-2 mb-5 bg-[#F5F5F5] rounded-lg px-3 py-2">
                   <BsTicketPerforated className="w-7 h-7 text-black" />
                   <input
                     type="text"
@@ -247,9 +244,12 @@ const Checkout = () => {
                     className="px-3 w-full bg-transparent text-gray-400 placeholder:text-gray-400"
                   />
                   <button
-                    disabled={isLoading}
-                    className={`bg-transparent font-semibold ${promo ? "text-[#FF2727]" : "text-primary"
-                      }`}
+                    disabled={isLoading || !promoCode?.length}
+                    className={cn(
+                      `bg-transparent font-semibold`,
+                      promo ? "text-[#FF2727]" : "text-primary",
+                      !promoCode?.length && 'text-[#AFAFAF]'
+                    )}
                   >
                     {isLoading ? (
                       <LuLoader2 className="animate-spin text-primary" />
@@ -267,6 +267,9 @@ const Checkout = () => {
                     )}
                   </button>
                 </div>
+                <h1 className="w-full text-left text-xl flex font-semibold mb-5 items-center justify-start">
+                  Payment Summary
+                </h1>
                 <div className="w-full flex flex-col items-center justify-center gap-2.5 text-[#555555]">
                   <div className="w-full flex items-center justify-between font-medium">
                     <span className="text-sm">Sub Total</span>
@@ -315,7 +318,7 @@ const Checkout = () => {
             </div>
           </div>
         )}
-        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto flex flex-col items-center justify-center gap-5 sm:py-20">
+        <div className="hidden sm:flex w-full md:w-[90%] lg:max-w-[1440px] mx-auto flex-col items-center justify-center gap-5 sm:py-20">
           <h1 className="w-full text-left text-xl font-bold px-5 md:px-0">
             {cart.length === 0 ? "Services You Might Like" : "Related Services"}
           </h1>

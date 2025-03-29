@@ -19,9 +19,10 @@ import { usePathname } from "next/navigation";
 interface DoctorVisitCardProps {
   drip: DRIP_CARD;
   navLink?: string;
+  showResponseTime?: boolean;
 }
 
-const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
+const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardProps) => {
   const dispatch = useDispatch();
   const { asPath } = useRouter();
   const pathname=usePathname()
@@ -141,6 +142,10 @@ const DoctorVisitCard = ({ drip, navLink }: DoctorVisitCardProps) => {
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
               className="rounded-l-lg size-full bg-top bg-cover flex items-center justify-center"
             >
+              {showResponseTime &&
+              <span className="absolute bottom-1 bg-tagline text-white py-0.5 px-1.5 sm:px-3 rounded-full font-semibold text-[9px] text-center">
+                {drip.response_time}*
+              </span>}
             </div>
           </div>
         </Link>

@@ -15,7 +15,7 @@ import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/globa
 import Image from "next/image";
 import BgTagline from "@/assets/icons/bgTagline.svg";
 
-const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string }) => {
+const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRIP_CARD, navLink?: string, showResponseTime?: boolean }) => {
   const dispatch = useDispatch();
   const { asPath } = useRouter();
   const [quantity, setQuantity] = useState(0);
@@ -106,11 +106,11 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
       }
     }
   }, [drip]);
-  
+
   return (
     <div className="w-full relative flex flex-col items-center justify-center border rounded-xl shadow-sm">
       {drip?.tagline &&
-      <div className="absolute top-0 left-0 z-10">
+        <div className="absolute top-0 left-0 z-10">
           <div className="relative">
             <Image
               src={BgTagline}
@@ -131,6 +131,12 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
               className="size-full rounded-xl bg-top bg-cover h-[120px] sm:h-auto"
             />
+            {showResponseTime &&
+              <div className="flex items-center justify-center w-full">
+                <span className="absolute bottom-1 bg-tagline text-white py-0.5 px-1.5 sm:px-3 rounded-full font-semibold text-[9px] text-center">
+                  {drip.response_time}*
+                </span></div>}
+
           </div>
         </Link>
         {user && (
@@ -184,8 +190,8 @@ const BestSellingListingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: 
           </Link>
           <div
             className={`sm:col-span-1 xs:ml-auto sm:w-[114px] ${asPath.includes("section")
-                ? "sm:w-[100px] xl:w-[115px]"
-                : "xl:w-[135px]"
+              ? "sm:w-[100px] xl:w-[115px]"
+              : "xl:w-[135px]"
               } md:w-[100px] flex items-center justify-between`}
           >
             {quantity === 0 ? (

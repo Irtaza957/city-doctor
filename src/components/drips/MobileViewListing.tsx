@@ -15,11 +15,12 @@ interface MobileViewListingProps {
     handleSubCategorySelect: any
     selectedSubCategory: string,
     subLoading: boolean,
+    showResponseTime?: boolean,
     sortingOptions: { id: number, name: string }[],
     getNavLink: any
 }
 
-const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySelect, selectedSubCategory, subLoading, getNavLink }: MobileViewListingProps) => {
+const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories, handleSubCategorySelect, selectedSubCategory, subLoading, getNavLink }: MobileViewListingProps) => {
     const [viewType, setViewType] = useState(true);
     const [sorting, setSorting] = useState("");
     const [openSortDrawer, setOpenSortDrawer] = useState(false)
@@ -32,6 +33,7 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
         setSorting(value)
         handleClose()
     }
+    console.log(selectedSubCategory, 'selectedSubCategoryselectedSubCategory')
 
     return (
         <>
@@ -123,11 +125,13 @@ const MobileViewListing = ({ sortingOptions, subCategories, handleSubCategorySel
                                                 key={sub.service_id}
                                                 drip={sub}
                                                 navLink={getNavLink(sub.name || '', sub?.category_name) || '#'}
+                                                showResponseTime={showResponseTime}
                                             /> :
                                             <BestSellingListingCard
                                                 key={sub.service_id}
                                                 drip={sub}
                                                 navLink={getNavLink(sub.name || '', sub?.category_name) || '#'}
+                                                showResponseTime={showResponseTime}
                                             />}
                                     </div>
                                 ))
