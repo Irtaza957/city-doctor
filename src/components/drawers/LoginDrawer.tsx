@@ -301,16 +301,24 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                       }
                     />
                   ) : (
-                    <input
-                      type="email"
-                      value={email}
-                      placeholder="Your Email"
-                      onChange={(e) => setEmail(e.target.value)}
+                    <PhoneInput
                       className={`w-full bg-[#F7F7F7] gray-input p-3 rounded-lg border ${
-                        errors.includes("email") && type === "email"
+                        errors.includes("phone") && type === "mobile"
                           ? "border-red-500"
                           : "border-[#DEDEDE]"
                       }`}
+                      defaultCountry={country as Country}
+                      international
+                      placeholder="+7 909 22-55-456"
+                      value={phone}
+                      onChange={setPhone}
+                      error={
+                        phone
+                          ? isValidPhoneNumber(phone)
+                            ? undefined
+                            : "Invalid phone number"
+                          : "Phone number required"
+                      }
                     />
                   )}
                 </div>
