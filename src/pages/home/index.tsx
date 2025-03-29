@@ -118,7 +118,7 @@ const Home = () => {
             <p className="text-xs sm:text-sm md:text-center w-full">Call us now at <span className="font-bold">8005060</span> to book your home medical service in Dubai!</p>
           </div>
         </div>}
-        <div className="flex items-start justify-start w-full">
+        <div className="flex items-start justify-start sm:justify-center w-full">
         <button onClick={handleShowMore} className="h-[36px] px-8 py-2 bg-primary rounded-md text-white mt-1 font-semibold text-sm">Read {showMore ? 'Less' : 'More'}</button>
         </div>
       </div>

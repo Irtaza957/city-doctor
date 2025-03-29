@@ -141,9 +141,10 @@ const LoginModal = ({
           type: isLogin ? "login" : "register",
           formData,
         });
-
         if (!data.error) {
           toast.success("Logged in Successfully!");
+          console.log(data?.data?.data?.token, 'datadatadatadata')
+          localStorage.setItem('token', data.data?.data?.token)
           setOpenVerify(false);
           clearForm();
         } else {

@@ -4,6 +4,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_API_URL,
   prepareHeaders: (headers) => {
+    const token = localStorage.getItem("token");
+console.log(token, 'tokentoken')
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
     headers.append("company-id", process.env.NEXT_PUBLIC_COMPANY_ID!);
     headers.append("secret-key", process.env.NEXT_PUBLIC_SECRET_KEY!);
     headers.append("business-id", process.env.NEXT_PUBLIC_BUSINESS_ID!);
