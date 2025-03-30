@@ -60,7 +60,7 @@ const TimeSlotDrawer = ({
                   <p
                     key={idx}
                     onClick={() => setSelectedSlot(slot)}
-                    className={`w-full px-4 py-2 rounded-lg cursor-pointer transition-all duration-150 ease-linear ${
+                    className={`w-full px-4 py-2 rounded-lg text-center font-semibold cursor-pointer transition-all duration-150 ease-linear ${
                       selectedSlot === slot
                         ? "bg-primary text-white"
                         : "bg-gray-100 text-black"

@@ -482,7 +482,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
           )}>
             {quantity === 0 ? (
               <div className="flex items-center justify-between">
-                <div className="">
+                <div>
                   <p className="text-[18px] font-bold">AED {data?.price ? Math.round(Number(data?.price)) : '-'}</p>
                   <div className="flex items-center justify-center space-x-2.5">
                 <FaRegClock className="w-4 h-4 text-primary" />

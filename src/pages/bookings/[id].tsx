@@ -3,30 +3,17 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { RiVisaLine } from "react-icons/ri";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-
-import { GetServerSidePropsContext } from "next";
 import ServedDrawer from "@/components/drawers/ServedDrawer";
 import LocationDrawer from "@/components/drawers/LocationDrawer";
 import ScheduleDrawer from "@/components/drawers/ScheduleDrawer";
 import CancelBookingDrawer from "@/components/drawers/CancelBookingDrawer";
-import { convertToDateString } from "@/utils/helpers";
+import { cn, convertToDateString } from "@/utils/helpers";
+import { useRouter } from "next/router";
 
-const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
+const BookingDetails = () => {
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState<DATE | null>(null);
   const [slot, setSlot] = useState<string | null>(null);
-  const [location, setLocation] = useState<ADDRESS | null>({
-    area: data.address.area,
-    street: data.address.street,
-    emirate: data.address.emirate,
-    area_id: data.address.area_id,
-    map_link: data.address.map_link,
-    apartment: data.address.apartment,
-    address_id: data.address.address_id,
-    building_no: data.address.building_no,
-    address_type: data.address.address_type,
-    extra_direction: data.address.extra_direction,
-  });
   const [services, setServices] = useState<DRIP_CARD[]>([]);
   const [member, setMember] = useState<FAMILY_LIST | null>(null);
 
@@ -34,6 +21,43 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
   const [openFamilyDrawer, setOpenFamilyDrawer] = useState(false);
   const [openScheduleDrawer, setOpenScheduleDrawer] = useState(false);
   const [openLocationDrawer, setOpenLocationDrawer] = useState(false);
+  const [data, setData] = useState<any>(null)
+  const [location, setLocation] = useState<ADDRESS | null>({
+    area: data?.address?.area,
+    street: data?.address?.street,
+    emirate: data?.address?.emirate,
+    area_id: data?.address?.area_id,
+    map_link: data?.address?.map_link,
+    apartment: data?.address?.apartment,
+    address_id: data?.address?.address_id,
+    building_no: data?.address?.building_no,
+    address_type: data?.address?.address_type,
+    extra_direction: data?.address?.extra_direction,
+  });
+  const router = useRouter()
+  const {id}=router.query
+
+  async function getData() {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/booking?id=${id}`,
+      {
+        method: "GET",
+        headers: {
+          "company-id": `${process.env.NEXT_PUBLIC_COMPANY_ID!}`,
+          "secret-key": `${process.env.NEXT_PUBLIC_SECRET_KEY!}`,
+          "business-id": `${process.env.NEXT_PUBLIC_BUSINESS_ID!}`,
+        },
+      }
+    );
+    const details: { success: number; error: string; data: BOOKING_DETAILS } =
+      await response.json();
+console.log(details, 'detailsdetails')
+    setData(details.data)
+  }
+
+  useEffect(()=>{
+    getData()
+  },[])
 
   const incrementQuantity = (id: string) => {
     setServices((prevServices) =>
@@ -116,6 +140,7 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
       />
       <CancelBookingDrawer
         open={cancelDrawer}
+        getData={getData}
         onClose={() => setCancelDrawer(false)}
       />
       <ScheduleDrawer
@@ -134,20 +159,19 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
               Status
             </span>
             <p
-              className={`w-full text-left text-xs font-medium ${
-                data.booking_status === "Pending"
-                  ? "text-accent"
-                  : data.booking_status === "Completed"
+              className={`w-full text-left text-xs font-medium ${data?.booking_status === "Pending"
+                ? "text-accent"
+                : data?.booking_status === "Completed"
                   ? "text-secondary"
                   : "text-[#FF2727]"
-              }`}
+                }`}
             >
-              {data.booking_status}
+              {data?.booking_status}
             </p>
           </div>
         </div>
         <p className="w-full text-left text-[16px] font-semibold">
-          Booking ID: {data.booking_id}
+          Booking ID: {data?.booking_id}
         </p>
         <div className="w-full flex flex-col items-center justify-center space-y-3 py-3 border-t">
           <div className="w-full flex flex-col items-center justify-center pb-3 border-b">
@@ -234,10 +258,10 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
                   alt="service"
                   width={64}
                   height={64}
-                  className="col-span-2 size-14 border rounded-full bg-black"
+                  className="col-span-2 size-14 border rounded-xl bg-black"
                 />
                 <div className="col-span-6 w-full flex flex-col items-center justify-between gap-0.5">
-                  <p className="text-black w-full text-left text-[16px] font-semibold overflow-hidden truncate">
+                  <p className="text-black w-full text-left text-[16px] font-semibold ">
                     {service.name}
                   </p>
                   <p className="w-full text-left text-xs text-[#555555]">
@@ -283,7 +307,7 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
                 Subtotal
               </p>
               <p className="w-full text-right text-[14px] font-medium text-[#555555]">
-                AED&nbsp;{data.sub_total}
+                AED&nbsp;{data?.sub_total}
               </p>
             </div>
             <div className="w-full flex items-center justify-between">
@@ -291,13 +315,13 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
                 Discount (Promo)
               </p>
               <p className="w-full text-right text-[14px] font-medium text-[#555555]">
-                AED&nbsp;{data.discount_value}
+                AED&nbsp;{data?.discount_value}
               </p>
             </div>
             <div className="w-full flex items-center justify-between">
               <p className="w-full text-left text-[14px] font-medium">VAT</p>
               <p className="w-full text-right text-[14px] font-medium text-[#555555]">
-                AED&nbsp;{data.vat_value}
+                AED&nbsp;{data?.vat_value}
               </p>
             </div>
             <div className="w-full flex items-center justify-between">
@@ -305,7 +329,7 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
                 Grand Total
               </p>
               <p className="w-full text-right text-lg text-[16px] font-semibold">
-                AED&nbsp;{data.total}
+                AED&nbsp;{Math.round(Number(data?.total))}
               </p>
             </div>
           </div>
@@ -313,11 +337,11 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
             <h1 className="w-full text-left text-[16px] font-semibold">
               Payment Method
             </h1>
-            <div className="w-full flex items-center justify-between">
+            <div className="w-full flex items-center justify-between pb-12">
               <p className="w-full text-left text-xs font-medium text-[#555555]">
-                {data.payment_method}
+                {data?.payment_method}
               </p>
-              {data.payment_method === "Online Payment" && (
+              {data?.payment_method === "Online Payment" && (
                 <div className="w-full flex items-center justify-end space-x-3">
                   <RiVisaLine className="w-8 h-8 text-[#1A1F71]" />
                   <span className="text-[14px] font-medium">
@@ -327,34 +351,36 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
               )}
             </div>
           </div>
-          <div className="w-full flex items-center justify-end space-x-2.5 pt-3">
-            {update ? (
-              <>
+          {data?.booking_status !== 'Cancelled' &&
+            <div className={cn("w-full fixed z-20 bottom-[68px] left-0 p-2.5 bg-white flex gap-2 sm:hidden border-t"
+            )}>
+              {update ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setCancelDrawer(true)}
+                    className="w-full px-5 py-2.5 text-red-500 text-[14px] sm:text-[16px] font-semibold border border-red-500 rounded-lg"
+                  >
+                    Cancel Booking
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setUpdate(false)}
+                    className="w-full px-5 py-2.5 text-white text-[14px] sm:text-[16px] font-semibold bg-primary rounded-lg"
+                  >
+                    Confirm
+                  </button>
+                </>
+              ) : (
                 <button
                   type="button"
-                  onClick={() => setCancelDrawer(true)}
-                  className="w-full px-5 py-2.5 text-red-500 text-[14px] sm:text-[16px] font-semibold border border-red-500 rounded-lg"
+                  onClick={() => setUpdate(true)}
+                  className="w-full py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
                 >
-                  Cancel Booking
+                  Update
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setUpdate(false)}
-                  className="w-full px-5 py-2.5 text-white text-[14px] sm:text-[16px] font-semibold bg-primary rounded-lg"
-                >
-                  Confirm
-                </button>
-              </>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setUpdate(true)}
-                className="w-1/2 px-5 py-2.5 text-white text-[14px] sm:text-[16px] font-semibold bg-primary rounded-lg"
-              >
-                Update
-              </button>
-            )}
-          </div>
+              )}
+            </div>}
         </div>
       </div>
     </>
@@ -362,25 +388,3 @@ const BookingDetails = ({ data }: { data: BOOKING_DETAILS }) => {
 };
 
 export default BookingDetails;
-
-export async function getServerSideProps({
-  params,
-}: GetServerSidePropsContext): Promise<{
-  props: { data: BOOKING_DETAILS };
-}> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/booking?id=${params?.id}`,
-    {
-      method: "GET",
-      headers: {
-        "company-id": `${process.env.NEXT_PUBLIC_COMPANY_ID!}`,
-        "secret-key": `${process.env.NEXT_PUBLIC_SECRET_KEY!}`,
-        "business-id": `${process.env.NEXT_PUBLIC_BUSINESS_ID!}`,
-      },
-    }
-  );
-  const details: { success: number; error: string; data: BOOKING_DETAILS } =
-    await response.json();
-
-  return { props: { data: details.data } };
-}

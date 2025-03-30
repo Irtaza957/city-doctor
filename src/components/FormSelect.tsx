@@ -30,7 +30,7 @@ const FormSelect = ({ cn, value, options, setValue }: SELECT_MENU_PROPS) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <ListboxOptions className="absolute mt-1 w-full z-10 max-h-52 overflow-y-auto custom-scrollbar rounded-md bg-white border text-base shadow-lg px-3 pb-3">
+        <ListboxOptions className="absolute mt-1 w-full z-20 max-h-52 overflow-y-auto custom-scrollbar rounded-md bg-white border text-base shadow-lg px-3 pb-3">
           {options.map((option: SELECT_MENU_ITEM_PROPS) => (
             <ListboxOption
               key={option.id}

@@ -194,7 +194,7 @@ const FamilyDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                   }`}
                 />
               </div>
-              <div className="col-span-1 w-full flex flex-col items-center justify-center">
+              <div className="col-span-1 w-full flex flex-col items-center justify-center relative z-[1]">
                 <label
                   htmlFor="relation"
                   className="w-full text-left text-gray-400 text-xs px-3 pb-1.5"

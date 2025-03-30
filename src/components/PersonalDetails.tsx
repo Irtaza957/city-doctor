@@ -135,13 +135,13 @@ const PersonalDetails = ({
     <div className="w-full flex flex-col items-center justify-center space-y-3 mt-[75px] mb-[85px] xl:m-0 pb-3">
       {!edit ? (
         <div className="w-full xl:w-[85%] mr-auto grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-5">
-          <div className="col-span-1 sm:col-span-2 w-full flex items-center justify-start pt-2.5">
+          <div className="col-span-1 sm:col-span-2 w-full flex items-center justify-start pt-2.5 ml-2">
             <ProfileUpload />
           </div>
           <div className="w-full flex flex-col items-center justify-center">
             <label
               htmlFor="firstName"
-              className="w-full text-left text-[#A3A3A3] text-xs px-3"
+              className="w-full text-left text-[#535763] px-3"
             >
               First Name
             </label>
@@ -155,7 +155,7 @@ const PersonalDetails = ({
           <div className="w-full flex flex-col items-center justify-center">
             <label
               htmlFor="lastName"
-              className="w-full text-left text-[#A3A3A3] text-xs px-3"
+              className="w-full text-left text-[#535763] px-3"
             >
               Last Name
             </label>
@@ -169,7 +169,7 @@ const PersonalDetails = ({
           <div className="w-full flex flex-col items-center justify-center">
             <label
               htmlFor="gender"
-              className="w-full text-left text-[#A3A3A3] text-xs px-3"
+              className="w-full text-left text-[#535763] px-3"
             >
               Gender
             </label>
@@ -183,7 +183,7 @@ const PersonalDetails = ({
           <div className="w-full flex flex-col items-center justify-center">
             <label
               htmlFor="dob"
-              className="w-full text-left text-[#A3A3A3] text-xs px-3"
+              className="w-full text-left text-[#535763] px-3"
             >
               Date of Birth
             </label>
@@ -194,7 +194,7 @@ const PersonalDetails = ({
           <div className="w-full flex flex-col items-center justify-center">
             <label
               htmlFor="email"
-              className="w-full text-left text-[#A3A3A3] text-xs px-3"
+              className="w-full text-left text-[#535763] px-3"
             >
               Email
             </label>
@@ -208,7 +208,7 @@ const PersonalDetails = ({
           <div className="w-full flex flex-col items-center justify-center">
             <label
               htmlFor="gender"
-              className="w-full text-left text-[#A3A3A3] text-xs px-3"
+              className="w-full text-left text-[#535763] px-3"
             >
               Phone Number
             </label>
@@ -352,7 +352,7 @@ const PersonalDetails = ({
           <button
             type="submit"
             disabled={isLoading}
-            className="w-36 py-2 text-sm rounded-lg bg-primary text-white flex items-center justify-center"
+            className="w-36 py-2 text-sm rounded-lg bg-primary text-white flex items-center justify-center mt-3"
           >
             {isLoading ? (
               <div className="w-full flex items-center justify-center gap-2">

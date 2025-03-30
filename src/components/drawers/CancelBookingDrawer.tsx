@@ -14,7 +14,7 @@ import {
 } from "@/store/services/booking";
 import { RootState } from "@/store";
 
-const CancelBookingDrawer = ({ open, onClose }: DIALOG_PROPS) => {
+const CancelBookingDrawer = ({ open, getData, onClose }: DIALOG_PROPS) => {
   const { id } = useParams();
   const [other, setOther] = useState("");
   const [reason, setReason] = useState("");
@@ -35,6 +35,7 @@ const CancelBookingDrawer = ({ open, onClose }: DIALOG_PROPS) => {
     try {
       const data = await cancelBooking(urlencoded);
       if (!data.error) {
+        getData?.()
         toast.success("Successfully Cancelled Booking!");
         onClose();
       } else {

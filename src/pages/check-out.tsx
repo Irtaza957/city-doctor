@@ -616,8 +616,8 @@ const CheckoutDetails = () => {
                 </div>
               </div>
               <div className="w-full flex flex-col items-center justify-center pt-5 gap-2.5">
-                <div className="w-full h-full flex items-center justify-center gap-3 bg-[#F7F7F7] sm:bg-transparent p-3 sm:p-0 rounded-md sm:rounded-none">
-                  <FaCircleInfo className="size-5 text-[#606060] place-self-start sm:place-self-center" />
+                <div className="w-full h-full flex items-start justify-center gap-3 bg-[#F7F7F7] sm:bg-transparent p-3 sm:p-0 rounded-md sm:rounded-none">
+                  <FaCircleInfo className="size-6 text-[#606060] place-self-start sm:place-self-center" />
                   <span className="w-full text-left text-xs text-[#5E5E5E] place-self-start sm:place-self-center">
                     Free cancellation until 12 hours before the start of your
                     booking.
@@ -673,7 +673,7 @@ const CheckoutDetails = () => {
                     </span>
                   </div>
                   <div
-                    className={`rounded-full border border-primary p-[3px] size-5 ${
+                    className={`rounded-full border border-primary p-[3px] w-5 h-[19px] sm:size-5 ${
                       payMethod === "Online Payment" ? "flex" : "hidden"
                     }`}
                   >
@@ -691,7 +691,7 @@ const CheckoutDetails = () => {
                     </span>
                   </div>
                   <div
-                    className={`rounded-full border border-primary p-[3px] size-5 ${
+                    className={`rounded-full border border-primary p-[3px] w-5 h-[19px] sm:size-5 ${
                       payMethod === "Cash on Delivery" ? "flex" : "hidden"
                     }`}
                   >
@@ -705,11 +705,11 @@ const CheckoutDetails = () => {
                   <div className="w-full flex items-center justify-start space-x-3">
                     <FaRegCreditCard className="w-5 h-5 text-black" />
                     <span className="text-xs md:text-sm  font-medium">
-                      Card on Delivery
+                      Card on Delive
                     </span>
                   </div>
                   <div
-                    className={`rounded-full border border-primary p-[3px] size-5 ${
+                    className={`rounded-full border border-primary p-[3px] w-5 h-[19px] sm:size-5 ${
                       payMethod === "Card on Delivery" ? "flex" : "hidden"
                     }`}
                   >
@@ -717,7 +717,7 @@ const CheckoutDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full h-full flex flex-col items-start justify-start gap-2.5 text-[#555555]">
+              <div className="w-full h-full flex flex-col items-start justify-start gap-2.5 text-[#555555] pb-24 sm:pb-0">
                 <div className="w-full flex items-center justify-between text-sm font-medium">
                   <span>Sub Total</span>
                   <span>

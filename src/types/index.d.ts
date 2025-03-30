@@ -113,6 +113,7 @@ declare type DIALOG_PROPS = {
   id?: string;
   open: boolean;
   onClose: () => void;
+  getData?: () => void;
 };
 
 declare type SELECT_MENU_ITEM_PROPS = {

@@ -2,7 +2,6 @@
 
 import { RootState } from "../store";
 import UserIcon from "@/assets/icons/UserIcon";
-import HelpIcon from "@/assets/icons/HelpIcon";
 import HelpCenter from "../components/HelpCenter";
 import CalendarIcon from "@/assets/icons/CalendarIcon";
 import LocationIcon from "@/assets/icons/LocationIcon";
@@ -51,12 +50,12 @@ const sidebar = [
       />
     ),
   },
-  {
-    id: 4,
-    name: "Help Center",
-    link: "help",
-    icon: <HelpIcon className="size-5 sm:size-6 text-black" />,
-  },
+  // {
+  //   id: 4,
+  //   name: "Help Center",
+  //   link: "help",
+  //   icon: <HelpIcon className="size-5 sm:size-6 text-black" />,
+  // },
   {
     id: 5,
     name: "Logout",

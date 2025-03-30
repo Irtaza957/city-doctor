@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const ThankYou = () => {
     const bookingID = useSelector((state: RootState) => state.city.bookingID);
     return (
-        <div className="w-[30%] mx-auto flex flex-col items-center justify-center rounded-lg bg-white px-5 pt-40 pb-20">
+        <div className="w-full md:w-[30%] mx-auto flex flex-col items-center justify-center rounded-lg bg-white px-5 pt-40 pb-20">
             <div className="w-full flex flex-col items-center justify-center">
                 <div className="w-[70px] h-[70px] p-4 rounded-full bg-[#38B1A2] flex items-center justify-center">
                     <FaCheck className="size-full text-white" />
