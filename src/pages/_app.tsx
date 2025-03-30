@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
   // const [showBottomNav, setShowBottomNav] = useState(true);
   // const [lastScrollY, setLastScrollY] = useState(0);
 
-  const pathname=usePathname()?.split('/')
+  const pathname = usePathname()?.split('/')
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
@@ -58,6 +58,17 @@ export default function App({ Component, pageProps }: AppProps) {
   const isTwoChars = pathname?.length === 2;
   const isThreeCharsButNotHome = pathname?.length === 3 && pathname?.[1] !== 'home'
 
+  const isCategoriesPath = (pathname?.length === 2 || pathname?.length === 3) && pathname?.[1] !== 'home';
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (isCategoriesPath) {
+      htmlElement.classList.add("h-screen", "overflow-hidden");
+    } else {
+      htmlElement.classList.remove("h-screen", "overflow-hidden");
+    }
+  }, [isCategoriesPath]);
+
   return (
     <>
       <noscript>
@@ -74,11 +85,11 @@ export default function App({ Component, pageProps }: AppProps) {
           <Navbar />
           {loading && <Loader />}
           <Component {...pageProps} />
-          <CheckoutBar isMenuVisible={pathname?.length!==4} />
-          {pathname?.length!==4 && <BottomNav />}
+          <CheckoutBar isMenuVisible={pathname?.length !== 4} />
+          {pathname?.length !== 4 && <BottomNav />}
           {/* {showBottomNav && <BottomNav />} */}
           <Footer />
-          {}
+          { }
           {(!isTwoChars && !isThreeCharsButNotHome) && <MobileFooter />}
           <CartBar />
         </PersistGate>

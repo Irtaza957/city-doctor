@@ -493,7 +493,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                 </div>
                 <button
                   onClick={() => handleIncrement()}
-                  className="w-[35%] py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
+                  className="w-[45%] xs:w-[40%] py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
                 >
                   Add to Cart
                 </button>

@@ -117,7 +117,7 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
 
   return (
     <>
-      <div className="md:hidden relative flex shadow-sm sm:h-[180px] items-start justify-start gap-1 rounded-[9px] border border-[#EAEAEA] bg-white">
+      <div className="md:hidden relative flex shadow-sm h-full sm:h-[180px] items-start justify-start gap-1 rounded-[9px] border border-[#EAEAEA] bg-white">
         {drip?.tagline &&
         <div className="absolute top-0 left-0 z-10">
           <div className="relative">
@@ -135,8 +135,8 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
         </div>}
         <Link href={navLink || `/drips/${drip.service_id}`}>
           <div className={cn(
-            "relative h-[102px] rounded-l-lg bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover",
-            asPath.includes("home") && pathname?.split('/')?.length===3 ? 'w-28 h-[102px]' : 'w-20 h-[98px]'
+            "relative rounded-l-lg bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover",
+            asPath.includes("home") && pathname?.split('/')?.length===3 ? 'w-28 h-[102px]' : 'w-20 h-[86px]'
             )}>
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
@@ -149,13 +149,13 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
             </div>
           </div>
         </Link>
-        <div className="w-full h-full flex flex-col items-center justify-end sm:justify-center gap-2.5 px-2.5 pt-2.5 sm:p-3.5">
+        <div className="w-full h-full flex flex-col items-center justify-between sm:justify-center px-2.5 pt-2.5 pb-2 sm:p-3.5">
           <div className="w-full sm:h-full flex items-start justify-start">
             <div className="w-full flex flex-col items-center justify-center">
               <div className="w-full flex items-center justify-between space-x-2.5">
                 <Link
                   href={navLink || `/drips/${drip.service_id}`}
-                  className="w-full text-left text-sm font-semibold line-clamp-2 !leading-[1.2] min-h-[36px]"
+                  className="w-full text-left text-sm font-semibold line-clamp-2 !leading-[1.2]"
                 >
                   {drip.name}
                 </Link>
