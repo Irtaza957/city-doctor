@@ -17,6 +17,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import BottomNav from "@/components/BottomNav";
 import MobileFooter from "@/components/MobileFooter";
 import { usePathname } from "next/navigation";
+import { staticPaths } from "@/utils/constants";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -58,11 +59,11 @@ export default function App({ Component, pageProps }: AppProps) {
   const isTwoChars = pathname?.length === 2;
   const isThreeCharsButNotHome = pathname?.length === 3 && pathname?.[1] !== 'home'
 
-  const isCategoriesPath = (pathname?.length === 2 || pathname?.length === 3) && pathname?.[1] !== 'home';
+  const isCategoriesPath = (pathname?.length === 2 || pathname?.length === 3) && !staticPaths.includes(pathname?.[1]);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
-    if (isCategoriesPath) {
+    if (isCategoriesPath && window.innerWidth < 650) {
       htmlElement.classList.add("h-screen", "overflow-hidden");
     } else {
       htmlElement.classList.remove("h-screen", "overflow-hidden");
