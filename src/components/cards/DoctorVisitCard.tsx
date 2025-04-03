@@ -1,23 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaStar, FaPlus, FaMinus } from "react-icons/fa6";
 
 import { RootState } from "@/store";
-import HeartIcon from "@/assets/icons/HeartIcon";
 import { imageBase, truncateString } from "@/utils/helpers";
-import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 
 const DoctorVisitCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
-  const [wishlist, setWishlist] = useState(false);
-  const [addToWishlist] = useAddToWishlistMutation();
-  const { user, cart } = useSelector((state: RootState) => state.global);
+  // const [wishlist, setWishlist] = useState(false);
+  // const [addToWishlist] = useAddToWishlistMutation();
+  const { cart } = useSelector((state: RootState) => state.global);
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -56,33 +53,33 @@ const DoctorVisitCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
     }
   };
 
-  const like = async (id: string) => {
-    setWishlist((prev) => (prev = !prev));
+  // const like = async (id: string) => {
+  //   setWishlist((prev) => (prev = !prev));
 
-    try {
-      const urlencoded = new URLSearchParams();
-      urlencoded.append("customer_id", user?.customer_id!);
-      urlencoded.append("service_id", id);
+  //   try {
+  //     const urlencoded = new URLSearchParams();
+  //     urlencoded.append("customer_id", user?.customer_id!);
+  //     urlencoded.append("service_id", id);
 
-      const response = await addToWishlist({
-        data: urlencoded,
-        token: user?.token,
-      });
+  //     const response = await addToWishlist({
+  //       data: urlencoded,
+  //       token: user?.token,
+  //     });
 
-      if (response.error) {
-        // @ts-ignore
-        toast.error(response.error.data.error);
-      } else {
-        if (wishlist) {
-          setWishlist(false);
-        } else {
-          setWishlist(true);
-        }
-      }
-    } catch (error) {
-      toast.error("Please Try Again!");
-    }
-  };
+  //     if (response.error) {
+  //       // @ts-ignore
+  //       toast.error(response.error.data.error);
+  //     } else {
+  //       if (wishlist) {
+  //         setWishlist(false);
+  //       } else {
+  //         setWishlist(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     toast.error("Please Try Again!");
+  //   }
+  // };
 
   useEffect(() => {
     if (cart) {
@@ -95,13 +92,13 @@ const DoctorVisitCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
     }
   }, [cart]);
 
-  useEffect(() => {
-    if (drip) {
-      if (drip.wishlist_id) {
-        setWishlist(true);
-      }
-    }
-  }, [drip]);
+  // useEffect(() => {
+  //   if (drip) {
+  //     if (drip.wishlist_id) {
+  //       setWishlist(true);
+  //     }
+  //   }
+  // }, [drip]);
 
   return (
     <div className="grid shadow-sm sm:h-[180px] grid-cols-8 mr-2 mb-2 items-start justify-start rounded-xl border border-[#EAEAEA] bg-white">
@@ -127,7 +124,7 @@ const DoctorVisitCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
               >
                 {drip.name}
               </Link>
-              {user && (
+              {/* {user && (
                 <div
                   onClick={() => like(drip.service_id!)}
                   className="flex flex-col items-end justify-end space-y-1 pb-2"
@@ -138,7 +135,7 @@ const DoctorVisitCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
                     <HeartIcon className="text-secondary" />
                   )}
                 </div>
-              )}
+              )} */}
             </div>
             <Link href={navLink || `/drips/${drip.service_id}`} className="w-full">
               <p className="w-full text-left text-xs line-clamp-1 text-[#555555] font-medium mt-0.5 flex md:hidden">

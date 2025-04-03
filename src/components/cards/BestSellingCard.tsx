@@ -1,23 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaStar, FaPlus, FaMinus } from "react-icons/fa6";
 
 import { RootState } from "@/store";
 import { imageBase } from "@/utils/helpers";
-import HeartIcon from "@/assets/icons/HeartIcon";
-import { useAddToWishlistMutation } from "@/store/services/wishlist";
+// import HeartIcon from "@/assets/icons/HeartIcon";
+// import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 
 const BestSellingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
-  const [wishlist, setWishlist] = useState(false);
-  const [addToWishlist] = useAddToWishlistMutation();
-  const { user, cart } = useSelector((state: RootState) => state.global);
+  // const [wishlist, setWishlist] = useState(false);
+  // const [addToWishlist] = useAddToWishlistMutation();
+  const { cart } = useSelector((state: RootState) => state.global);
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -58,33 +58,33 @@ const BestSellingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
     }
   };
 
-  const like = async (id: string) => {
-    setWishlist((prev) => (prev = !prev));
+  // const like = async (id: string) => {
+  //   setWishlist((prev) => (prev = !prev));
 
-    try {
-      const urlencoded = new URLSearchParams();
-      urlencoded.append("customer_id", user?.customer_id!);
-      urlencoded.append("service_id", id);
+  //   try {
+  //     const urlencoded = new URLSearchParams();
+  //     urlencoded.append("customer_id", user?.customer_id!);
+  //     urlencoded.append("service_id", id);
 
-      const response = await addToWishlist({
-        data: urlencoded,
-        token: user?.token,
-      });
+  //     const response = await addToWishlist({
+  //       data: urlencoded,
+  //       token: user?.token,
+  //     });
 
-      if (response.error) {
-        // @ts-ignore
-        toast.error(response.error.data.error);
-      } else {
-        if (wishlist) {
-          setWishlist(false);
-        } else {
-          setWishlist(true);
-        }
-      }
-    } catch (error) {
-      toast.error("Please Try Again!");
-    }
-  };
+  //     if (response.error) {
+  //       // @ts-ignore
+  //       toast.error(response.error.data.error);
+  //     } else {
+  //       if (wishlist) {
+  //         setWishlist(false);
+  //       } else {
+  //         setWishlist(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     toast.error("Please Try Again!");
+  //   }
+  // };
 
   useEffect(() => {
     if (cart) {
@@ -97,13 +97,13 @@ const BestSellingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
     }
   }, [cart]);
 
-  useEffect(() => {
-    if (drip) {
-      if (drip.wishlist_id) {
-        setWishlist(true);
-      }
-    }
-  }, [drip]);
+  // useEffect(() => {
+  //   if (drip) {
+  //     if (drip.wishlist_id) {
+  //       setWishlist(true);
+  //     }
+  //   }
+  // }, [drip]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center border rounded-xl shadow-sm">
@@ -116,7 +116,7 @@ const BestSellingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
             />
           </div>
         </Link>
-        {user && (
+        {/* {user && (
           <div
             onClick={() => like(drip.service_id!)}
             className="absolute top-2 right-2 flex flex-col items-center justify-center space-y-2 place-self-end cursor-pointer"
@@ -127,7 +127,7 @@ const BestSellingCard = ({ drip, navLink }: { drip: DRIP_CARD, navLink?: string 
               <HeartIcon className="text-secondary" />
             )}
           </div>
-        )}
+        )} */}
         <span className="absolute bottom-2 left-2 bg-tagline text-white py-0.5 px-3 rounded-full font-semibold text-xs">
           {drip.response_time}*
         </span>

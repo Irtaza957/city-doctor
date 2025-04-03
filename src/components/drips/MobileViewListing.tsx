@@ -38,7 +38,7 @@ const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories, ha
     return (
         <>
             <div className="flex h-screen overflow-hidden pb-5 items-start justify-center w-full sm:hidden pt-[136.25px] sm:mb-24 pr-3 gap-2">
-                <div className="w-[40%] xs:w-[35%] bg-[#F7F7F7] space-y overflow-auto custom-scrollbar h-screen">
+                <div className="w-[40%] xs:w-[35%] bg-[#F7F7F7] space-y overflow-auto custom-scrollbar h-[calc(100vh-300px)] pb-14">
                     {subLoading ?
                         <div className='space-y-3'>
                             {[...Array(10)].map((_, idx) => (
@@ -70,7 +70,7 @@ const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories, ha
                     <div className='sticky mt-2 z-10 mb-2.5 w-full'>
                         <SortHeader viewType={viewType} setViewType={setViewType} setOpenSortDrawer={setOpenSortDrawer} handleClose={handleClose} sorting={sorting} openSortDrawer={openSortDrawer} handleSelectSort={handleSelectSort} sortingOptions={sortingOptions} />
                     </div>
-                    <div className='overflow-auto custom-scrollbar h-full pb-56'>
+                    <div className='overflow-auto custom-scrollbar h-full pb-64'>
                         <div className='relative w-full h-[80px] mb-3'>
                             <Image
                                 src={DripBanner}

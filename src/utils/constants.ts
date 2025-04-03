@@ -214,9 +214,6 @@ export const subCategoriesMetaData = [
 
 export const staticPaths = [
   "home",
-  "bookings",
-  "cart",
-  "check-out",
   "blogs",
   "about-us",
   "account-settings",

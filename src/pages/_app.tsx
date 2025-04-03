@@ -56,10 +56,10 @@ export default function App({ Component, pageProps }: AppProps) {
   //   return () => window.removeEventListener("scroll", handleScroll);
   // }, [lastScrollY]);
 
-  const isTwoChars = pathname?.length === 2;
-  const isThreeCharsButNotHome = pathname?.length === 3 && pathname?.[1] !== 'home'
+  // const isTwoChars = pathname?.length === 2;
+  // const isThreeCharsButNotHome = pathname?.length === 3 && pathname?.[1] !== 'home'
 
-  const isCategoriesPath = (pathname?.length === 2 || pathname?.length === 3) && !staticPaths.includes(pathname?.[1]);
+  const isCategoriesPath = (pathname?.length === 2 || pathname?.length === 3) && ![...staticPaths, 'cart', 'check-out', 'bookings'].includes(pathname?.[1]);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -91,7 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {/* {showBottomNav && <BottomNav />} */}
           <Footer />
           { }
-          {(!isTwoChars && !isThreeCharsButNotHome) && <MobileFooter />}
+          {(staticPaths.includes(pathname?.[1])) && <MobileFooter />}
           <CartBar />
         </PersistGate>
       </Provider>

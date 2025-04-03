@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +8,6 @@ import { FaStar, FaPlus, FaMinus } from "react-icons/fa6";
 
 import { RootState } from "@/store";
 import { cn, imageBase } from "@/utils/helpers";
-import HeartIcon from "@/assets/icons/HeartIcon";
-import { useAddToWishlistMutation } from "@/store/services/wishlist";
 import { addToCart, removeFromCart, setCart, toggleSidebar } from "@/store/global";
 import Image from "next/image";
 import BgTagline from "@/assets/icons/bgTagline.svg";
@@ -20,9 +17,9 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
   const dispatch = useDispatch();
   const { asPath } = useRouter();
   const [quantity, setQuantity] = useState(0);
-  const [wishlist, setWishlist] = useState(false);
-  const [addToWishlist] = useAddToWishlistMutation();
-  const { user, cart } = useSelector((state: RootState) => state.global);
+  // const [wishlist, setWishlist] = useState(false);
+  // const [addToWishlist] = useAddToWishlistMutation();
+  const { cart } = useSelector((state: RootState) => state.global);
   const pathname=usePathname()
 
   const handleSidebar = () => {
@@ -62,33 +59,33 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
     }
   };
 
-  const like = async (id: string) => {
-    setWishlist((prev) => (prev = !prev));
+  // const like = async (id: string) => {
+  //   setWishlist((prev) => (prev = !prev));
 
-    try {
-      const urlencoded = new URLSearchParams();
-      urlencoded.append("customer_id", user?.customer_id!);
-      urlencoded.append("service_id", id);
+  //   try {
+  //     const urlencoded = new URLSearchParams();
+  //     urlencoded.append("customer_id", user?.customer_id!);
+  //     urlencoded.append("service_id", id);
 
-      const response = await addToWishlist({
-        data: urlencoded,
-        token: user?.token,
-      });
+  //     const response = await addToWishlist({
+  //       data: urlencoded,
+  //       token: user?.token,
+  //     });
 
-      if (response.error) {
-        // @ts-ignore
-        toast.error(response.error.data.error);
-      } else {
-        if (wishlist) {
-          setWishlist(false);
-        } else {
-          setWishlist(true);
-        }
-      }
-    } catch (error) {
-      toast.error("Please Try Again!");
-    }
-  };
+  //     if (response.error) {
+  //       // @ts-ignore
+  //       toast.error(response.error.data.error);
+  //     } else {
+  //       if (wishlist) {
+  //         setWishlist(false);
+  //       } else {
+  //         setWishlist(true);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     toast.error("Please Try Again!");
+  //   }
+  // };
 
   useEffect(() => {
     if (cart) {
@@ -101,13 +98,13 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
     }
   }, [cart]);
 
-  useEffect(() => {
-    if (drip) {
-      if (drip.wishlist_id) {
-        setWishlist(true);
-      }
-    }
-  }, [drip]);
+  // useEffect(() => {
+  //   if (drip) {
+  //     if (drip.wishlist_id) {
+  //       setWishlist(true);
+  //     }
+  //   }
+  // }, [drip]);
 
   return (
     <div className="w-full relative flex flex-col items-center justify-center border rounded-xl shadow-sm">
@@ -146,7 +143,7 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
 
           </div>
         </Link>
-        {user && (
+        {/* {user && (
           <div
             onClick={() => like(drip.service_id!)}
             className="absolute top-2 right-2 flex flex-col items-center justify-center space-y-2 place-self-end cursor-pointer"
@@ -157,7 +154,7 @@ const BestSellingListingCard = ({ drip, navLink, showResponseTime }: { drip: DRI
               <HeartIcon className="text-secondary" />
             )}
           </div>
-        )}
+        )} */}
         <span className="hidden sm:block absolute bottom-2 left-2 bg-tagline text-white py-0.5 px-3 rounded-full font-semibold text-xs">
           {drip.response_time}*
         </span>

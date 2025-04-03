@@ -485,11 +485,11 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                 <div>
                   <p className="text-[18px] font-bold">AED {data?.price ? Math.round(Number(data?.price)) : '-'}</p>
                   <div className="flex items-center justify-center space-x-2.5">
-                <FaRegClock className="w-4 h-4 text-primary" />
-                <span className="text-[#A3A3A3] font-medium text-sm">
-                  {data?.response_time}
-                </span>
-              </div>
+                    <FaRegClock className="w-4 h-4 text-primary" />
+                    <span className="text-[#A3A3A3] font-medium text-sm">
+                      {data?.response_time}
+                    </span>
+                  </div>
                 </div>
                 <button
                   onClick={() => handleIncrement()}
@@ -499,22 +499,33 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                 </button>
               </div>
             ) : (
-              <div className="w-full flex items-center justify-center gap-6">
-                <span
-                  onClick={handleDecrement}
-                  className="size-10 px-2 rounded-lg text-primary border border-primary flex items-center justify-center"
-                >
-                  <FaMinus />
-                </span>
-                <span className="text-lg font-bold w-4 text-center">
-                  {quantity}
-                </span>
-                <span
-                  onClick={handleIncrement}
-                  className="size-10 px-2 rounded-lg bg-primary text-white border border-primary hover:bg-primary hover:text-white flex items-center justify-center"
-                >
-                  <FaPlus />
-                </span>
+              <div className="flex items-center justify-between w-full">
+                <div className="w-full">
+                  <p className="text-[18px] font-bold">AED {data?.price ? Math.round(Number(data?.price)) : '-'}</p>
+                  <div className="flex items-center justify space-x-2.5">
+                    <FaRegClock className="w-4 h-4 text-primary" />
+                    <span className="text-[#A3A3A3] font-medium text-sm">
+                      {data?.response_time}
+                    </span>
+                  </div>
+                </div>
+                <div className="w-full flex items-center justify-end gap-6">
+                  <span
+                    onClick={handleDecrement}
+                    className="size-10 px-2 rounded-lg text-primary border border-primary flex items-center justify-center"
+                  >
+                    <FaMinus />
+                  </span>
+                  <span className="text-lg font-bold w-4 text-center">
+                    {quantity}
+                  </span>
+                  <span
+                    onClick={handleIncrement}
+                    className="size-10 px-2 rounded-lg bg-primary text-white border border-primary hover:bg-primary hover:text-white flex items-center justify-center"
+                  >
+                    <FaPlus />
+                  </span>
+                </div>
               </div>
             )}
           </div>

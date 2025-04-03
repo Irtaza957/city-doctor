@@ -113,10 +113,13 @@ const Checkout = () => {
       <GoogleAnalytics />
       <LoginDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
       <LoginModal open={open} setOpen={setOpen} />
-      <div className="w-full flex flex-col items-center justify-center gap-5 pb-10 mt-[69px] md:mt-[108px]">
+      <div className={cn(
+        "w-full flex flex-col items-center justify-center gap-5 pb-10 sm:mt-[50px] md:mt-[108px]",
+        cart.length !== 0 && ''
+        )}>
         {cart.length === 0 ? (
-          <div className="w-full h-[calc(100vh-76px)] flex flex-col items-center justify-center">
-            <Image src={EmptyCart} alt="empty-wishlist" className="size-44 -ml-10 sm:-ml-0" />
+          <div className="w-full h-[calc(100vh-76px)] overflow-hidden flex flex-col items-center justify-center">
+            <Image src={EmptyCart} alt="empty-wishlist" className="size-44 -ml-10" />
             <p className="w-full text-center text-lg font-semibold mb-2">
               Your Cart is Empty!!
             </p>
@@ -144,7 +147,7 @@ const Checkout = () => {
                   <>
                     <div
                       key={idx}
-                      className="w-full py-3 flex sm:hidden items-center justify-center border-b"
+                      className="w-full py-3 flex sm:hidden items-start justify-center border-b"
                     >
                       <Image
                         src={imageBase(item.thumbnail!)}
@@ -154,7 +157,7 @@ const Checkout = () => {
                         className="size-16 rounded-md object-cover"
                       />
                       <div className="w-full flex items-center justify-center">
-                        <div className="w-[60%] flex flex-col items-center justify-center gap-1 pl-3">
+                        <div className="w-[75%] flex flex-col items-center justify-center gap-1 pl-3">
                           <span className="w-full text-left text-sm font-semibold break-words">
                             {item.name}
                           </span>
@@ -165,7 +168,7 @@ const Checkout = () => {
                             AED {item.price_without_vat}
                           </span>
                         </div>
-                        <div className="w-[40%] h-full flex items-center justify-center">
+                        <div className="w-[25%] h-full flex items-center justify-center mt-5">
                           <div className="w-full flex items-center justify-end gap-2.5">
                             <span
                               onClick={() => {

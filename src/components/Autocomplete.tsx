@@ -65,7 +65,7 @@ const AutoComplete = ({ handleClose }: { handleClose?: () => void }) => {
       </div>
       <div
         ref={dropRef}
-        className={`md:absolute md:-bottom-[310px] h-[70vh] mt-1 md:mt-0 md:h-[300px] z-10 left-0 w-full flex-col divide-y overflow-auto custom-scrollbar rounded-lg bg-white ${
+        className={`md:absolute md:-bottom-[310px] h-[70vh] pb-32 mt-1 md:mt-0 md:h-[300px] z-10 left-0 w-full flex-col divide-y overflow-auto custom-scrollbar rounded-lg bg-white ${
           query === "" ? "hidden" : "flex"
         } ${
           results?.length === 0 || isLoading
