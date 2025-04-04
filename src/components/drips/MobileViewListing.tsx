@@ -45,7 +45,7 @@ const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories=[],
                                 <div key={idx} className="w-full h-6 rounded-lg bg-gray-200 animate-pulse" />
                             ))}
                         </div> :
-                        <div className='overflow-auto custom-scrollbar max-h-[calc(100vh-200px)] pb-14 w-full'>
+                        <div className='overflow-auto custom-scrollbar max-h-[calc(100vh-250px)] pb-14 w-full'>
                             <div
                                 onClick={() => handleSubCategorySelect('all')}
                                 className={cn(
