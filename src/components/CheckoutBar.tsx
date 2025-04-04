@@ -61,16 +61,17 @@ const CheckoutBar = ({isMenuVisible}: {isMenuVisible: boolean}) => {
   useEffect(() => {
     dispatch(setIsMenuVisible(isMenuVisible));
   }, [isMenuVisible]);
-
+  
   return (
     <>
       <LoginDrawer open={openLogin} onClose={closeLogin} />
       <div
-        className={cn("fixed bottom-0 left-0 z-50 w-full flex sm:hidden flex-col items-end justify-end",
+        className={cn("fixed left-0 z-50 w-full flex sm:hidden flex-col items-end justify-end",
         openCart && "bg-black/30 h-full",
         shouldHide && "hidden",
         cart.length === 0 && 'hidden',
-        isMenuVisible && 'bottom-[68px]'
+        isMenuVisible && 'bottom-[68px]',
+        pathname?.split('/')?.length===4 ? 'bottom-[68px]' : 'bottom-[68px]'
       )}
       >
         <div

@@ -20,7 +20,7 @@ interface MobileViewListingProps {
     getNavLink: any
 }
 
-const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories, handleSubCategorySelect, selectedSubCategory, subLoading, getNavLink }: MobileViewListingProps) => {
+const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories=[], handleSubCategorySelect, selectedSubCategory, subLoading, getNavLink }: MobileViewListingProps) => {
     const [viewType, setViewType] = useState(true);
     const [sorting, setSorting] = useState("");
     const [openSortDrawer, setOpenSortDrawer] = useState(false)
@@ -38,14 +38,14 @@ const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories, ha
     return (
         <>
             <div className="flex h-screen overflow-hidden pb-5 items-start justify-center w-full sm:hidden pt-[136.25px] sm:mb-24 pr-3 gap-2">
-                <div className="w-[40%] xs:w-[35%] bg-[#F7F7F7] space-y overflow-auto custom-scrollbar h-[calc(100vh-300px)] pb-14">
+                <div className="w-[40%] xs:w-[35%] bg-[#F7F7F7] space-y h-screen">
                     {subLoading ?
                         <div className='space-y-3'>
                             {[...Array(10)].map((_, idx) => (
                                 <div key={idx} className="w-full h-6 rounded-lg bg-gray-200 animate-pulse" />
                             ))}
                         </div> :
-                        <>
+                        <div className='overflow-auto custom-scrollbar max-h-[calc(100vh-200px)] pb-14 w-full'>
                             <div
                                 onClick={() => handleSubCategorySelect('all')}
                                 className={cn(
@@ -64,9 +64,9 @@ const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories, ha
                                     {sub.name}
                                 </div>
                             ))}
-                        </>}
+                        </div>}
                 </div>
-                <div className="w-full relative h-screen overflow-hidden pb-36">
+                <div className="w-full relative h-screen overflow-hidden pb-20">
                     <div className='sticky mt-2 z-10 mb-2.5 w-full'>
                         <SortHeader viewType={viewType} setViewType={setViewType} setOpenSortDrawer={setOpenSortDrawer} handleClose={handleClose} sorting={sorting} openSortDrawer={openSortDrawer} handleSelectSort={handleSelectSort} sortingOptions={sortingOptions} />
                     </div>

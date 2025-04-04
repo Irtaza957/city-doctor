@@ -32,6 +32,7 @@ import { addToCart, removeFromCart, toggleSidebar } from "@/store/global";
 import he from "he";
 import SizeIcon from "@/assets/icons/size.svg";
 import avatar from "@/assets/icons/avatar.svg";
+import { usePathname } from "next/navigation";
 
 const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData?: () => void }) => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
   const [tab, setTab] = useState<string>(data?.sections?.[0]?.name);
   const { user, cart, isMenuVisible } = useSelector((state: RootState) => state.global);
   const [selectedBundle, setSelectedBundle] = useState<number | null>(null)
+  const pathname=usePathname()
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -467,7 +469,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
               </div>
             </div> : null}
           {data?.faqs?.length ?
-            <div className="w-full flex flex-col items-center justify-center space-y-5 px-5">
+            <div className="w-full flex flex-col items-center justify-center space-y-5 px-5 pb-36">
               <h1 className="w-full text-left text-xl font-medium">FAQs</h1>
               <div className="w-full flex flex-col items-center justify-center space-y-2.5">
                 {data?.faqs?.map((section, idx) => (
@@ -476,9 +478,10 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
               </div>
             </div> : null}
           <div className={cn(
-            `fixed w-full z-20 bottom-0 left-0 p-3 bg-white border-t`,
+            `fixed w-full bottom-0 z-20 left-0 p-3 bg-white border-t`,
             cart?.length > 0 && 'pb-[85px]',
-            isMenuVisible && 'bottom-[68px]'
+            isMenuVisible && 'bottom-[68px]',
+            pathname?.split('/')?.length===4 && 'pb-[10px]'
           )}>
             {quantity === 0 ? (
               <div className="flex items-center justify-between">
@@ -493,7 +496,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                 </div>
                 <button
                   onClick={() => handleIncrement()}
-                  className="w-[45%] xs:w-[40%] py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
+                  className="w-[45%] xs:w-[40%] py-3 -mb-0.5 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
                 >
                   Add to Cart
                 </button>

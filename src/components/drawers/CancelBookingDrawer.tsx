@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { LuLoader2 } from "react-icons/lu";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 
 import {
   useCancelBookingMutation,
@@ -15,7 +15,8 @@ import {
 import { RootState } from "@/store";
 
 const CancelBookingDrawer = ({ open, getData, onClose }: DIALOG_PROPS) => {
-  const { id } = useParams();
+  const router = useRouter()
+  const {id}=router.query
   const [other, setOther] = useState("");
   const [reason, setReason] = useState("");
   const { user } = useSelector((state: RootState) => state.global);

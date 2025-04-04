@@ -39,7 +39,7 @@ const Header = ({ position }: HeaderProps) => {
   return (
     <div className={cn(
       `block w-full h-full mb-5 xl:mb-0 `,
-      position === 'middle' ? 'mt-5' : 'mt-[69px] sm:mt-[72px] md:mt-[112.5px]'
+      position === 'middle' ? 'mt-5' : 'sm:mt-[72px] md:mt-[112.5px]'
     )}>
       {isLoading ? (
         <Swiper

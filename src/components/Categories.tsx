@@ -30,14 +30,14 @@ const Categories = () => {
   useEffect(() => {
     let hasUserInteracted = false;
     setShowSlider(false); // Ensure showSlider resets on mount
-  
+
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       if (!hasUserInteracted) return;
-  
+
       entries.forEach((entry) => {
         const adjustedTop = entry.boundingClientRect.top - 120;
         console.log(entry.intersectionRatio, adjustedTop, "adjustedTopadjustedTop");
-  
+
         if (entry.intersectionRatio === 0 && adjustedTop <= 0) {
           setShowSlider(true);
         } else {
@@ -45,31 +45,31 @@ const Categories = () => {
         }
       });
     };
-  
+
     const handleScroll = () => {
       hasUserInteracted = true;
     };
-  
+
     const observerOptions = {
       root: null,
       threshold: [0, 1],
     };
-  
+
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-  
+
     if (categoryRef.current) observer.observe(categoryRef.current);
     if (categoryDRef.current) observer.observe(categoryDRef.current);
-  
+
     window.addEventListener("scroll", handleScroll);
-  
+
     return () => {
       if (categoryRef.current) observer.unobserve(categoryRef.current);
       if (categoryDRef.current) observer.unobserve(categoryDRef.current);
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isLoading]); // Keep dependencies minimal
-  
-  
+
+
 
   return (
     <>
@@ -80,7 +80,30 @@ const Categories = () => {
         )}
       >
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto sm:px-5 md:px-0">
-          <div className="block sm:hidden py-2.5">
+          <div className="flex items-center justify-center gap-1.5 sm:hidden py-2.5 px-3">
+            {data?.map((category, idx) => (
+              <div
+                key={idx}
+              >
+                <Link
+                  href={getCategoryLink(category.category_id, category.category_name)}
+                  onClick={() => selectCategory(category)}
+                  className={"w-full text-black flex items-center justify-center gap-1 cursor-pointer py-2 px-1.5 rounded-lg"}
+                  style={{ backgroundColor: category?.color || "#F0F0F0" }}
+                >
+                  {/* <Image
+                  src={`${imageBase(category.icon)}`}
+                  alt="icon"
+                  width={56}
+                  height={56}
+                  className="w-[26px] h-[26px]"
+                /> */}
+                  <span className="text-center font-semibold text-[10px] h-[30px] line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                </Link>
+              </div>
+            ))}
+          </div>
+          {/* <div className="block sm:hidden py-2.5">
             <Swiper
               freeMode={true}
               spaceBetween={5}
@@ -118,7 +141,7 @@ const Categories = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div>
+          </div> */}
           <div className="w-full hidden sm:block md:hidden py-2.5">
             <Swiper
               freeMode={true}
@@ -232,10 +255,10 @@ const Categories = () => {
             ))}
         </div>
       </div>
-      <div ref={categoryRef} className="flex md:hidden w-full px-3 pb-5">
+      <div ref={categoryRef} className="flex md:hidden w-full px-3 pb-1">
         <div
           className={`w-full h-full ${showSlider && "invisible"
-            } grid grid-cols-2 sm:grid-cols-3 items-center justify-center gap-2.5`}
+            } grid grid-cols-4 sm:grid-cols-3 items-center justify-center gap-1.5`}
         >
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
@@ -244,7 +267,7 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("col-span-1 w-full h-[70px] flex items-center justify-start gap-3 xs:gap-4 space-y-2 rounded-xl bg-gray-100 text-black pl-4 pr-2")}
+                className={cn("col-span-1 w-full flex flex-col items-center justify-start space-y-2 rounded-xl bg-gray-100 text-black px-1.5 xs:px-2 py-3")}
                 style={{ backgroundColor: category?.color || "#F5F5F5" }}
               >
                 <Image
@@ -254,7 +277,7 @@ const Categories = () => {
                   alt="category"
                   className="w-[38px] h-11"
                 />
-                <span className="w-[80px] text-left font-bold text-[13px] !mb-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                <span className="text-center font-semibold text-[11px] line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>

@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/navigation";
 import { RootState } from "@/store";
-import EmptyCart from "@/assets/img/empty-cart.svg";
+import EmptyCart from "@/assets/icons/empty-cart.svg";
 import LoginModal from "@/components/modals/LoginModal";
 import LoginDrawer from "@/components/drawers/LoginDrawer";
 import { useFetchHomeDataQuery } from "@/store/services/home";
@@ -119,18 +119,19 @@ const Checkout = () => {
         )}>
         {cart.length === 0 ? (
           <div className="w-full h-[calc(100vh-76px)] overflow-hidden flex flex-col items-center justify-center">
-            <Image src={EmptyCart} alt="empty-wishlist" className="size-44 -ml-10" />
-            <p className="w-full text-center text-lg font-semibold mb-2">
-              Your Cart is Empty!!
+            <p className="w-full text-center text-2xl sm:text-[30px] font-bold mb-1">
+              Your Cart is Empty!
             </p>
-            <p className="w-full text-center font-semibold text-sm sm:text-base text-[#707070]">
-              Explore more and shortlist some services
+            <p className="w-[300px] md:w-[400px] text-center font-medium text-sm sm:text-base text-[#555555] mb-4">
+            Looks like you haven’t added anything yet.
+            Let’s get you started!
             </p>
+            <Image src={EmptyCart} alt="empty-wishlist" className="size-44 " />
             <Link
               href="/home"
-              className="mt-6 sm:mt-12 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
+              className="mt-6 w-[200px] flex items-center justify-center sm:mt-8 bg-primary text-white rounded-lg text-xs font-bold py-3 px-6 place-self-center"
             >
-              Explore More
+              Start Shopping
             </Link>
           </div>
         ) : (

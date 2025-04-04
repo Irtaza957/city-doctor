@@ -103,16 +103,16 @@ console.log(details, 'detailsdetails')
     if (data) {
       setServices(data?.services);
       setMember({
-        mrn: data?.customer.mrn!,
-        phone: data?.customer.phone!,
-        gender: `${data?.customer.gender}`,
-        is_allergy: data?.customer.is_allergy,
-        lastname: `${data?.customer.lastname}`,
-        firstname: `${data?.customer.firstname}`,
-        relationship: data?.customer.relationship!,
-        family_member_id: data?.customer.customer_id!,
-        date_of_birth: `${data?.customer.date_of_birth}`,
-        allergy_description: data?.customer.allergy_description,
+        mrn: data?.customer?.mrn!,
+        phone: data?.customer?.phone!,
+        gender: `${data?.customer?.gender}`,
+        is_allergy: data?.customer?.is_allergy,
+        lastname: `${data?.customer?.lastname}`,
+        firstname: `${data?.customer?.firstname}`,
+        relationship: data?.customer?.relationship!,
+        family_member_id: data?.customer?.customer_id!,
+        date_of_birth: `${data?.customer?.date_of_birth}`,
+        allergy_description: data?.customer?.allergy_description,
       });
       setDate({
         id: 0,
@@ -260,7 +260,7 @@ console.log(details, 'detailsdetails')
                   height={64}
                   className="col-span-2 size-14 border rounded-xl bg-black"
                 />
-                <div className="col-span-6 w-full flex flex-col items-center justify-between gap-0.5">
+                <div className="col-span-10 w-full flex flex-col items-center justify-between gap-0.5">
                   <p className="text-black w-full text-left text-[16px] font-semibold ">
                     {service.name}
                   </p>
@@ -338,7 +338,7 @@ console.log(details, 'detailsdetails')
               Payment Method
             </h1>
             <div className="w-full flex items-center justify-between pb-12">
-              <p className="w-full text-left text-xs font-medium text-[#555555]">
+              <p className="w-full text-left text-[#535763] text-sm font-medium">
                 {data?.payment_method}
               </p>
               {data?.payment_method === "Online Payment" && (

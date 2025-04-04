@@ -36,9 +36,9 @@ const sortingOptions = [
   },
 ];
 
-const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
+const SectionListing = ({ sectionData }: { sectionData?: DRIP }) => {
   const dispatch = useDispatch();
-  const [limit, setLimit]=useState('All')
+  const [limit, setLimit] = useState('All')
   const [viewType, setViewType] = useState(true);
   const [startSlide, setStartSlide] = useState(true);
   const { data: categories } = useFetchCategoriesQuery({});
@@ -94,11 +94,11 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
       console.log(err)
     }
   }
-  
+
   useEffect(() => {
-    if(sectionData){
-      setData({section_data: sectionData, section: 'Banner', page_type: 'Sections', rows: '1'})
-    }else{
+    if (sectionData) {
+      setData({ section_data: sectionData, section: 'Banner', page_type: 'Sections', rows: '1' })
+    } else {
       getData()
     }
   }, [name, sectionData])
@@ -108,7 +108,30 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
       <GoogleAnalytics />
       <div className="fixed flex w-full shadow-md z-50 top-[69px] sm:top-[65.75px] md:top-[108px] lg:top-[113px] left-0 bg-white md:border-b xl:border-none">
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto">
-          <div className="w-full block sm:hidden pb-2.5">
+          <div className="flex items-center justify-center gap-1.5 sm:hidden py-2.5 px-3 shadow">
+            {categories?.map((category, idx) => (
+              <div
+                key={idx}
+              >
+                <Link
+                    href={getCategoryLink(category.category_id, category.category_name)}
+                    onClick={() => selectCategory(category)}
+                    className="w-full flex items-center justify-center cursor-pointer gap-1 px-1.5 py-2 rounded-lg text-black"
+                    style={{ backgroundColor: category?.color || "#F0F0F0" }}
+                  >
+                  {/* <Image
+                  src={`${imageBase(category.icon)}`}
+                  alt="icon"
+                  width={56}
+                  height={56}
+                  className="w-[26px] h-[26px]"
+                /> */}
+                  <span className="text-center font-semibold text-[10px] h-[30px] line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                </Link>
+              </div>
+            ))}
+          </div>
+          {/* <div className="w-full block sm:hidden pb-2.5">
             <Swiper
               freeMode={true}
               spaceBetween={5}
@@ -147,7 +170,7 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div>
+          </div> */}
           <div className="w-full hidden sm:block md:hidden py-2.5">
             <Swiper
               freeMode={true}
@@ -245,7 +268,7 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
         </div>
       </div>
       <div className="w-full px-5 lg:px-0 md:w-[90%] lg:max-w-[1440px] mx-auto mb-20 flex flex-col items-start justify-start gap-5">
-        <div className="w-full flex flex-col items-center gap-4 mt-[145.75px] sm:mt-[163.75px] md:mt-[196px] lg:mt-[205px]">
+        <div className="w-full flex flex-col items-center gap-4 mt-[155.75px] sm:mt-[163.75px] md:mt-[196px] lg:mt-[205px]">
           <Image
             width={1000}
             height={1000}
@@ -259,16 +282,14 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
             <div className="flex items-center justify-start gap-2">
               <button type="button" onClick={() => setViewType(false)}>
                 <FaThList
-                  className={`size-6 ${
-                    viewType ? "text-gray-400" : "text-primary"
-                  }`}
+                  className={`size-6 ${viewType ? "text-gray-400" : "text-primary"
+                    }`}
                 />
               </button>
               <button type="button" onClick={() => setViewType(true)}>
                 <IoGrid
-                  className={`size-6 ${
-                    viewType ? "text-primary" : "text-gray-400"
-                  }`}
+                  className={`size-6 ${viewType ? "text-primary" : "text-gray-400"
+                    }`}
                 />
               </button>
             </div>
@@ -322,13 +343,13 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
             </div>
           </div>
           {/* <div className="sm:hidden w-full flex items-center justify-between bg-gray-100 border border-[#DEDEDE] rounded-lg py-2 px-3"> */}
-            <SortHeader viewType={viewType} setViewType={setViewType} setOpenSortDrawer={setOpenSortDrawer} handleClose={handleClose} sorting={sorting} openSortDrawer={openSortDrawer} handleSelectSort={handleSelectSort} sortingOptions={sortingOptions} />
+          <SortHeader viewType={viewType} setViewType={setViewType} setOpenSortDrawer={setOpenSortDrawer} handleClose={handleClose} sorting={sorting} openSortDrawer={openSortDrawer} handleSelectSort={handleSelectSort} sortingOptions={sortingOptions} />
           {/* </div> */}
           <h1 className="w-full text-left font-bold text-xl">{data?.section}</h1>
           <div
             className={`sm:hidden w-full grid pb-5 ${!viewType
-                ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
-                : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2"
+              ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
+              : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2"
               }`}
           >
             {sort(sorting, data?.section_data)?.map((service, idx) => {
@@ -345,8 +366,8 @@ const SectionListing = ({sectionData}: {sectionData?: DRIP}) => {
           </div>
           <div
             className={`hidden sm:grid w-full pb-5 ${!viewType
-                ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
-                : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2"
+              ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2"
+              : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2"
               }`}
           >
             {(limit === "All" ? sort(sorting, data?.section_data) : sort(sorting, data?.section_data)?.slice(0, parseInt(limit)))?.map((service, idx) => {

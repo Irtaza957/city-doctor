@@ -113,13 +113,14 @@ const ProfileTab = ({ handleTab }: { handleTab: (tab: string) => void }) => {
               Personal Details
             </h1>
           </div>
+          {!edit &&
           <button
             type="button"
             onClick={() => setEdit(true)}
             className="w-20 py-2 text-sm rounded-full bg-primary text-white items-center justify-center"
           >
             Edit
-          </button>
+          </button>}
         </div>
         <PersonalDetails edit={edit} setEdit={setEdit} />
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-5">

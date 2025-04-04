@@ -50,7 +50,6 @@ const DripListing = () => {
   const [viewType, setViewType] = useState(false);
   const mobileSubCatRef = useRef<SwiperRef>(null);
   const desktopSubCatRef = useRef<SwiperRef>(null);
-  const [startSlide, setStartSlide] = useState(true);
   const [getSubCategories, { isLoading: subLoading }] =
     useFetchSubCategoriesMutation();
   const { data, isLoading } = useFetchCategoriesQuery({});
@@ -182,18 +181,43 @@ const DripListing = () => {
     }
   }
   const handleSubCategorySelect = async (subCategory: string) => {
-    if(subCategory==='all'){
+    if (subCategory === 'all') {
       router.push(`/${(selectedCategory?.category_name || '').toLowerCase().replace(/\s+/g, "-")}`)
       return
     }
     router.push(`/${(selectedCategory?.category_name || '').toLowerCase().replace(/\s+/g, "-")}/${getSlug(subCategory || '')}`)
   }
-console.log(selectedCategory, 'selectedCategoryselectedCategory')
+  console.log(selectedCategory, 'selectedCategoryselectedCategory')
   return (
     <>
       <div className="fixed w-full z-20 top-[69px] sm:top-[75.75px] md:top-[108px] lg:top-[113px] left-0 bg-white md:border-b xl:border-none">
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto">
-          <div className="w-full block sm:hidden pb-2.5 pt-2.5 shadow-md">
+          <div className="flex items-center justify-center gap-1.5 sm:hidden py-2.5 px-3 shadow">
+            {data?.map((category, idx) => (
+              <div
+                key={idx}
+              >
+                <div
+                  onClick={() => navigateToCategory(category)}
+                  className={`w-full flex items-center justify-center cursor-pointer gap-1 py-2 px-1.5 rounded-lg ${selectedCategory?.category_id === category.category_id
+                    ? "text-white"
+                    : "text-black"
+                    }`}
+                  style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
+                >
+                  {/* <Image
+                  src={`${imageBase(category.icon)}`}
+                  alt="icon"
+                  width={56}
+                  height={56}
+                  className="w-[26px] h-[26px]"
+                /> */}
+                  <span className="text-center font-semibold text-[10px] h-[30px] line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* <div className="w-full block sm:hidden pb-2.5 pt-2.5 shadow-md">
             {isLoading ? (
               <Swiper
                 freeMode={true}
@@ -249,7 +273,7 @@ console.log(selectedCategory, 'selectedCategoryselectedCategory')
                 ))}
               </Swiper>
             )}
-          </div>
+          </div> */}
           {/* <div className="w-full block sm:hidden py-2.5">
             {subLoading ? (
               <Swiper
@@ -648,7 +672,7 @@ console.log(selectedCategory, 'selectedCategoryselectedCategory')
           </div>
         )}
       </div>
-      <MobileViewListing showResponseTime={selectedCategory?.show_response_time==='1'} sortingOptions={sortingOptions} subCategories={subCategories} handleSubCategorySelect={handleSubCategorySelect} selectedSubCategory={selectedSubCategory} subLoading={subLoading} getNavLink={getNavLink} />
+      <MobileViewListing showResponseTime={selectedCategory?.show_response_time === '1'} sortingOptions={sortingOptions} subCategories={subCategories} handleSubCategorySelect={handleSubCategorySelect} selectedSubCategory={selectedSubCategory} subLoading={subLoading} getNavLink={getNavLink} />
 
       {/* <div className="w-full sm:hidden mt-[230.25px] mb-24 px-5">
         {subLoading ? (

@@ -387,7 +387,7 @@ const Bookings = () => {
           </button>
         </div>
       </div>
-      <div className="w-full mt-[200.75px] mb-10 px-5 flex md:hidden flex-col items-start justify-start gap-5">
+      <div className="w-full mt-[200.75px] mb-24 px-5 flex md:hidden flex-col items-start justify-start gap-5">
         {isLoading ? (
           [...Array(10)].map((_, idx) => <BookingCardSkeleton key={idx} />)
         ) : (

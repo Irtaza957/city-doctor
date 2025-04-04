@@ -206,6 +206,8 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
         await register(urlencoded);
         toast.success("Successfully Registered!");
         setOpenRegister(false);
+        setPhone(undefined)
+        setOTP("")
       } catch (error) {
         toast.error("Please Try Again!");
       }
@@ -218,7 +220,12 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
     if(open){
       fetchCountries(setCountryList);
     }
+    return ()=>{
+      setPhone(undefined)
+      setOTP("")
+    }
   }, [open]);
+  
 
   /**
    * 1. Type Selection Drawer (Mobile, Email) && Input Drawer (Based on Type) --
