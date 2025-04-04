@@ -115,7 +115,7 @@ const Checkout = () => {
       <LoginModal open={open} setOpen={setOpen} />
       <div className={cn(
         "w-full flex flex-col items-center justify-center gap-5 pb-10 mt-[50px] md:mt-[108px]",
-        cart.length !== 0 && ''
+        cart.length === 0 && 'mt-5'
         )}>
         {cart.length === 0 ? (
           <div className="w-full h-[calc(100vh-76px)] overflow-hidden flex flex-col items-center justify-center">
@@ -135,7 +135,7 @@ const Checkout = () => {
             </Link>
           </div>
         ) : (
-          <div className="w-full sm:bg-gray-100 px-5 md:px-0 h-screen">
+          <div className="w-full sm:bg-gray-100 px-5 md:px-0 h-[calc(100vh-220px)]">
             <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 py-7 sm:pt-14 sm:pb-24">
               <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
                 <h1 className="w-full text-left text-xl flex font-semibold mb-2.5 items-center justify-start">
