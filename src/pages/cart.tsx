@@ -158,7 +158,7 @@ const Checkout = () => {
                         className="size-16 rounded-md object-cover"
                       />
                       <div className="w-full flex items-center justify-center">
-                        <div className="w-[75%] flex flex-col items-center justify-center gap-1 pl-3">
+                        <div className="w-[70%] xs:w-[75%] flex flex-col items-center justify-center gap-1 pl-3">
                           <span className="w-full text-left text-sm font-semibold break-words">
                             {item.name}
                           </span>
@@ -169,7 +169,7 @@ const Checkout = () => {
                             AED {item.price_without_vat}
                           </span>
                         </div>
-                        <div className="w-[25%] h-full flex items-center justify-center mt-5">
+                        <div className="w-[30%] xs:w-[25%] h-full flex items-center justify-center mt-5">
                           <div className="w-full flex items-center justify-end gap-2.5">
                             <span
                               onClick={() => {
