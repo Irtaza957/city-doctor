@@ -159,3 +159,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 7.5px !important;
   }
 }
+
+.testimonial .swiper-pagination-bullet{
+  background: #999999 !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+.testimonial .swiper-pagination-bullet-active{
+  background: #006fac !important;
+}
+
+.swiper-pagination{
+  bottom: 0 !important;
+}

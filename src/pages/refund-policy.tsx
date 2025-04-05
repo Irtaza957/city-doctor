@@ -53,42 +53,44 @@ const RefundPolicy = () => {
                         <h1 className="w-full text-left text-lg font-semibold">
                             Cancellation Policy
                         </h1>
-                        <table className="min-w-full border border-gray-300">
-                            <thead>
-                                <tr className="bg-gray-200">
-                                    <th className="border border-gray-300 px-4 py-2 text-left">Condition</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left">Cancellation Fee</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left">Rescheduling Fee</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="border border-gray-300 px-4 py-2">Cancellation and rescheduling within 10 minutes of request submission</td>
-                                    <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
-                                    <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
-                                </tr>
-                                <tr className="bg-gray-100">
-                                    <td className="border border-gray-300 px-4 py-2">Cancellations and Rescheduling 12* hours before appointment</td>
-                                    <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
-                                    <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
-                                </tr>
-                                <tr>
-                                    <td className="border border-gray-300 px-4 py-2">Cancellation between 2 and 12 hours before the appointment</td>
-                                    <td className="border border-gray-300 px-4 py-2">25% of Appointment Value</td>
-                                    <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
-                                </tr>
-                                <tr className="bg-gray-100">
-                                    <td className="border border-gray-300 px-4 py-2">Cancellation less than 2 hours before the appointment</td>
-                                    <td className="border border-gray-300 px-4 py-2">50% of the Appointment Value</td>
-                                    <td className="border border-gray-300 px-4 py-2">25% of the Appointment Value</td>
-                                </tr>
-                                <tr>
-                                    <td className="border border-gray-300 px-4 py-2">Missed appointments</td>
-                                    <td className="border border-gray-300 px-4 py-2">100% of appointment value</td>
-                                    <td className="border border-gray-300 px-4 py-2">100% of appointment value</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div className="w-full overflow-x-auto">
+                            <table className="min-w-full border border-gray-300">
+                                <thead>
+                                    <tr className="bg-gray-200">
+                                        <th className="border border-gray-300 px-4 py-2 text-left">Condition</th>
+                                        <th className="border border-gray-300 px-4 py-2 text-left">Cancellation Fee</th>
+                                        <th className="border border-gray-300 px-4 py-2 text-left">Rescheduling Fee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="border border-gray-300 px-4 py-2">Cancellation and rescheduling within 10 minutes of request submission</td>
+                                        <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
+                                        <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
+                                    </tr>
+                                    <tr className="bg-gray-100">
+                                        <td className="border border-gray-300 px-4 py-2">Cancellations and Rescheduling 12* hours before appointment</td>
+                                        <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
+                                        <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border border-gray-300 px-4 py-2">Cancellation between 2 and 12 hours before the appointment</td>
+                                        <td className="border border-gray-300 px-4 py-2">25% of Appointment Value</td>
+                                        <td className="border border-gray-300 px-4 py-2">Free of Charges</td>
+                                    </tr>
+                                    <tr className="bg-gray-100">
+                                        <td className="border border-gray-300 px-4 py-2">Cancellation less than 2 hours before the appointment</td>
+                                        <td className="border border-gray-300 px-4 py-2">50% of the Appointment Value</td>
+                                        <td className="border border-gray-300 px-4 py-2">25% of the Appointment Value</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border border-gray-300 px-4 py-2">Missed appointments</td>
+                                        <td className="border border-gray-300 px-4 py-2">100% of appointment value</td>
+                                        <td className="border border-gray-300 px-4 py-2">100% of appointment value</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div
                         className="w-full flex flex-col items-center justify-start space-y-2.5 mb-5"
