@@ -232,7 +232,7 @@ const Categories = () => {
         ref={categoryDRef}
         className="w-full hidden md:flex items-center justify-center"
       >
-        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto xl:pt-5 pb-4 flex items-center justify-center gap-3">
+        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto xl:pt-5 pb-12 flex items-center justify-center gap-3">
           {isLoading
             ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
