@@ -272,15 +272,17 @@ const Categories = () => {
                 onClick={() => selectCategory(category)}
                 className={cn("col-span-1 w-full flex flex-col items-center justify-start space-y-2 text-black")}
               >
+                <div className="h-[90px] w-full px-1.5 pt-1 pb-0 rounded-xl bg-gray-100">
                   <Image
                     src={`${imageBase(category.icon)}`}
-                    width={78}
-                    height={78}
+                    width={80}
+                    height={90}
                     alt="category"
-                    className="w-full h-full rounded-xl bg-gray-100 px-1.5 pt-1 pb-0"
+                    className="w-full h-full rounded-xl object-cover"
                     style={{ backgroundColor: category?.color || "#F5F5F5" }}
                   />
-                <span className="text-center font-semibold text-[11px] line-clamp-2 w-[80px] h-8" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                  </div>
+                <span className="text-center font-semibold text-[11px] line-clamp-2 w-[80px]" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>

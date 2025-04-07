@@ -243,7 +243,7 @@ const AddAddressDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                 />
               </div>
               {areaList && (
-                <div className="col-span-1 w-full flex flex-col items-center justify-center z-20">
+                <div className="col-span-2 w-full flex flex-col items-center justify-center z-20">
                   <label
                     htmlFor="firstName"
                     className="w-full text-left text-gray-400 text-xs px-3 pb-1.5"

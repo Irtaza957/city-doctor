@@ -3,13 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // @ts-ignore
 import { FreeMode } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
-import { getCategoryLink, getSlug, imageBase, sort } from "@/utils/helpers";
+import { cn, getCategoryLink, getSlug, imageBase, sort } from "@/utils/helpers";
 import { setSelectedCategory } from "@/store/global";
 import { useFetchCategoriesQuery } from "@/store/services/category";
 import DoctorVisitListingCard from "@/components/cards/DoctorVisitListingCard";
@@ -20,6 +20,7 @@ import SortHeader from "@/components/drips/SortHeader";
 import { useRouter } from "next/router";
 import { FaThList } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
+import { RootState } from "@/store";
 
 const sortingOptions = [
   {
@@ -46,6 +47,9 @@ const SectionListing = ({ sectionData }: { sectionData?: DRIP }) => {
   const [data, setData] = useState<any>(null)
   const router = useRouter();
   const { name } = router.query
+  const { cart } = useSelector(
+    (state: RootState) => state.global
+  );
 
   const selectCategory = (value: CATEGORY) => {
     dispatch(setSelectedCategory(value));
@@ -267,7 +271,10 @@ const SectionListing = ({ sectionData }: { sectionData?: DRIP }) => {
           </div>
         </div>
       </div>
-      <div className="w-full px-5 lg:px-0 md:w-[90%] lg:max-w-[1440px] mx-auto mb-20 flex flex-col items-start justify-start gap-5">
+      <div className={cn(
+        "w-full px-5 lg:px-0 md:w-[90%] lg:max-w-[1440px] mx-auto flex flex-col items-start justify-start gap-5",
+        cart?.length ? 'mb-32' : 'mb-20'
+        )}>
         <div className="w-full flex flex-col items-center gap-4 mt-[155.75px] sm:mt-[163.75px] md:mt-[196px] lg:mt-[205px]">
           <Image
             width={1000}
