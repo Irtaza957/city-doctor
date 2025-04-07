@@ -114,8 +114,8 @@ const Checkout = () => {
       <LoginDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
       <LoginModal open={open} setOpen={setOpen} />
       <div className={cn(
-        "w-full flex flex-col items-center justify-center gap-5 pb-10 mt-[50px] md:mt-[108px]",
-        cart.length === 0 && 'mt-5'
+        "w-full flex flex-col items-center justify-center gap-5 mt-[50px] md:mt-[108px]",
+        cart.length === 0 ? 'mt-5': 'pb-8'
         )}>
         {cart.length === 0 ? (
           <div className="w-full h-[calc(100vh-76px)] overflow-hidden flex flex-col items-center justify-center">

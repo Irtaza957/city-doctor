@@ -240,16 +240,19 @@ const Categories = () => {
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("w-full flex flex-col items-center justify-between space-y-3 text-black py-5 px-6 lg:px-12 xl:px-14 3xl:px-12 rounded-lg shadow-sm")}
-                style={{ backgroundColor: category?.color || "#F5F5F5" }}
-              >
-                <Image
-                  src={`${imageBase(category.icon)}`}
-                  width={50}
-                  height={50}
-                  alt="category"
-                  className="size-16 lg:size-20"
-                />
+                className={cn("w-full flex flex-col items-center justify-between space-y-3 text-black")}
+                >
+                <div 
+                  style={{ backgroundColor: category?.color || "#F5F5F5" }} 
+                  className="pt-5 px-6 lg:px-12 xl:px-14 3xl:px-12 rounded-2xl pb-0 shadow-sm">
+                  <Image
+                    src={`${imageBase(category.icon)}`}
+                    width={274}
+                    height={274}
+                    alt="category"
+                    className="-mb-2.5"
+                  />
+                </div>
                 <span className="w-full whitespace-nowrap line-clamp-2 text-center text-sm !leading-[18px] lg:text-base xl:text-lg 3xl:text-xl lg:!leading-[22px] xl:!leading-[24px] 3xl:!leading-[26px] font-bold" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
@@ -261,23 +264,23 @@ const Categories = () => {
             } grid grid-cols-4 sm:grid-cols-3 items-center justify-center gap-1.5`}
         >
           {isLoading
-            ? [...Array(6)].map((_, idx) => <CategorySkeletion key={idx} />)
+            ? [...Array(4)].map((_, idx) => <CategorySkeletion key={idx} />)
             : data?.map((category) => (
               <Link
                 href={getCategoryLink(category.category_id, category.category_name)}
                 key={category.category_id}
                 onClick={() => selectCategory(category)}
-                className={cn("col-span-1 w-full flex flex-col items-center justify-start space-y-2 rounded-xl bg-gray-100 text-black px-1.5 xs:px-2 py-3")}
-                style={{ backgroundColor: category?.color || "#F5F5F5" }}
+                className={cn("col-span-1 w-full flex flex-col items-center justify-start space-y-2 text-black")}
               >
-                <Image
-                  src={`${imageBase(category.icon)}`}
-                  width={40}
-                  height={40}
-                  alt="category"
-                  className="w-[38px] h-11"
-                />
-                <span className="text-center font-semibold text-[11px] line-clamp-2" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                  <Image
+                    src={`${imageBase(category.icon)}`}
+                    width={78}
+                    height={78}
+                    alt="category"
+                    className="w-full h-full rounded-xl bg-gray-100 px-1.5 pt-1 pb-0"
+                    style={{ backgroundColor: category?.color || "#F5F5F5" }}
+                  />
+                <span className="text-center font-semibold text-[11px] line-clamp-2 w-[80px] h-8" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
               </Link>
             ))}
         </div>

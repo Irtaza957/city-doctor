@@ -59,7 +59,7 @@ export default function App({ Component, pageProps }: AppProps) {
   // const isTwoChars = pathname?.length === 2;
   // const isThreeCharsButNotHome = pathname?.length === 3 && pathname?.[1] !== 'home'
 
-  const isCategoriesPath = (pathname?.length === 2 || pathname?.length === 3) && ![...staticPaths, 'cart', 'check-out', 'bookings'].includes(pathname?.[1]);
+  const isCategoriesPath = (pathname?.length === 2 || pathname?.length === 3) && ![...staticPaths, 'cart', 'check-out', 'bookings', 'account-settings'].includes(pathname?.[1]);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -91,7 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {/* {showBottomNav && <BottomNav />} */}
           <Footer />
           { }
-          {(staticPaths.includes(pathname?.[1])) && <MobileFooter />}
+          {(staticPaths.includes(pathname?.[1]) && pathname?.length<=2) && <MobileFooter />}
           <CartBar />
         </PersistGate>
       </Provider>

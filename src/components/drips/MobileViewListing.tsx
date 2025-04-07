@@ -9,6 +9,8 @@ import EmptyResults from "@/assets/img/empty-results.svg";
 import DripBanner from "@/assets/icons/mobileDripBanner.svg";
 import BestSellingListingCard from '../cards/BestSellingListingCard'
 import SortHeader from './SortHeader'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
 
 interface MobileViewListingProps {
     subCategories: SERVICE_LIST[] | null,
@@ -24,6 +26,7 @@ const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories=[],
     const [viewType, setViewType] = useState(true);
     const [sorting, setSorting] = useState("");
     const [openSortDrawer, setOpenSortDrawer] = useState(false)
+    const { cart } = useSelector((state: RootState) => state.global);
 
     const handleClose = () => {
         setOpenSortDrawer(false)
@@ -70,7 +73,10 @@ const MobileViewListing = ({ sortingOptions, showResponseTime, subCategories=[],
                     <div className='sticky mt-2 z-10 mb-2.5 w-full'>
                         <SortHeader viewType={viewType} setViewType={setViewType} setOpenSortDrawer={setOpenSortDrawer} handleClose={handleClose} sorting={sorting} openSortDrawer={openSortDrawer} handleSelectSort={handleSelectSort} sortingOptions={sortingOptions} />
                     </div>
-                    <div className='overflow-auto custom-scrollbar h-full pb-64'>
+                    <div className={cn(
+                        `overflow-auto custom-scrollbar h-full`,
+                        cart?.length ? 'pb-80' : 'pb-64'
+                        )}>
                         <div className='relative w-full h-[80px] mb-3'>
                             <Image
                                 src={DripBanner}

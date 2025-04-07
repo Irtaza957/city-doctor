@@ -26,6 +26,7 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
   const dispatch = useDispatch();
   const { asPath } = useRouter();
   const pathname=usePathname()
+  const formattedPath=pathname?.split('/')
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
   const [addToWishlist] = useAddToWishlistMutation();
@@ -114,7 +115,7 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
       }
     }
   }, [drip]);
-
+console.log(formattedPath, formattedPath?.[1]==='home' && formattedPath?.length===3, 'formattedPathformattedPath')
   return (
     <>
       <div className="md:hidden relative flex shadow-sm h-full sm:h-[180px] items-start justify-start gap-1 rounded-[9px] border border-[#EAEAEA] bg-white">
@@ -136,7 +137,7 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
         <Link href={navLink || `/drips/${drip.service_id}`}>
           <div className={cn(
             "relative rounded-l-lg bg-[#E8E8E8] flex items-center justify-center bg-top bg-cover",
-            asPath.includes("home") && pathname?.split('/')?.length===3 ? 'w-28 h-[102px]' : 'w-20 h-[86px]'
+            asPath.includes("home") && formattedPath?.length===3 ? 'w-28 h-[102px]' : 'w-20 h-[86px]'
             )}>
             <div
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
@@ -192,7 +193,7 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
           </div>
           <div className={cn(
             "w-full sm:h-full flex justify-between gap-1.5",
-            asPath.includes("home") && pathname?.split('/')?.length===3 ? "items-center mb-1" : 'items-end'
+            asPath.includes("home") && formattedPath?.length===3 ? "items-center mb-1" : 'items-end'
             )}>
             <Link
               href={navLink || `/drips/${drip.service_id}`}
@@ -207,7 +208,7 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
               </div>
               <div className={cn(
                 "flex flex-col",
-                asPath.includes("home") && pathname?.split('/')?.length===3 && '!mb-1'
+                asPath.includes("home") && formattedPath?.length===3 && '!mb-1'
                 )}>
                 <span className="sm:hidden w-full text-left text-[10px] whitespace-nowrap">
                   AED <span className="line-through">{(Number(drip.discount_value))?.toFixed(2)}</span>
@@ -232,8 +233,8 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
                     drip.thumbnail
                   );
                 }}
-                className={cn("h-[24px] w-[60px] px-3 bg-primary rounded-md text-white font-semibold text-xs",
-                  !(asPath.includes("home") && pathname?.split('/')?.length===3) && "place-self-end"
+                className={cn("px-3 bg-primary rounded-md text-white font-semibold text-xs",
+                  formattedPath?.[1]==='home' && formattedPath?.length===3 ? "h-[32px] w-[80px]" : 'h-[24px] w-[60px] place-self-end'
                 )}
               >
                 Add
@@ -245,7 +246,10 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
                     remove(drip);
                     handleDecrement();
                   }}
-                  className="border border-primary p-1 text-black rounded-md size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
+                  className={cn(
+                    "border border-primary p-1 text-black rounded-md flex items-center justify-center cursor-pointer",
+                    formattedPath?.[1]==='home' && formattedPath?.length===3 ? 'size-8 sm:size-[36px]' : 'size-5 xs:size-6 sm:size-[36px]'
+                  )}
                 >
                   <FaMinus />
                 </span>
@@ -265,7 +269,10 @@ const DoctorVisitCard = ({ drip, navLink, showResponseTime }: DoctorVisitCardPro
                       true
                     );
                   }}
-                  className="bg-primary text-white p-1 rounded-md size-5 xs:size-6 sm:size-[36px] flex items-center justify-center cursor-pointer"
+                  className={cn(
+                    "border border-primary p-1 text-black rounded-md flex items-center justify-center cursor-pointer",
+                    formattedPath?.[1]==='home' && formattedPath?.length===3 ? 'size-8 sm:size-[36px]' : 'size-5 xs:size-6 sm:size-[36px]'
+                  )}
                 >
                   <FaPlus />
                 </span>

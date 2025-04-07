@@ -216,7 +216,6 @@ export const staticPaths = [
   "home",
   "blogs",
   "about-us",
-  "account-settings",
   "careers",
   "contact-us",
   "faq",
