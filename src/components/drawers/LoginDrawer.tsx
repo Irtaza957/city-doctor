@@ -28,6 +28,7 @@ import { IoClose } from "react-icons/io5";
 import { LuLoader2 } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { MdOutlineEmail } from "react-icons/md";
+import { Sheet, SheetContent, SheetDescription, SheetHeader } from "../ui/sheet";
 
 const genders = [
   {
@@ -78,7 +79,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
 
   const handleInfoErrors = () => {
     const errorList = [];
-    
+
     if (type === "mobile") {
       if (!phone) errorList.push("phone");
     } else {
@@ -217,15 +218,15 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
   };
 
   useEffect(() => {
-    if(open){
+    if (open) {
       fetchCountries(setCountryList);
     }
-    return ()=>{
+    return () => {
       setPhone(undefined)
       setOTP("")
     }
   }, [open]);
-  
+
 
   /**
    * 1. Type Selection Drawer (Mobile, Email) && Input Drawer (Based on Type) --
@@ -234,13 +235,13 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
    */
 
   return (
-    <Drawer.Root open={open} onClose={onClose}>
-      <Drawer.Portal>
-        <Drawer.Overlay
-          onClick={() => handleClose()}
-          className="fixed inset-0 bg-black/40 z-50"
-        />
-        <Drawer.Content className="bg-white flex flex-col rounded-t-xl fixed text-black bottom-0 left-0 right-0 z-50 focus-visible:outline-none">
+    <Sheet open={open} onOpenChange={(state) => {
+      if (!state) onClose();
+    }}> 
+      <SheetContent className="z-50 bg-white">
+        <SheetHeader>
+        </SheetHeader>
+        <SheetDescription>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -249,7 +250,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
             className="w-full p-5 flex flex-col items-center justify-center gap-5"
           >
             {/* Heading */}
-            <h1 className="text-left text-[26px] font-bold">
+            <h1 className="text-left text-[26px] font-bold mt-5">
               {isLogin ? "Login" : "Register"}
             </h1>
             {/* Type Selection */}
@@ -257,11 +258,10 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
               <div className="w-full grid grid-cols-1 gap-5">
                 <div
                   onClick={() => setType("mobile")}
-                  className={`col-span-1 w-full p-3.5 rounded-lg font-semibold text-[16px] cursor-pointer flex items-center justify-center space-x-3 ${
-                    type === "mobile"
+                  className={`col-span-1 w-full p-3.5 rounded-lg font-semibold text-[16px] cursor-pointer flex items-center justify-center space-x-3 ${type === "mobile"
                       ? "bg-primary text-white"
                       : "bg-[#F5F6FA] text-black"
-                  }`}
+                    }`}
                 >
                   <MobileIcon
                     fillColor={type === "mobile" ? "#FFFFFF" : "#555555"}
@@ -271,11 +271,10 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                 </div>
                 <div
                   onClick={() => setType("email")}
-                  className={`col-span-1 w-full p-3.5 rounded-lg font-semibold text-[16px] cursor-pointer flex items-center justify-center space-x-3 ${
-                    type === "email"
+                  className={`col-span-1 w-full p-3.5 rounded-lg font-semibold text-[16px] cursor-pointer flex items-center justify-center space-x-3 ${type === "email"
                       ? "bg-primary text-white"
                       : "bg-[#F5F6FA] text-[#555555]"
-                  }`}
+                    }`}
                 >
                   <MdOutlineEmail className="size-6" />
                   <span className="w-full text-center pr-6">Email</span>
@@ -289,11 +288,10 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                   </label>
                   {type === "mobile" ? (
                     <PhoneInput
-                      className={`w-full bg-[#F7F7F7] gray-input p-3 rounded-lg border ${
-                        errors.includes("phone") && type === "mobile"
+                      className={`w-full bg-[#F7F7F7] gray-input p-3 rounded-lg border ${errors.includes("phone") && type === "mobile"
                           ? "border-red-500"
                           : "border-[#DEDEDE]"
-                      }`}
+                        }`}
                       defaultCountry={country as Country}
                       international
                       placeholder="+7 909 22-55-456"
@@ -313,11 +311,10 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                       value={email}
                       placeholder="Your Email"
                       onChange={(e) => setEmail(e.target.value)}
-                      className={`w-full bg-[#F7F7F7] gray-input p-3 rounded-lg border ${
-                        errors.includes("email") && type === "email"
+                      className={`w-full bg-[#F7F7F7] gray-input p-3 rounded-lg border ${errors.includes("email") && type === "email"
                           ? "border-red-500"
                           : "border-[#DEDEDE]"
-                      }`}
+                        }`}
                     />
                   )}
                 </div>
@@ -331,11 +328,10 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                   Enter Phone Number
                 </label>
                 <PhoneInput
-                  className={`w-full bg-[#F7F7F7] gray-input p-3 rounded-lg border ${
-                    errors.includes("phone") && type === "mobile"
+                  className={`w-full bg-[#F7F7F7] gray-input p-3 rounded-lg border ${errors.includes("phone") && type === "mobile"
                       ? "border-red-500"
                       : "border-[#DEDEDE]"
-                  }`}
+                    }`}
                   defaultCountry={country as Country}
                   international
                   placeholder="+7 909 22-55-456"
@@ -567,9 +563,9 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
               </Drawer.Content>
             </Drawer.Portal>
           </Drawer.NestedRoot>
-        </Drawer.Content>
-      </Drawer.Portal>
-    </Drawer.Root>
+        </SheetDescription>
+      </SheetContent>
+    </Sheet>
   );
 };
 

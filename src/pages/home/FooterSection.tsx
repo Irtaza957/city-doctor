@@ -56,6 +56,7 @@ const FooterSection = () => {
             delay: 3000,
           }}
           modules={[Pagination, FreeMode, Autoplay]}
+           className="!pb-10"
         >
           {[...Array(5)]?.map((_, idx) => (
             <SwiperSlide key={idx}>
