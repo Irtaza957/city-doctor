@@ -83,19 +83,20 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
     if (type === "mobile") {
       if (!phone) errorList.push("phone");
     } else {
-      if (!email) errorList.push("email");
+      // if (!email) errorList.push("email");
     }
 
     setErrors(errorList);
+    console.log(errorList, 'errorListerrorList')
     return errorList.length === 0;
   };
 
   const handleBlur = () => {
     const parsedPhoneNumber: PhoneNumber = parsePhoneNumber(
-      `${phone}`,
+      `${phone || ''}`,
       country as Country
     )!;
-    if (parsedPhoneNumber.isValid()) {
+    if (parsedPhoneNumber?.isValid()) {
       return true;
     } else {
       toast.error("Invalid Phone Number!");
@@ -110,20 +111,22 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
       return;
     }
 
-    if (!phone) {
+    if (!phone && type==='mobile' && isLogin) {
       toast.error("Enter Phone Number to Proceed!");
-    } else {
-      const valid = handleBlur();
+    } else if (!email && type==='email' && isLogin) {
+      toast.error("Enter Email to Proceed!");
+    }  else {
+      const valid = type==='mobile' && isLogin ? handleBlur() : true;
 
       if (valid) {
         const formData = new URLSearchParams();
         if (!isLogin || type === "mobile") {
-          formData.append("phone", phone);
+          formData.append("phone", phone || '');
         } else {
           formData.append("email", email);
         }
 
-        const data = await getOTP({
+        const data: any = await getOTP({
           type: isLogin ? "login" : "register",
           formData,
         });
@@ -141,7 +144,8 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
           setOpenVerify(true);
           toast.success("Please Enter your OTP Now.");
         } else {
-          toast.error("Phone Number Doesn't Exist!");
+          console.log(data.error?.data?.error, 'data.error')
+          toast.error(data.error?.data?.error || "Account Alreay Doesn't Exist!");
         }
       } else {
         toast.error("Invalid Phone Number!");
@@ -155,7 +159,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
       if (type === "mobile") {
         formData.append("phone", phone?.toString()!);
       } else {
-        formData.append("email", phone?.toString()!);
+        formData.append("email", email);
       }
     } else {
       formData.append("phone", phone?.toString()!);
@@ -207,8 +211,15 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
         await register(urlencoded);
         toast.success("Successfully Registered!");
         setOpenRegister(false);
+        setOpenVerify(false)
         setPhone(undefined)
         setOTP("")
+        setFirstName('')
+        setLastName('')
+        setEmail('')
+        setDOB('')
+        setGender('')
+        setNationality('')
       } catch (error) {
         toast.error("Please Try Again!");
       }
@@ -223,6 +234,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
     }
     return () => {
       setPhone(undefined)
+      setEmail('')
       setOTP("")
     }
   }, [open]);
@@ -414,7 +426,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                         Enter the Code that was sent to
                       </label>
                       <span className="w-full text-left text-black text-[20px] font-bold">
-                        {type === "mobile" ? phone : email}
+                        {isLogin ? (type === "mobile" ? phone : email) : phone}
                       </span>
                       <OTPInput
                         value={otp}
@@ -438,7 +450,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                         onClick={closeVerify}
                         className="text-xs text-primary"
                       >
-                        Change {type === "mobile" ? "Number" : "Email"}
+                        Change {isLogin ? (type === "mobile" ? "Number" : "Email") : 'Number'}
                       </span>
                     </div>
                     <button

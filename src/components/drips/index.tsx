@@ -450,14 +450,14 @@ const DripListing = () => {
                         }`}
                       style={{ backgroundColor: selectedCategory?.category_id === category.category_id ? "#006fac" : category?.color || "#F0F0F0" }}
                     >
-                      <Image
+                      {/* <Image
                         src={`${imageBase(category.icon)}`}
                         alt="icon"
                         width={56}
                         height={56}
                         className="size-7 lg:size-9 3xl:size-9"
-                      />
-                      <span className="text-left font-bold text-sm line-clamp-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                      /> */}
+                      <span className="text-center font-bold text-sm line-clamp-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                     </div>
                   </SwiperSlide>
                 ))}
