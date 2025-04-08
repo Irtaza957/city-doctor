@@ -21,7 +21,7 @@ const CheckoutBar = ({isMenuVisible}: {isMenuVisible: boolean}) => {
   const [openLogin, setOpenLogin] = useState(false);
   const { user, cart } = useSelector((state: RootState) => state.global);
   
-  const pathnames = ["/bookings", "/drips", "/doctor-on-home-visit", "/physiotherapy-and-body-adjustment", "/iv-drip-therapy", "/lab-test-and-checkup", "/account-settings", "/check-out"];
+  const pathnames = ["/bookings", "/drips", "/account-settings", "/check-out"];
   const dynamicPatterns = [/^\/bookings\/\d+$/, /^\/drips\/\d+$/, /^\/doctor-on-home-visit\/\d+$/, /^\/physiotherapy-and-body-adjustment\/\d+$/, /^\/iv-drip-therapy\/\d+$/, /^\/lab-test-and-checkup\/\d+$/];
   const shouldHide =
     pathnames.includes(pathname) ||

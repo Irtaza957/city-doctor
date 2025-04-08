@@ -289,9 +289,10 @@ console.log(formattedPath, formattedPath?.[1]==='home' && formattedPath?.length=
               style={{ backgroundImage: `url(${imageBase(drip.thumbnail)})` }}
               className="rounded-l-xl size-full bg-top bg-cover flex items-center justify-center"
             >
+              {drip.response_time &&
               <span className="absolute bottom-1 bg-tagline text-white py-0.5 px-1.5 sm:px-3 rounded-full font-semibold text-xs text-center">
                 {drip.response_time}*
-              </span>
+              </span>}
             </div>
           </div>
         </Link>

@@ -182,17 +182,17 @@ const Categories = () => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className={cn("w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg bg-[#F0F0F0] text-black")}
+                    className={cn("w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-2xl bg-[#F0F0F0] text-black h-[75px]")}
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
-                    <Image
+                    {/* <Image
                       src={`${imageBase(category.icon)}`}
                       alt="icon"
                       width={56}
                       height={56}
                       className="w-7 h-7"
-                    />
-                    <span className="text-left font-bold text-xs whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    /> */}
+                    <span className="text-center font-medium whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
@@ -210,7 +210,7 @@ const Categories = () => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className={"w-full text-black flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-lg"}
+                    className={"w-full text-black flex items-center justify-center cursor-pointer h-[75px] gap-4 py-2 pr-3 pl-4 rounded-2xl"}
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     {/* <Image
@@ -220,7 +220,7 @@ const Categories = () => {
                       height={56}
                       className="size-7 lg:size-9 3xl:size-9"
                     /> */}
-                    <span className="text-center font-bold text-sm line-clamp-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
+                    <span className="text-center font-medium line-clamp-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: he.decode(category.category_name) }} />
                   </Link>
                 </SwiperSlide>
               ))}
