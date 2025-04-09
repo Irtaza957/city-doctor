@@ -69,6 +69,12 @@ const Categories = () => {
     };
   }, [isLoading]); // Keep dependencies minimal
 
+  useEffect(()=>{
+    setTimeout(()=>{
+      setShowSlider(false)
+    },600)
+  },[])
+
 
 
   return (
@@ -258,6 +264,7 @@ const Categories = () => {
             ))}
         </div>
       </div>
+      {console.log(showSlider, 'showSlidershowSlider')}
       <div ref={categoryRef} className="flex md:hidden w-full px-3 pb-1">
         <div
           className={`w-full h-full ${showSlider && "invisible"

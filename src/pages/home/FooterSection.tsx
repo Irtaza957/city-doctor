@@ -171,7 +171,7 @@ const FooterSection = () => {
                     height={20}
                   />
                 </div>
-                <p className="text-[#333333] my-5 font-medium">
+                <p className="text-[#333333] my-5 font-medium text-sm">
                   {idx + 1}. Lorem ipsum dolor sit, amet consectetur adipisicing
                   elit. Laborum sit exercitationem rem. Quae tenetur minus
                   ab autem sequi dolor velit mollitia earum eum totam
@@ -186,7 +186,7 @@ const FooterSection = () => {
                     height={50}
                   />
                   <div>
-                    <p className="text-[#333333] font-bold">Sandeep Dev</p>
+                    <p className="text-[#333333] font-bold text-sm">Sandeep Dev</p>
                     <p className="text-[#333333] font-semibold text-xs">Graphic Artist</p>
                   </div>
                 </div>

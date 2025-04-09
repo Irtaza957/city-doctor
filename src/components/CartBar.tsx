@@ -1,6 +1,6 @@
 import { RootState } from "@/store";
 import LoginModal from "./modals/LoginModal";
-import EmptyCart from "@/assets/img/empty-cart.svg";
+import EmptyCart from "@/assets/icons/empty-cart.svg";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { addToCart, toggleSidebar, removeFromCart, setCart } from "@/store/global";
 

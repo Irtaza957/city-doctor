@@ -80,7 +80,7 @@ const Home = () => {
       <div className="flex items-start justify-between gap-28 w-full md:w-[90%] lg:max-w-[1440px] mx-auto mt-2 sm:mt-14">
         <div className="w-full flex flex-col items-center text-left md:text-center justify-center gap-5 px-4 md:px-2 my-7 md:pb-5">
           <div className="w-full">
-            <p className="text-xl sm:text-3xl font-bold text-left w-full md:whitespace-nowrap text-[#333333]">About <br />City Doctor</p>
+            <p className="text-2xl sm:text-3xl font-bold text-left w-full md:whitespace-nowrap text-[#333333]">About <br />City Doctor</p>
             <div className={`space-y-3 mt-3`}>
               <p className="sm:text-xl text-left font-bold md:whitespace-nowrap text-[#333333]">Bringing Quality Medical Care to Your Home</p>
               <p className="text-xs sm:text-sm text-left">At City Doctor, we provide expert home healthcare services across Dubai, ensuring you receive professional medical care without leaving your home. Whether you need a doctor on call, IV therapy, lab tests, or physiotherapy, our dedicated team is available 24/7, delivering medical services at home in Dubai with convenience, care, and efficiency.</p>
