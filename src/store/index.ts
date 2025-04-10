@@ -3,7 +3,6 @@ import globalReducer from "./global";
 import storage from "redux-persist/lib/storage";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
-import cityReducer from "./city";
 
 const persistConfig = {
   key: "root",
@@ -15,8 +14,6 @@ const store = configureStore({
     [api.reducerPath]: api.reducer,
     // @ts-ignore
     global: persistReducer(persistConfig, globalReducer),
-    // @ts-ignore
-    city: cityReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(api.middleware),

@@ -11,6 +11,8 @@ const initialState: GLOBAL_STATE = {
   selectedCategory: null,
   selectedBanner: null,
   isMenuVisible: true,
+  bookingID: null,
+  referenceNum: null
 };
 
 const globalSlice = createSlice({
@@ -85,6 +87,12 @@ const globalSlice = createSlice({
     setIsMenuVisible: (state, action) => {
       state.isMenuVisible = action.payload;
     },
+    setBookingID: (state, action) => {
+      state.bookingID = action.payload;
+    },
+    setReferenceNum: (state, action) => {
+      state.referenceNum = action.payload;
+    },
   },
 });
 
@@ -102,6 +110,8 @@ export const {
   setWishListCount,
   setSelectedCategory,
   setIsMenuVisible,
-  setSelectedBanner
+  setSelectedBanner,
+  setBookingID,
+  setReferenceNum
 } = globalSlice.actions;
 export default globalSlice.reducer;

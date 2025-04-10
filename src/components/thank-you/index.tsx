@@ -5,7 +5,7 @@ import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 
 const ThankYou = () => {
-    const bookingID = useSelector((state: RootState) => state.city.bookingID);
+    const bookingID = useSelector((state: RootState) => state.global.bookingID);
     return (
         <div className="w-full md:w-[30%] mx-auto flex flex-col items-center justify-center rounded-lg bg-white px-5 pt-40 pb-20">
             <div className="w-full flex flex-col items-center justify-center">

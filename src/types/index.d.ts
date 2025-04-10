@@ -54,6 +54,8 @@ declare type GLOBAL_STATE = {
   selectedCategory: CATEGORY | null;
   selectedBanner: {index: number, place: top} | null;
   isMenuVisible: boolean;
+  bookingID: string | null;
+  referenceNum: string | null;
 };
 
 declare type DRIP_CARD = {
@@ -341,4 +343,5 @@ declare type IconProps = {
 
 declare type CITY_STATE = {
   bookingID: string | null;
+  referenceNum: string | null;
 }

@@ -4,7 +4,6 @@ import "swiper/css";
 import {
   generateDates,
   generateTimeSlots,
-  calculateTotalCost,
   convertToDateString,
   calculateWithoutVAT,
   calculateDiscountValue,
@@ -12,13 +11,13 @@ import {
   cn,
 } from "@/utils/helpers";
 import { RootState } from "@/store";
-import { emptyCart } from "@/store/global";
+import { emptyCart, setBookingID, setReferenceNum } from "@/store/global";
 import ServedDrawer from "@/components/drawers/ServedDrawer";
 import TimeSlotModal from "@/components/modals/TimeSlotModal";
 import AddFamilyModal from "@/components/modals/AddFamilyModal";
 import LocationDrawer from "@/components/drawers/LocationDrawer";
 import TimeSlotDrawer from "@/components/drawers/TimeSlotDrawer";
-import { usePostBookingMutation } from "@/store/services/booking";
+import { useCreateOrderMutation, usePostBookingMutation } from "@/store/services/booking";
 import AddLocationModal from "@/components/modals/AddLocationModal";
 import CancellationModal from "@/components/modals/CancellationModal";
 import CancellationDrawer from "@/components/drawers/CancellationDrawer";
@@ -37,7 +36,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import { useRouter } from "next/navigation";
-import { setBookingID } from "@/store/city";
 
 const CheckoutDetails = () => {
   const dispatch = useDispatch();
@@ -72,6 +70,7 @@ const CheckoutDetails = () => {
     is_allergy: user?.is_allergy!,
     allergy_description: user?.allergy_description!,
   });
+  const [createOrder, { isLoading: isOrderLoading }] = useCreateOrderMutation();
 
   const handleErrors = () => {
     const errors = [];
@@ -133,6 +132,7 @@ const CheckoutDetails = () => {
       return;
     }
 
+    const grandTotal=Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))
     const urlencoded = new URLSearchParams();
     urlencoded.append("customer_id", user?.customer_id!);
     urlencoded.append("address_id", finalAddress?.address_id!);
@@ -160,9 +160,9 @@ const CheckoutDetails = () => {
         : "cdd"
     );
     urlencoded.append("payment_status", "pending");
-    urlencoded.append("sub_total", `${calculateTotalCost(cart)}`);
+    urlencoded.append("sub_total", `${grandTotal}`);
     urlencoded.append("discount_value", "0.00");
-    urlencoded.append("total", `${calculateTotalCost(cart)}`);
+    urlencoded.append("total", `${grandTotal}`);
     urlencoded.append(
       "services",
       JSON.stringify(
@@ -185,9 +185,22 @@ const CheckoutDetails = () => {
         // @ts-ignore
         toast.error(data.error.data.error);
       } else {
-        dispatch(setBookingID(data.data.data.id));
-        clearCheckout();
-        router.push("/thank-you");
+        if(payMethod==='Online Payment'){
+          const urlencoded = new URLSearchParams();
+          urlencoded.append("amount", String(grandTotal));
+          const resp=await createOrder(urlencoded)
+          if(resp?.error){
+            toast.error("Please Try Again!");
+          }else{
+            dispatch(setBookingID(data.data.data.id));
+            dispatch(setReferenceNum(resp.data.data.reference));
+            window.open(resp?.data?.data?.payment_url, '_blank');
+          }
+        }else{
+          dispatch(setBookingID(data.data.data.id));
+          clearCheckout();
+          router.push("/thank-you");
+        }
       }
     } catch (err) {
       toast.error("Please Try Again!");
@@ -705,7 +718,7 @@ const CheckoutDetails = () => {
                   <div className="w-full flex items-center justify-start space-x-3">
                     <FaRegCreditCard className="w-5 h-5 text-black" />
                     <span className="text-xs md:text-sm  font-medium">
-                      Card on Delive
+                      Card on Delivery
                     </span>
                   </div>
                   <div
@@ -742,11 +755,11 @@ const CheckoutDetails = () => {
                 </div>
                 <button
                   type="button"
-                  disabled={isLoading}
+                  disabled={isLoading || isOrderLoading}
                   onClick={handleSubmit}
                   className="w-full bg-primary text-white rounded-md py-2 !mt-6 text-sm items-center justify-center hidden sm:flex"
                 >
-                  {isLoading ? (
+                  {isLoading || isOrderLoading ? (
                     <div className="w-full flex items-center justify-center space-x-3">
                       <LuLoader2 className="w-5 h-5 animate-spin" />
                       <span>Please Wait...</span>
@@ -765,11 +778,11 @@ const CheckoutDetails = () => {
       )}>
         <button
           type="button"
-          disabled={isLoading}
+          disabled={isLoading || isOrderLoading}
           onClick={handleSubmit}
           className="w-full py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
         >
-          {isLoading ? (
+          {isLoading || isOrderLoading ? (
             <div className="w-full flex items-center justify-center space-x-3">
               <LuLoader2 className="w-5 h-5 animate-spin" />
               <span>Please Wait...</span>

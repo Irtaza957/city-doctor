@@ -5,7 +5,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_API_URL,
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("token");
-console.log(token, 'tokentoken')
+    
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
