@@ -42,7 +42,7 @@ const Payment = () => {
                     }
                 </div>
                 <h1 className="text-center text-xl font-bold text-primary mt-4">
-                    {isError ? 'Booking Failed' : 'Booking Successful'}
+                    {isError ? 'Payment Failed' : 'Payment Successful'}
                 </h1>
             </div>
             <p className="text-center text-xs text-[#535763] font-medium my-2.5">

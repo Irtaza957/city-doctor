@@ -113,8 +113,8 @@ export const bookingApi = api.injectEndpoints({
     }),
     paymentCheck: build.query({
       query: ({reference, booking_id}) => ({
-        // url: `/payment/return?ref=70319180-ed6a-4198-b853-dc4c56a7e2bf&booking_id=${booking_id}`,
-        url: `/payment/return?reference=${reference}&booking_id=${booking_id}`,
+        url: `/payment/return?reference=4a04ef37-9dfb-424e-95c0-f738a495a254&booking_id=40`,
+        // url: `/payment/return?reference=${reference}&booking_id=${booking_id}`,
         method: "GET"
       }),
     }),
