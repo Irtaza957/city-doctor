@@ -194,7 +194,7 @@ const CheckoutDetails = () => {
           }else{
             dispatch(setBookingID(data.data.data.id));
             dispatch(setReferenceNum(resp.data.data.reference));
-            window.open(resp?.data?.data?.payment_url, '_blank');
+            router.push(resp?.data?.data?.payment_url);
           }
         }else{
           dispatch(setBookingID(data.data.data.id));
