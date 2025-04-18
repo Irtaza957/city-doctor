@@ -82,7 +82,12 @@ const PaymentSidebar = ({
                             outletRef: outletRef,
                             onSuccess: onSuccess,
                             onFail: onFail,
-                            onChangeValidStatus: function (_ref: any) {
+                            onChangeValidStatus: function (_ref:  {
+                                isCVVValid: boolean;
+                                isExpiryValid: boolean;
+                                isNameValid: boolean;
+                                isPanValid: boolean;
+                              }) {
                                 const { isCVVValid, isExpiryValid, isNameValid, isPanValid } =
                                     _ref;
                                 console.log(isCVVValid, isExpiryValid, isNameValid, isPanValid);
