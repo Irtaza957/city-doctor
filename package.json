@@ -11,7 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^2.0.4",
     "@next/third-parties": "^14.2.3",
-    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.5",
     "class-variance-authority": "^0.7.1",
@@ -30,7 +30,7 @@
     "redux-persist": "^6.0.0",
     "swiper": "^10.0.0",
     "tailwind-merge": "^3.0.2",
-    "vaul": "^0.9.1"
+    "vaul": "^0.7.2"
   },
   "devDependencies": {
     "@types/he": "^1.2.3",
