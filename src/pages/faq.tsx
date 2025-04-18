@@ -7,6 +7,7 @@ import {
 import { Fragment } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const FAQ = () => {
   return (
@@ -62,6 +63,7 @@ const FAQ = () => {
         ))}
       </div>
     </div>
+    <Footer />
     </>
   );
 };

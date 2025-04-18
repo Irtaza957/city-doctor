@@ -397,7 +397,7 @@ const DripListing = () => {
                   <SwiperSlide key={idx}>
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-2xl h-[75px] ${selectedCategory?.category_id === category.category_id
+                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 px-8 rounded-2xl h-[50px] ${selectedCategory?.category_id === category.category_id
                         ? " text-white"
                         : " text-black"
                         }`}
@@ -444,7 +444,7 @@ const DripListing = () => {
                   <SwiperSlide key={idx}>
                     <div
                       onClick={() => navigateToCategory(category)}
-                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 h-[75px]  rounded-2xl ${selectedCategory?.category_id === category.category_id
+                      className={`w-full flex items-center justify-center cursor-pointer gap-4 py-2 h-[50px]  rounded-2xl ${selectedCategory?.category_id === category.category_id
                         ? "text-white"
                         : `text-black`
                         }`}
@@ -466,7 +466,7 @@ const DripListing = () => {
           </div>
         </div>
       </div>
-      <div className="relative w-full md:w-[90%] lg:max-w-[1440px] mx-auto hidden sm:flex mt-[140.75px] sm:mt-[135.75px] md:mt-[205px] lg:mt-[190px] items-start justify-start">
+      <div className="relative w-full md:w-[90%] lg:max-w-[1440px] mx-auto hidden sm:flex mt-[140.75px] sm:mt-[135.75px] md:mt-[180px] lg:mt-[175px] items-start justify-start">
         {isLoading ? (
           <div className="w-full flex items-center justify-center px-5 md:px-0 py-7">
             <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -499,7 +499,7 @@ const DripListing = () => {
           </div>
         ) : (
           <div className="relative w-full sm:h-[calc(100vh-143.75px)] md:h-[calc(100vh-176px)] lg:h-[calc(100vh-183px)] flex items-start justify-start gap-3 pt-2 md:pt-4 px-5 md:px-0">
-            <div className="mt-1.5 rounded-lg sticky sm:top-[143.75px] md:top-[176px] lg:top-[215px] left-0 w-[30%] md:w-[25%] max-h-full overflow-auto custom-scrollbar flex flex-col bg-gray-100 divide-y">
+            <div className="mt-1.5 rounded-lg sticky sm:top-[143.75px] md:top-[176px] lg:top-[190px] left-0 w-[30%] md:w-[25%] max-h-full overflow-auto custom-scrollbar flex flex-col bg-gray-100 divide-y">
               {subCategories?.map((sub, idx) => (
                 <div
                   key={idx}

@@ -18,6 +18,7 @@ import { FaChevronRight } from "react-icons/fa6";
 import { MdOutlineLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const sidebar = [
   {
@@ -168,6 +169,7 @@ const AccountSettings = () => {
           <HelpCenter handleTab={handleTab} />
         )}
       </div>
+      <Footer />
     </>
   );
 };

@@ -12,6 +12,7 @@ import EmptyWishlist from "@/assets/img/empty-wishlist.svg";
 import { useGetWishlistQuery } from "@/store/services/wishlist";
 import ServiceCardSkeleton from "@/components/cards/skeleton/ServiceCardSkeleton";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState<WISHLIST[]>([]);
@@ -142,6 +143,7 @@ const Wishlist = () => {
         )}
       </div>
     </div>
+    <Footer />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { FaChartPie, FaMountainSun } from "react-icons/fa6";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import About3 from "@/assets/img/about/about3.png";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const Careers = () => {
   return (
@@ -110,6 +111,7 @@ const Careers = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

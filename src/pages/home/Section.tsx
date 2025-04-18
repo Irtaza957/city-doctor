@@ -225,7 +225,7 @@ const SectionListing = ({ sectionData }: { sectionData?: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full flex items-center justify-center cursor-pointer gap-4 h-[75px] py-2 pr-3 pl-4 rounded-2xl text-black"
+                    className="w-full flex items-center justify-center cursor-pointer gap-4 h-[50px] py-2 pr-3 pl-4 rounded-2xl text-black"
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     {/* <Image
@@ -253,7 +253,7 @@ const SectionListing = ({ sectionData }: { sectionData?: DRIP }) => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className="w-full text-black flex items-center justify-center cursor-pointer gap-4 py-2 h-[75px] pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-2xl"
+                    className="w-full text-black flex items-center justify-center cursor-pointer gap-4 py-2 h-[50px] pr-3 lg:pr-5 xl:pl-6 xl:pr-16 pl-4 rounded-2xl"
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     {/* <Image
@@ -275,7 +275,7 @@ const SectionListing = ({ sectionData }: { sectionData?: DRIP }) => {
         "w-full px-5 lg:px-0 md:w-[90%] lg:max-w-[1440px] mx-auto flex flex-col items-start justify-start gap-5",
         cart?.length ? 'mb-32' : 'mb-20'
         )}>
-        <div className="w-full flex flex-col items-center gap-4 mt-[155.75px] sm:mt-[163.75px] md:mt-[226px] lg:mt-[230px]">
+        <div className="w-full flex flex-col items-center gap-4 mt-[155.75px] sm:mt-[163.75px] md:mt-[200px] lg:mt-[205px]">
           <Image
             width={1000}
             height={1000}

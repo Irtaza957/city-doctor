@@ -4,7 +4,6 @@ import "@/assets/css/globals.css";
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import type { AppProps } from "next/app";
-import Footer from "@/components/Footer";
 import store, { persistor } from "@/store";
 import CartBar from "@/components/CartBar";
 import CheckoutBar from "@/components/CheckoutBar";
@@ -89,7 +88,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <CheckoutBar isMenuVisible={pathname?.length !== 4} />
           {pathname?.length !== 4 && <BottomNav />}
           {/* {showBottomNav && <BottomNav />} */}
-          <Footer />
           { }
           {(staticPaths.includes(pathname?.[1]) && pathname?.length<=2) && <MobileFooter />}
           <CartBar />

@@ -11,23 +11,21 @@ import {
   cn,
 } from "@/utils/helpers";
 import { RootState } from "@/store";
-import { emptyCart, setBookingID, setReferenceNum } from "@/store/global";
+import { emptyCart, setBookingID } from "@/store/global";
 import ServedDrawer from "@/components/drawers/ServedDrawer";
 import TimeSlotModal from "@/components/modals/TimeSlotModal";
 import AddFamilyModal from "@/components/modals/AddFamilyModal";
 import LocationDrawer from "@/components/drawers/LocationDrawer";
 import TimeSlotDrawer from "@/components/drawers/TimeSlotDrawer";
-import { useCreateOrderMutation, usePostBookingMutation } from "@/store/services/booking";
+import { useCreatePaymentMutation, useCreateTokenOrderMutation, usePostBookingMutation } from "@/store/services/booking";
 import AddLocationModal from "@/components/modals/AddLocationModal";
 import CancellationModal from "@/components/modals/CancellationModal";
 import CancellationDrawer from "@/components/drawers/CancellationDrawer";
 
 import {
-  FaMoneyBill,
   FaCircleInfo,
-  FaRegCreditCard,
 } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 // @ts-ignore
 import { FreeMode } from "swiper/modules";
@@ -36,6 +34,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import { useRouter } from "next/navigation";
+import PaymentSidebar from "@/components/checkout/PaymentSidebar";
+import Footer from "@/components/Footer";
 
 const CheckoutDetails = () => {
   const dispatch = useDispatch();
@@ -49,12 +49,19 @@ const CheckoutDetails = () => {
   const [openLocation, setOpenLocation] = useState(false);
   const [openTimeModal, setOpenTimeModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dates[0]);
-  const [payMethod, setPayMethod] = useState("Online Payment");
+  const [payMethod, setPayMethod] = useState("Cash on Delivery");
   const [postBooking, { isLoading }] = usePostBookingMutation();
   const [openCancelModal, setOpenCancelModal] = useState(false);
   const [openAddressModal, setOpenAddressModal] = useState(false);
   const { cart, user, isMenuVisible } = useSelector((state: RootState) => state.global);
   const [finalAddress, setFinalAddress] = useState<ADDRESS | null>(null);
+  const [showCard, setShowCard] = useState(false);
+  const [cardValidStatus, setCardValidStatus] = useState({
+      isPanValid: true,
+      isExpiryValid: true,
+      isCVVValid: true,
+      isNameValid: true,
+  });
 
   const slots = generateTimeSlots(convertToDateString(selectedDate));
   const [selectedSlot, setSelectedSlot] = useState(slots[0]);
@@ -70,7 +77,8 @@ const CheckoutDetails = () => {
     is_allergy: user?.is_allergy!,
     allergy_description: user?.allergy_description!,
   });
-  const [createOrder, { isLoading: isOrderLoading }] = useCreateOrderMutation();
+  const [createPayment, { isLoading: isOrderLoading }] = useCreatePaymentMutation()
+  const [createTokenOrder] = useCreateTokenOrderMutation()
 
   const handleErrors = () => {
     const errors = [];
@@ -132,16 +140,15 @@ const CheckoutDetails = () => {
       return;
     }
 
-    const grandTotal=Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))
+    const grandTotal = Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))
     const urlencoded = new URLSearchParams();
     urlencoded.append("customer_id", user?.customer_id!);
     urlencoded.append("address_id", finalAddress?.address_id!);
     urlencoded.append(
       "family_member_id",
-      `${
-        finalMember?.family_member_id !== user?.customer_id
-          ? finalMember?.family_member_id
-          : "0"
+      `${finalMember?.family_member_id !== user?.customer_id
+        ? finalMember?.family_member_id
+        : "0"
       }`
     );
     urlencoded.append("firstname", finalMember?.firstname!);
@@ -156,8 +163,8 @@ const CheckoutDetails = () => {
       payMethod === "Online Payment"
         ? "pol"
         : payMethod === "Cash on Delivery"
-        ? "cod"
-        : "cdd"
+          ? "cod"
+          : "cdd"
     );
     urlencoded.append("payment_status", "pending");
     urlencoded.append("sub_total", `${grandTotal}`);
@@ -185,30 +192,80 @@ const CheckoutDetails = () => {
         // @ts-ignore
         toast.error(data.error.data.error);
       } else {
-        if(payMethod==='Online Payment'){
-          const urlencoded = new URLSearchParams();
-          urlencoded.append("amount", String(grandTotal));
-          const resp=await createOrder(urlencoded)
-          if(resp?.error){
-            toast.error("Please Try Again!");
-          }else{
-            dispatch(setBookingID(data.data.data.id));
-            dispatch(setReferenceNum(resp.data.data.reference));
-            router.push(resp?.data?.data?.payment_url);
-          }
-        }else{
-          dispatch(setBookingID(data.data.data.id));
-          clearCheckout();
-          router.push("/thank-you");
+        if (!data.data.data.id) return toast.error("Error creating booking!");
+        if (payMethod === 'Card on Delivery' || payMethod === 'Cash on Delivery') {
+          handleRedirect(data.data.data.id)
+          return
         }
+        if (payMethod && payMethod !== 'Card on Delivery' && payMethod !== 'Cash on Delivery' && !showCard) {
+          const urlencodedToken = new URLSearchParams();
+          urlencodedToken.append("booking_id", data.data.data.id);
+          urlencodedToken.append("payment_method_code", payMethod);
+          createTokenOrder(urlencodedToken)
+          handleRedirect(data.data.data.id)
+          return
+        }
+        if (showCard && !payMethod) {
+          const response = await window.NI.generateSessionId();
+
+          if (response?.session_id) {
+            const urlencoded = new URLSearchParams();
+            urlencoded.append("session", response?.session_id);
+            urlencoded.append("booking_id", data.data.data.id);
+            urlencoded.append("amount", String(Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))))
+
+            await createPayment(urlencoded)
+          }
+          handleRedirect(data.data.data.id)
+        } else {
+          toast.error("Invalid Session!");
+        }
+
+
+        // if (payMethod === 'Online Payment') {
+        //   const urlencoded = new URLSearchParams();
+        //   urlencoded.append("amount", String(grandTotal));
+        //   const resp = await createOrder(urlencoded)
+        //   if (resp?.error) {
+        //     toast.error("Please Try Again!");
+        //   } else {
+        //     dispatch(setBookingID(data.data.data.id));
+        //     dispatch(setReferenceNum(resp.data.data.reference));
+        //     router.push(resp?.data?.data?.payment_url);
+        //   }
+        // } else {
+        //   dispatch(setBookingID(data.data.data.id));
+        //   clearCheckout();
+        //   router.push("/thank-you");
+        // }
       }
     } catch (err) {
+      console.log(err, 'errerr')
       toast.error("Please Try Again!");
     }
   };
 
+  const handleRedirect = (id: number) => {
+    dispatch(setBookingID(id));
+    clearCheckout()
+    router.push("/thank-you");
+  }
+
+  useEffect(() => {
+    if (showCard) {
+      setPayMethod('')
+    }
+  }, [showCard])
+
+  useEffect(() => {
+    if (payMethod) {
+      setShowCard(false)
+    }
+  }, [payMethod])
+
   return (
     <>
+
       <GoogleAnalytics />
       <TimeSlotDrawer
         slots={slots}
@@ -284,9 +341,8 @@ const CheckoutDetails = () => {
             <div className="w-full flex flex-col items-center justify-center gap-5 divide-y">
               <div className="w-full flex flex-col items-center justify-center gap-2.5">
                 <h1
-                  className={`col-span-2 w-full text-sm lg:text-base text-left font-bold ${
-                    errors.includes("finalMember") && "border-b border-red-500"
-                  }`}
+                  className={`col-span-2 w-full text-sm lg:text-base text-left font-bold ${errors.includes("finalMember") && "border-b border-red-500"
+                    }`}
                 >
                   Who will be served today ?
                 </h1>
@@ -322,9 +378,8 @@ const CheckoutDetails = () => {
               </div>
               <div className="w-full flex flex-col items-center justify-center pt-5 gap-2.5">
                 <h1
-                  className={`w-full text-sm lg:text-base text-left font-bold ${
-                    errors.includes("finalAddress") && "border-b border-red-500"
-                  }`}
+                  className={`w-full text-sm lg:text-base text-left font-bold ${errors.includes("finalAddress") && "border-b border-red-500"
+                    }`}
                 >
                   Where would you prefer service?
                 </h1>
@@ -366,9 +421,8 @@ const CheckoutDetails = () => {
               </div>
               <div className="w-full flex flex-col items-center justify-center pt-5 gap-2.5">
                 <h1
-                  className={`w-full text-sm lg:text-base text-left font-bold ${
-                    errors.includes("selectedDate") && "border-b border-red-500"
-                  }`}
+                  className={`w-full text-sm lg:text-base text-left font-bold ${errors.includes("selectedDate") && "border-b border-red-500"
+                    }`}
                 >
                   When would you like to be served?
                 </h1>
@@ -387,11 +441,10 @@ const CheckoutDetails = () => {
                         <SwiperSlide key={date.id}>
                           <div
                             onClick={() => setSelectedDate(date)}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                              selectedDate.id === date.id
-                                ? "bg-primary text-white"
-                                : "bg-[#F7F7F7] text-black"
-                            }`}
+                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedDate.id === date.id
+                              ? "bg-primary text-white"
+                              : "bg-[#F7F7F7] text-black"
+                              }`}
                           >
                             <span className="text-xs w-full text-center">
                               {date.day}
@@ -418,11 +471,10 @@ const CheckoutDetails = () => {
                         <SwiperSlide key={date.id}>
                           <div
                             onClick={() => setSelectedDate(date)}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                              selectedDate.id === date.id
-                                ? "bg-primary text-white"
-                                : "bg-[#F7F7F7] text-black"
-                            }`}
+                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedDate.id === date.id
+                              ? "bg-primary text-white"
+                              : "bg-[#F7F7F7] text-black"
+                              }`}
                           >
                             <span className="text-xs w-full text-center">
                               {date.day}
@@ -449,11 +501,10 @@ const CheckoutDetails = () => {
                         <SwiperSlide key={date.id}>
                           <div
                             onClick={() => setSelectedDate(date)}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                              selectedDate.id === date.id
-                                ? "bg-primary text-white"
-                                : "bg-[#F7F7F7] text-black"
-                            }`}
+                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedDate.id === date.id
+                              ? "bg-primary text-white"
+                              : "bg-[#F7F7F7] text-black"
+                              }`}
                           >
                             <span className="text-xs w-full text-center">
                               {date.day}
@@ -480,11 +531,10 @@ const CheckoutDetails = () => {
                         <SwiperSlide key={date.id}>
                           <div
                             onClick={() => setSelectedDate(date)}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                              selectedDate.id === date.id
-                                ? "bg-primary text-white"
-                                : "bg-[#F7F7F7] text-black"
-                            }`}
+                            className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedDate.id === date.id
+                              ? "bg-primary text-white"
+                              : "bg-[#F7F7F7] text-black"
+                              }`}
                           >
                             <span className="text-xs w-full text-center">
                               {date.day}
@@ -505,10 +555,9 @@ const CheckoutDetails = () => {
               <div className="w-full flex flex-col items-center justify-center pt-5 gap-2.5">
                 <div className="w-full flex items-center justify-between">
                   <h1
-                    className={`text-sm font-semibold  ${
-                      errors.includes("selectedSlot") &&
+                    className={`text-sm font-semibold  ${errors.includes("selectedSlot") &&
                       "border-b border-red-500"
-                    }`}
+                      }`}
                   >
                     Pick a Time Slot
                   </h1>
@@ -538,11 +587,10 @@ const CheckoutDetails = () => {
                       <SwiperSlide key={idx}>
                         <div
                           onClick={() => setSelectedSlot(slot)}
-                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                            selectedSlot === slot
-                              ? "bg-primary text-white"
-                              : "bg-[#F7F7F7] text-black"
-                          }`}
+                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedSlot === slot
+                            ? "bg-primary text-white"
+                            : "bg-[#F7F7F7] text-black"
+                            }`}
                         >
                           <span className="text-xs w-full text-center">
                             {slot}
@@ -563,11 +611,10 @@ const CheckoutDetails = () => {
                       <SwiperSlide key={idx}>
                         <div
                           onClick={() => setSelectedSlot(slot)}
-                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                            selectedSlot === slot
-                              ? "bg-primary text-white"
-                              : "bg-[#F7F7F7] text-black"
-                          }`}
+                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedSlot === slot
+                            ? "bg-primary text-white"
+                            : "bg-[#F7F7F7] text-black"
+                            }`}
                         >
                           <span className="text-xs w-full text-center">
                             {slot}
@@ -588,11 +635,10 @@ const CheckoutDetails = () => {
                       <SwiperSlide key={idx}>
                         <div
                           onClick={() => setSelectedSlot(slot)}
-                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                            selectedSlot === slot
-                              ? "bg-primary text-white"
-                              : "bg-[#F7F7F7] text-black"
-                          }`}
+                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedSlot === slot
+                            ? "bg-primary text-white"
+                            : "bg-[#F7F7F7] text-black"
+                            }`}
                         >
                           <span className="text-xs w-full text-center">
                             {slot}
@@ -613,11 +659,10 @@ const CheckoutDetails = () => {
                       <SwiperSlide key={idx}>
                         <div
                           onClick={() => setSelectedSlot(slot)}
-                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${
-                            selectedSlot === slot
-                              ? "bg-primary text-white"
-                              : "bg-[#F7F7F7] text-black"
-                          }`}
+                          className={`flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer ${selectedSlot === slot
+                            ? "bg-primary text-white"
+                            : "bg-[#F7F7F7] text-black"
+                            }`}
                         >
                           <span className="text-xs w-full text-center">
                             {slot}
@@ -666,111 +711,20 @@ const CheckoutDetails = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-1 w-full h-fit flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
-            <h1 className="w-full text-left text-xl flex font-semibold mb-2.5 items-center justify-start">
-              Payment Summary
-            </h1>
-            <div className="w-full flex flex-col items-center justify-center gap-5">
-              <h1 className="w-full text-sm lg:text-base text-left font-bold">
-                How would you like to pay?
-              </h1>
-              <div className="w-full rounded-xl border flex flex-col items-center justify-center divide-y">
-                <div
-                  onClick={() => setPayMethod("Online Payment")}
-                  className="cursor-pointer w-full rounded-t-xl flex items-center justify-between p-3"
-                >
-                  <div className="w-full flex items-center justify-start space-x-3">
-                    <FaRegCreditCard className="w-5 h-5 text-black" />
-                    <span className="text-xs md:text-sm font-medium">
-                      Card Payment
-                    </span>
-                  </div>
-                  <div
-                    className={`rounded-full border border-primary p-[3px] w-5 h-[19px] sm:size-5 ${
-                      payMethod === "Online Payment" ? "flex" : "hidden"
-                    }`}
-                  >
-                    <div className="rounded-full bg-primary w-full h-full" />
-                  </div>
-                </div>
-                <div
-                  onClick={() => setPayMethod("Cash on Delivery")}
-                  className="cursor-pointer w-full rounded-b-xl flex items-center justify-between p-3"
-                >
-                  <div className="w-full flex items-center justify-start space-x-3">
-                    <FaMoneyBill className="w-5 h-5 text-black" />
-                    <span className="text-xs md:text-sm  font-medium">
-                      Cash on Delivery
-                    </span>
-                  </div>
-                  <div
-                    className={`rounded-full border border-primary p-[3px] w-5 h-[19px] sm:size-5 ${
-                      payMethod === "Cash on Delivery" ? "flex" : "hidden"
-                    }`}
-                  >
-                    <div className="rounded-full bg-primary w-full h-full" />
-                  </div>
-                </div>
-                <div
-                  onClick={() => setPayMethod("Card on Delivery")}
-                  className="cursor-pointer w-full rounded-b-xl flex items-center justify-between p-3"
-                >
-                  <div className="w-full flex items-center justify-start space-x-3">
-                    <FaRegCreditCard className="w-5 h-5 text-black" />
-                    <span className="text-xs md:text-sm  font-medium">
-                      Card on Delivery
-                    </span>
-                  </div>
-                  <div
-                    className={`rounded-full border border-primary p-[3px] w-5 h-[19px] sm:size-5 ${
-                      payMethod === "Card on Delivery" ? "flex" : "hidden"
-                    }`}
-                  >
-                    <div className="rounded-full bg-primary w-full h-full" />
-                  </div>
-                </div>
-              </div>
-              <div className="w-full h-full flex flex-col items-start justify-start gap-2.5 text-[#555555] pb-24 sm:pb-0">
-                <div className="w-full flex items-center justify-between text-sm font-medium">
-                  <span>Sub Total</span>
-                  <span>
-                    AED&nbsp;
-                    {new Intl.NumberFormat().format(calculateWithoutVAT(cart))}
-                  </span>
-                </div>
-                <div className="w-full flex items-center text-sm justify-between font-medium">
-                  <span>Discount</span>
-                  <span>AED {calculateDiscountValue(cart)}</span>
-                </div>
-                <div className="w-full flex items-center text-sm justify-between font-medium">
-                  <span>VAT</span>
-                  <span>AED {Math.round(Number(calculateVAT(cart)))}</span>
-                </div>
-                <div className="w-full flex items-center justify-between font-bold">
-                  <span>Grand Total</span>
-                  <span>
-                    AED&nbsp;
-                    {Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  disabled={isLoading || isOrderLoading}
-                  onClick={handleSubmit}
-                  className="w-full bg-primary text-white rounded-md py-2 !mt-6 text-sm items-center justify-center hidden sm:flex"
-                >
-                  {isLoading || isOrderLoading ? (
-                    <div className="w-full flex items-center justify-center space-x-3">
-                      <LuLoader2 className="w-5 h-5 animate-spin" />
-                      <span>Please Wait...</span>
-                    </div>
-                  ) : (
-                    "Place Order"
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
+          <PaymentSidebar
+            isLoading={isLoading}
+            payMethod={payMethod}
+            isOrderLoading={isOrderLoading}
+            handleSubmit={handleSubmit}
+            setPayMethod={setPayMethod}
+            calculateDiscountValue={calculateDiscountValue(cart)}
+            calculateVAT={calculateVAT(cart)}
+            calculateWithoutVAT={calculateWithoutVAT(cart)}
+            setShowCard={setShowCard}
+            showCard={showCard}
+            setCardValidStatus={setCardValidStatus}
+            cardValidStatus={cardValidStatus}
+          />
         </div>
       </div>
       <div className={cn("w-full fixed z-20 bottom-0 left-0 p-2.5 bg-white flex sm:hidden border-t",
@@ -792,6 +746,7 @@ const CheckoutDetails = () => {
           )}
         </button>
       </div>
+      <Footer />
     </>
   );
 };

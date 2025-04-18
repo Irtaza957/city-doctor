@@ -7,6 +7,7 @@ import {
 import { GoogleMapsEmbed } from "@next/third-parties/google";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import { useState } from "react";
+import Footer from "@/components/Footer";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -194,6 +195,7 @@ const ContactUs = () => {
         />
       </div>
     </div>
+    <Footer />
     </>
   );
 };

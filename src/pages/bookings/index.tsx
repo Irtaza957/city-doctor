@@ -19,6 +19,7 @@ import ReviewDrawer from "@/components/drawers/ReviewDrawer";
 import TrackBookingDrawer from "@/components/drawers/TrackBookingDrawer";
 import BookingCardSkeleton from "@/components/cards/skeleton/BookingCardSkeleton";
 import GoogleAnalytics from "../../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const Upcoming = ({ booking }: { booking: BOOKING }) => {
   const [selected, setSelected] = useState("0");
@@ -417,6 +418,7 @@ const Bookings = () => {
           </>
         )}
       </div>
+      <Footer />
     </>
   );
 };

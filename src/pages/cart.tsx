@@ -26,6 +26,7 @@ import BestSellingCard from "@/components/cards/BestSellingCard";
 import { addToCart, removeFromCart, setCart, setPromo } from "@/store/global";
 import { calculateDiscount, calculateDiscountValue, calculateVAT, calculateWithoutVAT, cn, getSlug, imageBase } from "@/utils/helpers";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const Checkout = () => {
   const router = useRouter();
@@ -114,7 +115,7 @@ const Checkout = () => {
       <LoginDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
       <LoginModal open={open} setOpen={setOpen} />
       <div className={cn(
-        "w-full flex flex-col items-center justify-center gap-5 mt-[50px] md:mt-[108px]",
+        "w-full flex flex-col items-center justify-center sm:bg-gray-100 gap-5 mt-[50px] md:mt-[108px]",
         cart.length === 0 ? 'mt-5': ''
         )}>
         {cart.length === 0 ? (
@@ -135,7 +136,7 @@ const Checkout = () => {
             </Link>
           </div>
         ) : (
-          <div className="w-full sm:bg-gray-100 px-5 md:px-0 h-[calc(100vh-220px)]">
+          <div className="w-full px-5 md:px-0 h-[calc(100vh-220px)]">
             <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 py-7 pb-16 sm:pt-14 sm:pb-24">
               <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
                 <h1 className="w-full text-left text-xl flex font-semibold mb-2.5 items-center justify-start">
@@ -462,6 +463,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

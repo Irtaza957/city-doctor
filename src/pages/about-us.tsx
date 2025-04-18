@@ -6,6 +6,7 @@ import About1 from "@/assets/img/about/about1.png";
 import About2 from "@/assets/img/about/about2.png";
 import About3 from "@/assets/img/about/about3.png";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const AboutUs = () => {
   return (
@@ -135,6 +136,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

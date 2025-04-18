@@ -1,5 +1,6 @@
 import React from "react";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const RefundPolicy = () => {
     return (
@@ -165,6 +166,7 @@ const RefundPolicy = () => {
 
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

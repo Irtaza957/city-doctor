@@ -1,5 +1,6 @@
 import React from "react";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const PrivacyPolicy = () => {
     return (
@@ -106,6 +107,7 @@ const PrivacyPolicy = () => {
 
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

@@ -188,7 +188,7 @@ const Categories = () => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className={cn("w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-2xl bg-[#F0F0F0] text-black h-[75px]")}
+                    className={cn("w-full flex items-center justify-center cursor-pointer gap-4 py-2 pr-3 pl-4 rounded-2xl bg-[#F0F0F0] text-black h-[50px]")}
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     {/* <Image
@@ -216,7 +216,7 @@ const Categories = () => {
                   <Link
                     href={getCategoryLink(category.category_id, category.category_name)}
                     onClick={() => selectCategory(category)}
-                    className={"w-full text-black flex items-center justify-center cursor-pointer h-[75px] gap-4 py-2 pr-3 pl-4 rounded-2xl"}
+                    className={"w-full text-black flex items-center justify-center cursor-pointer h-[50px] gap-4 py-2 pr-3 pl-4 rounded-2xl"}
                     style={{ backgroundColor: category?.color || "#F0F0F0" }}
                   >
                     {/* <Image

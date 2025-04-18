@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import About1 from "@/assets/img/about/about1.png";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const Blogs = () => {
   const [unset, setUnset] = useState(false);
@@ -128,6 +129,7 @@ const Blogs = () => {
         </div>
       </div>
     </div>
+    <Footer />
     </>
   );
 };

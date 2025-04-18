@@ -111,9 +111,35 @@ export const bookingApi = api.injectEndpoints({
         body: formData,
       }),
     }),
+    createPayment: build.mutation({
+      query: (formData) => ({
+        url: "/payment/card",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+    createTokenOrder: build.mutation({
+      query: (formData) => ({
+        url: "/payment/card",
+        method: "POST",
+        body: formData,
+      }),
+    }),
     paymentCheck: build.query({
       query: ({reference, booking_id}) => ({
         url: `/payment/return?reference=${reference}&booking_id=${booking_id}`,
+        method: "GET"
+      }),
+    }),
+    getPaymentMethods: build.query({
+      query: () => ({
+        url: `/account/payment_methods?customer_id=1`,
+        method: "GET"
+      }),
+    }),
+    getPaymentAccessToken: build.mutation({
+      query: () => ({
+        url: `/payment/access_token`,
         method: "GET"
       }),
     }),
@@ -123,6 +149,7 @@ export const bookingApi = api.injectEndpoints({
 export const {
   useTrackBookingQuery,
   useAddReviewMutation,
+  useCreatePaymentMutation,
   useApplyPromoMutation,
   usePostBookingMutation,
   useCreateOrderMutation,
@@ -131,4 +158,7 @@ export const {
   useBookingDetailsQuery,
   useCancelBookingMutation,
   useFetchCancellationReasonsQuery,
+  useGetPaymentMethodsQuery,
+  useGetPaymentAccessTokenMutation,
+  useCreateTokenOrderMutation,
 } = bookingApi;

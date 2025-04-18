@@ -1,5 +1,6 @@
 import React from "react";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const TermsAndConditions = () => {
   return (
@@ -129,6 +130,7 @@ const TermsAndConditions = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

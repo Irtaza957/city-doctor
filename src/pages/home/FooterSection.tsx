@@ -25,20 +25,20 @@ const FooterSection = () => {
           <div className="w-full">
             <div className="flex relative items-center justify-center gap-16 w-full">
               <div className="flex flex-col items-center justify-center gap-0">
-                <span className="text-[60px]">30+</span>
-                <span className="text-xl -mt-5">Specialists</span>
+                <span className="text-[45px]">30+</span>
+                <span className="-mt-4">Specialists</span>
               </div>
               <div className="flex flex-col items-center justify-center py-2 border-x-2 border-[#DBDBDB] px-16">
-                <span className=" text-[60px]">200+</span>
-                <span className="text-xl -mt-5">Services</span>
+                <span className=" text-[45px]">200+</span>
+                <span className="-mt-4">Services</span>
               </div>
               <div className="flex flex-col items-center justify-center py-2 border-r-2 border-[#DBDBDB] pr-16">
-                <span className="text-[60px]">10K+</span>
-                <span className="text-xl -mt-5 whitespace-nowrap">Happy Patient</span>
+                <span className="text-[45px]">10K+</span>
+                <span className="-mt-4 whitespace-nowrap">Happy Patient</span>
               </div>
               <div className="flex flex-col items-center justify-center">
-                <span className="text-[60px]">24/7</span>
-                <span className="text-xl -mt-5">Available</span>
+                <span className="text-[45px]">24/7</span>
+                <span className="-mt-4">Available</span>
               </div>
             </div>
           </div>
@@ -81,8 +81,8 @@ const FooterSection = () => {
       </div>
       <div className="md:w-[90%] lg:max-w-[1440px] mx-auto mt-10 hidden sm:block">
         <div className='flex flex-col justify-center items-center mb-3'>
-          <p className="text-[50px] font-bold">Testimonial</p>
-          <p className='text-[#606060] text-xl text-center mt-4 w-[85%]'>Get expert medical care at home with licensed doctors available 24/7 in Dubai, Abu Dhabi, and Sharjah. From consultations and prescriptions to minor procedures and lab tests, we bring fast, reliable, and personalized healthcare to your doorstep—within 45 minutes!</p>
+          <p className="text-3xl font-bold">Testimonial</p>
+          <p className='text-[#606060] text-center mt-4 w-[75%]'>Get expert medical care at home with licensed doctors available 24/7 in Dubai, Abu Dhabi, and Sharjah. From consultations and prescriptions to minor procedures and lab tests, we bring fast, reliable, and personalized healthcare to your doorstep—within 45 minutes!</p>
           <Image
             src={Clients}
             alt="home"
