@@ -25,7 +25,7 @@ import toast from "react-hot-toast";
 import { OTPInput } from "input-otp";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { Sheet, SheetContent, SheetDescription, SheetHeader } from "../ui/sheet";
@@ -386,7 +386,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
             >
               {isLoading ? (
                 <div className="w-full flex items-center justify-center space-x-3">
-                  <LuLoader2 className="w-5 h-5 animate-spin" />
+                  <LuLoader className="w-5 h-5 animate-spin" />
                   <span>Please Wait...</span>
                 </div>
               ) : (
@@ -460,7 +460,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                     >
                       {submitting ? (
                         <div className="w-full flex items-center justify-center space-x-3">
-                          <LuLoader2 className="w-5 h-5 animate-spin" />
+                          <LuLoader className="w-5 h-5 animate-spin" />
                           <span>Please Wait...</span>
                         </div>
                       ) : (
@@ -559,7 +559,7 @@ const LoginDrawer = ({ open, onClose }: DIALOG_PROPS) => {
                             >
                               {registering ? (
                                 <div className="w-full flex items-center justify-center space-x-3">
-                                  <LuLoader2 className="w-5 h-5 animate-spin" />
+                                  <LuLoader className="w-5 h-5 animate-spin" />
                                   <span>Please Wait...</span>
                                 </div>
                               ) : (

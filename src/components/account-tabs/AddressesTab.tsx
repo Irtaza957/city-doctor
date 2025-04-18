@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { IoIosWarning } from "react-icons/io";
 import { IoArrowBack } from "react-icons/io5";
@@ -100,7 +100,7 @@ const AddressesTab = ({ handleTab }: { handleTab: (tab: string) => void }) => {
             >
               {deleting ? (
                 <div className="w-full flex items-center justify-center space-x-3">
-                  <LuLoader2 className="w-5 h-5 animate-spin" />
+                  <LuLoader className="w-5 h-5 animate-spin" />
                 </div>
               ) : (
                 "Delete"
@@ -150,7 +150,7 @@ const AddressesTab = ({ handleTab }: { handleTab: (tab: string) => void }) => {
         <div className="w-full flex flex-col items-start justify-start divide-y">
           {isLoading ? (
             <div className="w-full flex items-center justify-center">
-              <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+              <LuLoader className="w-10 h-10 animate-spin text-secondary" />
             </div>
           ) : (
             data?.map((address, idx) => (
@@ -182,7 +182,7 @@ const AddressesTab = ({ handleTab }: { handleTab: (tab: string) => void }) => {
                     <span>{address.address_type}</span>
                     {defAdd?.address_id === address.address_id
                       ? updating && (
-                          <LuLoader2 className="size-4 animate-spin text-secondary" />
+                          <LuLoader className="size-4 animate-spin text-secondary" />
                         )
                       : null}
                   </span>

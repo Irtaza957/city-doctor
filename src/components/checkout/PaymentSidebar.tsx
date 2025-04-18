@@ -3,7 +3,7 @@ import { cn } from "@/utils/helpers";
 import Script from "next/script";
 import React from "react";
 import { FaMoneyBill, FaRegCreditCard } from "react-icons/fa6";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import visa from "@/assets/icons/visaLogo.svg"
 import mastercard from "@/assets/icons/mastercardLogo.svg"
 import Image from "next/image";
@@ -82,7 +82,12 @@ const PaymentSidebar = ({
                             outletRef: outletRef,
                             onSuccess: onSuccess,
                             onFail: onFail,
-                            onChangeValidStatus: function (_ref: any) {
+                            onChangeValidStatus: function (_ref:  {
+                                isCVVValid: boolean;
+                                isExpiryValid: boolean;
+                                isNameValid: boolean;
+                                isPanValid: boolean;
+                              }) {
                                 const { isCVVValid, isExpiryValid, isNameValid, isPanValid } =
                                     _ref;
                                 console.log(isCVVValid, isExpiryValid, isNameValid, isPanValid);
@@ -250,7 +255,7 @@ const PaymentSidebar = ({
                         >
                             {isLoading || isOrderLoading ? (
                                 <div className="w-full flex items-center justify-center space-x-3">
-                                    <LuLoader2 className="w-5 h-5 animate-spin" />
+                                    <LuLoader className="w-5 h-5 animate-spin" />
                                     <span>Please Wait...</span>
                                 </div>
                             ) : (

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 
 import { RootState } from "@/store";
 import FamilyDrawer from "./FamilyDrawer";
@@ -136,7 +136,7 @@ const ServedDrawer = ({
                 ))
               ) : (
                 <div className="w-full flex items-center justify-center pt-2.5">
-                  <LuLoader2 className="size-10 animate-spin text-secondary" />
+                  <LuLoader className="size-10 animate-spin text-secondary" />
                 </div>
               )}
             </div>

@@ -29,7 +29,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 // @ts-ignore
 import { FreeMode } from "swiper/modules";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleAnalytics from "../components/GoogleAnalytics";
@@ -738,7 +738,7 @@ const CheckoutDetails = () => {
         >
           {isLoading || isOrderLoading ? (
             <div className="w-full flex items-center justify-center space-x-3">
-              <LuLoader2 className="w-5 h-5 animate-spin" />
+              <LuLoader className="w-5 h-5 animate-spin" />
               <span>Please Wait...</span>
             </div>
           ) : (

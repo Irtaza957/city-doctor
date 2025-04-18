@@ -9,7 +9,7 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { Fragment, useEffect, useState } from "react";
 import { FaChevronDown, FaLocationDot } from "react-icons/fa6";
 
@@ -33,7 +33,7 @@ const Location = () => {
       <FaLocationDot className="w-5 h-5 text-primary" />
       {isLoading ? (
         <div className="w-full flex items-center justify-center">
-          <LuLoader2 className="animate-spin text-white" />
+          <LuLoader className="animate-spin text-white" />
         </div>
       ) : (
         data && (

@@ -10,7 +10,7 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 import Link from "next/link";
 import Image from "next/image";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import { useRouter } from "next/router";
@@ -142,7 +142,7 @@ const Search = () => {
               <div className="col-span-1 w-full max-h-full overflow-auto custom-scrollbar flex flex-col items-start justify-start">
                 {isLoading ? (
                   <div className="w-full h-full flex items-center justify-center">
-                    <LuLoader2 className="size-10 animate-spin text-secondary" />
+                    <LuLoader className="size-10 animate-spin text-secondary" />
                   </div>
                 ) : subCategories?.length === 0 ? (
                   <div className="w-full h-full flex items-center justify-center">

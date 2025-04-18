@@ -11,7 +11,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useParams } from "next/navigation";
 
 const CancelBookingModal = ({
@@ -86,7 +86,7 @@ const CancelBookingModal = ({
           </p>
           {isLoading ? (
             <div className="w-full flex items-center justify-center">
-              <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+              <LuLoader className="w-10 h-10 animate-spin text-secondary" />
             </div>
           ) : (
             data?.map((r) => (
@@ -123,7 +123,7 @@ const CancelBookingModal = ({
           >
             {cancelling ? (
               <div className="w-full flex items-center justify-center space-x-3">
-                <LuLoader2 className="w-5 h-5 animate-spin" />
+                <LuLoader className="w-5 h-5 animate-spin" />
                 <span>Please Wait...</span>
               </div>
             ) : (

@@ -24,7 +24,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-// import { LuLoader2 } from "react-icons/lu";
+// import { LuLoader } from "react-icons/lu";
 import { Fragment, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
@@ -251,7 +251,7 @@ const Navbar = () => {
               />
               {isLoading ? (
                 <div className="w-full flex items-center justify-center">
-                  <LuLoader2 className="animate-spin text-white" />
+                  <LuLoader className="animate-spin text-white" />
                 </div>
               ) : (
                 data && (

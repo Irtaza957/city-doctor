@@ -18,7 +18,7 @@ import "react-phone-number-input/style.css";
 import FormSelect from "@/components/FormSelect";
 import CalendarIcon from "@/assets/icons/CalendarIcon";
 import { useUpdateUserMutation } from "@/store/services/auth";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 
 const genders = [
   {
@@ -356,7 +356,7 @@ const PersonalDetails = ({
           >
             {isLoading ? (
               <div className="w-full flex items-center justify-center gap-2">
-                <LuLoader2 className="animate-spin" />
+                <LuLoader className="animate-spin" />
                 <p>Please Wait...</p>
               </div>
             ) : "Save Changes"}

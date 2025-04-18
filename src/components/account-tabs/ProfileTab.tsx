@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { IoIosWarning } from "react-icons/io";
 import { IoArrowBack } from "react-icons/io5";
 
@@ -86,7 +86,7 @@ const ProfileTab = ({ handleTab }: { handleTab: (tab: string) => void }) => {
             >
               {deleting ? (
                 <div className="w-full flex items-center justify-center space-x-3">
-                  <LuLoader2 className="w-5 h-5 animate-spin" />
+                  <LuLoader className="w-5 h-5 animate-spin" />
                 </div>
               ) : (
                 "Delete"
@@ -126,7 +126,7 @@ const ProfileTab = ({ handleTab }: { handleTab: (tab: string) => void }) => {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-5">
           {isLoading ? (
             <div className="col-span-1 sm:col-span-2 lg:col-span-3 w-full flex items-center justify-center pt-2.5">
-              <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+              <LuLoader className="w-10 h-10 animate-spin text-secondary" />
             </div>
           ) : (
             <>

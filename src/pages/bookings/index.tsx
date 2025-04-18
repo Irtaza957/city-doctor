@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -208,7 +208,7 @@ const Completed = ({ booking }: { booking: BOOKING }) => {
           >
             {isLoading ? (
               <div className="w-full flex items-center justify-center space-x-3">
-                <LuLoader2 className="size-4 animate-spin" />
+                <LuLoader className="size-4 animate-spin" />
                 <span>Please Wait...</span>
               </div>
             ) : (
@@ -316,7 +316,7 @@ const Cancelled = ({ booking }: { booking: BOOKING }) => {
         >
           {isLoading ? (
             <div className="w-full flex items-center justify-center space-x-3">
-              <LuLoader2 className="size-4 animate-spin" />
+              <LuLoader className="size-4 animate-spin" />
               <span>Please Wait...</span>
             </div>
           ) : (

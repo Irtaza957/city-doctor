@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -257,7 +257,7 @@ const Checkout = () => {
                     )}
                   >
                     {isLoading ? (
-                      <LuLoader2 className="animate-spin text-primary" />
+                      <LuLoader className="animate-spin text-primary" />
                     ) : promo ? (
                       <span
                         onClick={() => {

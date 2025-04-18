@@ -3,7 +3,7 @@
 import { removeSpaces } from "@/utils/helpers";
 
 import toast from "react-hot-toast";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { FaLocationArrow, FaMagnifyingGlass } from "react-icons/fa6";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { Marker, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
@@ -87,7 +87,7 @@ const Map = ({ coords, setCoords }: MapProps) => {
         className="absolute bottom-16 right-5 size-10 bg-white/50 backdrop-blur-sm text-primary p-2 rounded-full shadow-lg"
       >
         {loading ? (
-          <LuLoader2 className="size-full animate-spin" />
+          <LuLoader className="size-full animate-spin" />
         ) : (
           <FaLocationArrow className="size-full" />
         )}

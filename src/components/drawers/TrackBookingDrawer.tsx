@@ -4,7 +4,7 @@ import { Drawer } from "vaul";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { TiCancel } from "react-icons/ti";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 
 import { RootState } from "@/store";
@@ -56,7 +56,7 @@ const TrackBookingDrawer = ({ id, open, onClose }: DIALOG_PROPS) => {
           </Drawer.Title>
           {isLoading ? (
             <div className="w-full flex items-center justify-center p-5">
-              <LuLoader2 className="size-10 animate-spin text-secondary" />
+              <LuLoader className="size-10 animate-spin text-secondary" />
             </div>
           ) : (
             <div className="w-full flex flex-col items-center justify-center pr-5 pl-10 pt-3 pb-5">

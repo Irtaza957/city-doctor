@@ -4,7 +4,7 @@ import { Drawer } from "vaul";
 import { GoPlus } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 
 import { RootState } from "@/store";
@@ -68,7 +68,7 @@ const LocationDrawer = ({ selectedAddress, setSelectedAddress, open, onClose }: 
             <div className="w-full max-h-full overflow-auto custom-scrollbar flex flex-col items-start justify-start gap-2.5 divide-y px-5 pb-2.5">
               {isLoading ? (
                 <div className="w-full flex items-center justify-center">
-                  <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+                  <LuLoader className="w-10 h-10 animate-spin text-secondary" />
                 </div>
               ) : (
                 data?.map((address) => (

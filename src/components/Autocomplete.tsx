@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import debounce from "lodash.debounce";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -74,7 +74,7 @@ const AutoComplete = ({ handleClose }: { handleClose?: () => void }) => {
         }`}
       >
         {results?.length === 0 || isLoading ? (
-          <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+          <LuLoader className="w-10 h-10 animate-spin text-secondary" />
         ) : results?.filter((result) =>
             result.name?.toLowerCase().includes(query.toLowerCase())
           ).length === 0 ? (

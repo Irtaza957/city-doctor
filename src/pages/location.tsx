@@ -4,7 +4,7 @@ import { libraries } from "@/utils/helpers";
 
 import toast from "react-hot-toast";
 import React, { useState } from "react";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { FaLocationArrow, FaMagnifyingGlass } from "react-icons/fa6";
 import { Marker, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
@@ -100,7 +100,7 @@ const Location = () => {
           className="absolute bottom-20 right-[12px] bg-white/50 backdrop-blur-sm text-primary p-2 rounded-full shadow-lg"
         >
           {loading ? (
-            <LuLoader2 className="w-8 h-8 animate-spin" />
+            <LuLoader className="w-8 h-8 animate-spin" />
           ) : (
             <FaLocationArrow className="w-8 h-8" />
           )}
@@ -115,7 +115,7 @@ const Location = () => {
     </div>
   ) : (
     <div className="w-screen h-screen overflow-hidden flex items-center justify-center">
-      <LuLoader2 className="w-10 h-10 text-primary animate-spin" />
+      <LuLoader className="w-10 h-10 text-primary animate-spin" />
     </div>
   );
 };

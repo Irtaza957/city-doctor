@@ -16,7 +16,7 @@ import {
 } from "@headlessui/react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { FaChevronDown } from "react-icons/fa6";
 import { Fragment, useEffect, useState } from "react";
 
@@ -71,7 +71,7 @@ const StatusBar = () => {
             </div>
             {isLoading ? (
               <div className="w-full flex items-center justify-center">
-                <LuLoader2 className="animate-spin text-white" />
+                <LuLoader className="animate-spin text-white" />
               </div>
             ) : (
               data && (

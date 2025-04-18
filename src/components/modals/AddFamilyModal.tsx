@@ -8,7 +8,7 @@ import { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 
 interface AddFamilyModalProps {
   open: boolean;
@@ -146,7 +146,7 @@ const AddFamilyModal = ({
               ))
             ) : (
               <div className="w-full flex items-center justify-center">
-                <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+                <LuLoader className="w-10 h-10 animate-spin text-secondary" />
               </div>
             )}
           </div>

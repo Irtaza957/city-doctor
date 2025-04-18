@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import Image from "next/image";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { RiVisaLine } from "react-icons/ri";
 import { IoArrowBack } from "react-icons/io5";
@@ -129,7 +129,7 @@ const BookingDetails = ({
       <CancelBookingModal open={cancel} setOpen={setCancel} />
       {!data ? (
         <div className="w-full flex items-center justify-center gap-2">
-          <LuLoader2 className="size-10 animate-spin text-secondary" />
+          <LuLoader className="size-10 animate-spin text-secondary" />
         </div>
       ) : (
         <div className="w-full max-h-full overflow-auto custom-scrollbar pr-5 flex flex-col items-start justify-start gap-5">

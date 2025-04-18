@@ -6,7 +6,7 @@ import { useFetchAddressesQuery } from "@/store/services/address";
 import { GoPlus } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 
 interface AddLocationModalProps {
@@ -72,7 +72,7 @@ const AddLocationModal = ({
           <div className="w-full flex flex-col items-center justify-center max-h-[425px] overflow-auto pr-5 custom-scrollbar">
             {isLoading ? (
               <div className="w-full flex items-center justify-center">
-                <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+                <LuLoader className="w-10 h-10 animate-spin text-secondary" />
               </div>
             ) : (
               data?.map((address) => (

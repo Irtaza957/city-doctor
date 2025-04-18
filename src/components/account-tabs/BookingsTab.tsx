@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { BsThreeDots } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
@@ -171,7 +171,7 @@ const BookingsTab = () => {
           <div className="w-full flex flex-col items-start justify-start">
             {isLoading ? (
               <div className="w-full h-full bg-white flex items-center justify-center">
-                <LuLoader2 className="w-10 h-10 animate-spin text-secondary" />
+                <LuLoader className="w-10 h-10 animate-spin text-secondary" />
               </div>
             ) : (
               filteredData?.map((booking) => (
@@ -289,7 +289,7 @@ const BookingsTab = () => {
                           >
                             {selected === booking.booking_id && isRebook ? (
                               <div className="w-full flex items-center justify-between gap-2">
-                                <LuLoader2 className="size-4 animate-spin" />
+                                <LuLoader className="size-4 animate-spin" />
                                 <span className="w-full text-left text-xs">
                                   Booking...
                                 </span>
@@ -313,7 +313,7 @@ const BookingsTab = () => {
                           >
                             {selected === booking.booking_id && isRebook ? (
                               <div className="w-full flex items-center justify-between gap-2">
-                                <LuLoader2 className="size-4 animate-spin" />
+                                <LuLoader className="size-4 animate-spin" />
                                 <span className="w-full text-left text-xs">
                                   Booking...
                                 </span>
@@ -375,7 +375,7 @@ const BookingsTab = () => {
                         >
                           {selected === booking.booking_id && isRebook ? (
                             <div className="w-full flex items-center justify-between gap-3">
-                              <LuLoader2 className="size-5 animate-spin" />
+                              <LuLoader className="size-5 animate-spin" />
                               <span className="w-full text-left text-xs">
                                 Booking...
                               </span>
@@ -398,7 +398,7 @@ const BookingsTab = () => {
                       >
                         {selected === booking.booking_id && isRebook ? (
                           <div className="w-full flex items-center justify-center gap-3">
-                            <LuLoader2 className="size-5 animate-spin" />
+                            <LuLoader className="size-5 animate-spin" />
                             <span className="text-center text-xs">
                               Booking...
                             </span>

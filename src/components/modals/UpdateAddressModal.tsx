@@ -12,7 +12,7 @@ import { removeSpaces } from "@/utils/helpers";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { LuLoader2 } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 
@@ -209,7 +209,7 @@ const UpdateAddressModal = ({
               >
                 {isLoading ? (
                   <div className="w-full flex items-center justify-center space-x-3">
-                    <LuLoader2 className="size-4 animate-spin" />
+                    <LuLoader className="size-4 animate-spin" />
                     <span>Please Wait...</span>
                   </div>
                 ) : (
@@ -354,7 +354,7 @@ const UpdateAddressModal = ({
               >
                 {updating ? (
                   <div className="w-full flex items-center justify-center gap-2">
-                    <LuLoader2 className="animate-spin size-4" />
+                    <LuLoader className="animate-spin size-4" />
                     <span>Please Wait...</span>
                   </div>
                 ) : (
