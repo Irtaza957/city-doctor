@@ -55,7 +55,6 @@ const CheckoutDetails = () => {
   const { cart, user, isMenuVisible } = useSelector((state: RootState) => state.global);
   const [finalAddress, setFinalAddress] = useState<ADDRESS | null>(null);
   const [showCard, setShowCard] = useState(false);
-  const [show3ds, setShow3ds]=useState(false)
   const [cardValidStatus, setCardValidStatus] = useState({
     isPanValid: true,
     isExpiryValid: true,
@@ -203,8 +202,7 @@ const CheckoutDetails = () => {
           return
         }
         if (payMethod && payMethod !== 'Card on Delivery' && payMethod !== 'Cash on Delivery' && !showCard) {
-          setShow3ds(true)
-          const urlencodedToken = new URLSearchParams();
+                    const urlencodedToken = new URLSearchParams();
           const card=paymentMethods?.data?.find((item: any)=>item?.card_type===payMethod)
           urlencodedToken.append("booking_id", data.data.data.id);
           urlencodedToken.append("card", card?.id);
@@ -217,7 +215,7 @@ const CheckoutDetails = () => {
               mountId: '3ds_iframe',
             }
           );
-          setShow3ds(false)
+          
           const urlencodedStatus = new URLSearchParams();
           urlencodedStatus.append("reference", paymenttokenResp?.data?.data?.orderReference);
           urlencodedStatus.append("booking_id", data.data.data.id);
@@ -230,8 +228,7 @@ const CheckoutDetails = () => {
           const response = await window.NI.generateSessionId();
 
           if (response?.session_id) {
-            setShow3ds(true)
-            const urlencoded = new URLSearchParams();
+                        const urlencoded = new URLSearchParams();
             urlencoded.append("session", response?.session_id);
             urlencoded.append("booking_id", data.data.data.id);
             urlencoded.append("amount", String(Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))))
@@ -250,7 +247,7 @@ const CheckoutDetails = () => {
             urlencodedStatus.append("booking_id", data.data.data.id);
             const statusResponse = await createPaymentStatus(urlencodedStatus)
             setLoading(false)
-            setShow3ds(false)
+            
             console.log(status, error, 'statusstatus')
             console.log(statusResponse, 'statusResponsestatusResponse')
           }
