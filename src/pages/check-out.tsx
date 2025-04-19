@@ -17,7 +17,7 @@ import TimeSlotModal from "@/components/modals/TimeSlotModal";
 import AddFamilyModal from "@/components/modals/AddFamilyModal";
 import LocationDrawer from "@/components/drawers/LocationDrawer";
 import TimeSlotDrawer from "@/components/drawers/TimeSlotDrawer";
-import { useCreatePaymentMutation, useCreatePaymentStatusMutation, useCreateTokenOrderMutation, usePostBookingMutation } from "@/store/services/booking";
+import { useCreatePaymentMutation, useCreatePaymentStatusMutation, useCreatePaymentTokenMutation, useGetPaymentMethodsQuery, usePostBookingMutation } from "@/store/services/booking";
 import AddLocationModal from "@/components/modals/AddLocationModal";
 import CancellationModal from "@/components/modals/CancellationModal";
 import CancellationDrawer from "@/components/drawers/CancellationDrawer";
@@ -79,7 +79,8 @@ const CheckoutDetails = () => {
   });
   const [createPayment] = useCreatePaymentMutation()
   const [createPaymentStatus] = useCreatePaymentStatusMutation()
-  const [createTokenOrder] = useCreateTokenOrderMutation()
+  const [createPaymentToken] = useCreatePaymentTokenMutation()
+  const { data: paymentMethods } = useGetPaymentMethodsQuery({});
 
   const handleErrors = () => {
     const errors = [];
@@ -202,10 +203,26 @@ const CheckoutDetails = () => {
           return
         }
         if (payMethod && payMethod !== 'Card on Delivery' && payMethod !== 'Cash on Delivery' && !showCard) {
+          setShow3ds(true)
           const urlencodedToken = new URLSearchParams();
+          const card=paymentMethods?.data?.find((item: any)=>item?.card_type===payMethod)
           urlencodedToken.append("booking_id", data.data.data.id);
-          urlencodedToken.append("payment_method_code", payMethod);
-          createTokenOrder(urlencodedToken)
+          urlencodedToken.append("card", card?.id);
+          urlencodedToken.append("amount", String(Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))))
+          const paymenttokenResp=await createPaymentToken(urlencodedToken)
+          console.log(paymenttokenResp, 'paymenttokenResppaymenttokenResp')
+          const { status, error } = await window.NI.handlePaymentResponse(
+            paymenttokenResp?.data?.data,
+            {
+              mountId: '3ds_iframe',
+            }
+          );
+          setShow3ds(false)
+          const urlencodedStatus = new URLSearchParams();
+          urlencodedStatus.append("reference", paymenttokenResp?.data?.data?.orderReference);
+          urlencodedStatus.append("booking_id", data.data.data.id);
+          await createPaymentStatus(urlencodedStatus)
+          console.log(status, error, 'statusstatus')
           handleRedirect(data.data.data.id)
           return
         }
@@ -356,8 +373,8 @@ const CheckoutDetails = () => {
       />
       <CancellationModal open={openCancelModal} setOpen={setOpenCancelModal} />
       <div className="w-full flex flex-col items-center justify-center gap-5 px-5 md:px-0 pt-7 sm:pt-14 pb-20 mt-[69px] md:mt-[108px] sm:bg-gray-100">
-        {show3ds && <div id="3ds_iframe"></div>}
-        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div id="3ds_iframe"></div>
+        <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 -mt-5">
           <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
             <h1 className="w-full text-left text-xl flex font-bold sm:font-semibold mb-2.5 items-center justify-start">
               Checkout
@@ -748,6 +765,7 @@ const CheckoutDetails = () => {
             showCard={showCard}
             setCardValidStatus={setCardValidStatus}
             cardValidStatus={cardValidStatus}
+            paymentMethods={paymentMethods}
           />
         </div>
       </div>

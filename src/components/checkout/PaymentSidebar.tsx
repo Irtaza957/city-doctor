@@ -1,4 +1,3 @@
-import { useGetPaymentMethodsQuery } from "@/store/services/booking";
 import { cn } from "@/utils/helpers";
 import Script from "next/script";
 import React from "react";
@@ -55,10 +54,9 @@ const PaymentSidebar = ({
     setShowCard,
     showCard,
     setCardValidStatus,
-    cardValidStatus
+    cardValidStatus,
+    paymentMethods
 }: any) => {
-
-    const { data: paymentMethods } = useGetPaymentMethodsQuery({});
 
     const onSuccess = (response: any) => {
         console.log("Payment Success:", response);
