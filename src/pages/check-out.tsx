@@ -55,6 +55,7 @@ const CheckoutDetails = () => {
   const { cart, user, isMenuVisible } = useSelector((state: RootState) => state.global);
   const [finalAddress, setFinalAddress] = useState<ADDRESS | null>(null);
   const [showCard, setShowCard] = useState(false);
+  const [show3ds, setShow3ds]=useState(false)
   const [cardValidStatus, setCardValidStatus] = useState({
     isPanValid: true,
     isExpiryValid: true,
@@ -212,6 +213,7 @@ const CheckoutDetails = () => {
           const response = await window.NI.generateSessionId();
 
           if (response?.session_id) {
+            setShow3ds(true)
             const urlencoded = new URLSearchParams();
             urlencoded.append("session", response?.session_id);
             urlencoded.append("booking_id", data.data.data.id);
@@ -219,6 +221,7 @@ const CheckoutDetails = () => {
 
             const paymentResponse = await createPayment(urlencoded)
             console.log(paymentResponse, 'paymentResponsepaymentResponse')
+            console.log(document.getElementById("3ds_iframe"), '3ds_iframe3ds_iframe')
             const { status, error } = await window.NI.handlePaymentResponse(
               paymentResponse?.data?.data,
               {
@@ -230,6 +233,7 @@ const CheckoutDetails = () => {
             urlencodedStatus.append("booking_id", data.data.data.id);
             const statusResponse = await createPaymentStatus(urlencodedStatus)
             setLoading(false)
+            setShow3ds(false)
             console.log(status, error, 'statusstatus')
             console.log(statusResponse, 'statusResponsestatusResponse')
           }
@@ -352,6 +356,7 @@ const CheckoutDetails = () => {
       />
       <CancellationModal open={openCancelModal} setOpen={setOpenCancelModal} />
       <div className="w-full flex flex-col items-center justify-center gap-5 px-5 md:px-0 pt-7 sm:pt-14 pb-20 mt-[69px] md:mt-[108px] sm:bg-gray-100">
+        {show3ds && <div id="3ds_iframe"></div>}
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5">
           <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
             <h1 className="w-full text-left text-xl flex font-bold sm:font-semibold mb-2.5 items-center justify-start">
