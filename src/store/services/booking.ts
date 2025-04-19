@@ -125,6 +125,13 @@ export const bookingApi = api.injectEndpoints({
         body: formData,
       }),
     }),
+    createPaymentStatus: build.mutation({
+      query: (formData) => ({
+        url: "/payment/status",
+        method: "POST",
+        body: formData,
+      }),
+    }),
     paymentCheck: build.query({
       query: ({reference, booking_id}) => ({
         url: `/payment/return?reference=${reference}&booking_id=${booking_id}`,
@@ -161,4 +168,5 @@ export const {
   useGetPaymentMethodsQuery,
   useGetPaymentAccessTokenMutation,
   useCreateTokenOrderMutation,
+  useCreatePaymentStatusMutation,
 } = bookingApi;

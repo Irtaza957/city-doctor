@@ -17,7 +17,7 @@ import TimeSlotModal from "@/components/modals/TimeSlotModal";
 import AddFamilyModal from "@/components/modals/AddFamilyModal";
 import LocationDrawer from "@/components/drawers/LocationDrawer";
 import TimeSlotDrawer from "@/components/drawers/TimeSlotDrawer";
-import { useCreatePaymentMutation, useCreateTokenOrderMutation, usePostBookingMutation } from "@/store/services/booking";
+import { useCreatePaymentMutation, useCreatePaymentStatusMutation, useCreateTokenOrderMutation, usePostBookingMutation } from "@/store/services/booking";
 import AddLocationModal from "@/components/modals/AddLocationModal";
 import CancellationModal from "@/components/modals/CancellationModal";
 import CancellationDrawer from "@/components/drawers/CancellationDrawer";
@@ -33,7 +33,6 @@ import { LuLoader } from "react-icons/lu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleAnalytics from "../components/GoogleAnalytics";
-import { useRouter } from "next/navigation";
 import PaymentSidebar from "@/components/checkout/PaymentSidebar";
 import Footer from "@/components/Footer";
 
@@ -57,15 +56,15 @@ const CheckoutDetails = () => {
   const [finalAddress, setFinalAddress] = useState<ADDRESS | null>(null);
   const [showCard, setShowCard] = useState(false);
   const [cardValidStatus, setCardValidStatus] = useState({
-      isPanValid: true,
-      isExpiryValid: true,
-      isCVVValid: true,
-      isNameValid: true,
+    isPanValid: true,
+    isExpiryValid: true,
+    isCVVValid: true,
+    isNameValid: true,
   });
+  const [loading, setLoading]=useState(false)
 
   const slots = generateTimeSlots(convertToDateString(selectedDate));
   const [selectedSlot, setSelectedSlot] = useState(slots[0]);
-  const router = useRouter();
   const [finalMember, setFinalMember] = useState<FAMILY_LIST | null>({
     family_member_id: user?.customer_id!,
     mrn: user?.mrn!,
@@ -77,7 +76,8 @@ const CheckoutDetails = () => {
     is_allergy: user?.is_allergy!,
     allergy_description: user?.allergy_description!,
   });
-  const [createPayment, { isLoading: isOrderLoading }] = useCreatePaymentMutation()
+  const [createPayment] = useCreatePaymentMutation()
+  const [createPaymentStatus] = useCreatePaymentStatusMutation()
   const [createTokenOrder] = useCreateTokenOrderMutation()
 
   const handleErrors = () => {
@@ -140,6 +140,8 @@ const CheckoutDetails = () => {
       return;
     }
 
+    setLoading(true)
+
     const grandTotal = Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))
     const urlencoded = new URLSearchParams();
     urlencoded.append("customer_id", user?.customer_id!);
@@ -191,6 +193,7 @@ const CheckoutDetails = () => {
       if (data.error) {
         // @ts-ignore
         toast.error(data.error.data.error);
+        setLoading(false)
       } else {
         if (!data.data.data.id) return toast.error("Error creating booking!");
         if (payMethod === 'Card on Delivery' || payMethod === 'Cash on Delivery') {
@@ -214,11 +217,27 @@ const CheckoutDetails = () => {
             urlencoded.append("booking_id", data.data.data.id);
             urlencoded.append("amount", String(Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))))
 
-            await createPayment(urlencoded)
+            const paymentResponse = await createPayment(urlencoded)
+            console.log(paymentResponse, 'paymentResponsepaymentResponse')
+            const { status, error } = await window.NI.handlePaymentResponse(
+              paymentResponse?.data?.data,
+              {
+                mountId: '3ds_iframe',
+              }
+            );
+            const urlencodedStatus = new URLSearchParams();
+            urlencodedStatus.append("reference", paymentResponse?.data?.data?.orderReference);
+            urlencodedStatus.append("booking_id", data.data.data.id);
+            const statusResponse = await createPaymentStatus(urlencodedStatus)
+            setLoading(false)
+            console.log(status, error, 'statusstatus')
+            console.log(statusResponse, 'statusResponsestatusResponse')
           }
+
           handleRedirect(data.data.data.id)
         } else {
           toast.error("Invalid Session!");
+          setLoading(false)
         }
 
 
@@ -248,7 +267,7 @@ const CheckoutDetails = () => {
   const handleRedirect = (id: number) => {
     dispatch(setBookingID(id));
     clearCheckout()
-    router.push("/thank-you");
+    window.location.href="/thank-you"
   }
 
   useEffect(() => {
@@ -714,7 +733,7 @@ const CheckoutDetails = () => {
           <PaymentSidebar
             isLoading={isLoading}
             payMethod={payMethod}
-            isOrderLoading={isOrderLoading}
+            isOrderLoading={loading}
             handleSubmit={handleSubmit}
             setPayMethod={setPayMethod}
             calculateDiscountValue={calculateDiscountValue(cart)}
@@ -732,11 +751,11 @@ const CheckoutDetails = () => {
       )}>
         <button
           type="button"
-          disabled={isLoading || isOrderLoading}
+          disabled={isLoading || loading}
           onClick={handleSubmit}
           className="w-full py-3 rounded-xl bg-primary border border-primary text-white text-[18px] font-semibold"
         >
-          {isLoading || isOrderLoading ? (
+          {isLoading || loading ? (
             <div className="w-full flex items-center justify-center space-x-3">
               <LuLoader className="w-5 h-5 animate-spin" />
               <span>Please Wait...</span>

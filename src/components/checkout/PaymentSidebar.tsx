@@ -59,7 +59,6 @@ const PaymentSidebar = ({
 }: any) => {
 
     const { data: paymentMethods } = useGetPaymentMethodsQuery({});
-    console.log(paymentMethods, "datadata");
 
     const onSuccess = (response: any) => {
         console.log("Payment Success:", response);
@@ -244,6 +243,7 @@ const PaymentSidebar = ({
                                 )}
                             </span>
                         </div>
+                        <div id="3ds_iframe" className="overflow-hidden"></div>
                         <button
                             type="button"
                             disabled={isLoading || isOrderLoading || (showCard && (cardValidStatus && Object.values(cardValidStatus).some((isValid) => !isValid)))}
