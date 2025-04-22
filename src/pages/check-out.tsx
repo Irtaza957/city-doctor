@@ -35,6 +35,7 @@ import { useDispatch, useSelector } from "react-redux";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import PaymentSidebar from "@/components/checkout/PaymentSidebar";
 import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
 
 const CheckoutDetails = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const CheckoutDetails = () => {
     isNameValid: true,
   });
   const [loading, setLoading]=useState(false)
+  const [is3ds, setIs3ds]=useState(false)
 
   const slots = generateTimeSlots(convertToDateString(selectedDate));
   const [selectedSlot, setSelectedSlot] = useState(slots[0]);
@@ -198,15 +200,16 @@ const CheckoutDetails = () => {
       } else {
         if (!data.data.data.id) return toast.error("Error creating booking!");
         if (payMethod === 'Card on Delivery' || payMethod === 'Cash on Delivery') {
-          handleRedirect(data.data.data.id)
+          handleRedirect(data.data.data.id, payMethod)
           return
         }
         if (payMethod && payMethod !== 'Card on Delivery' && payMethod !== 'Cash on Delivery' && !showCard) {
-                    const urlencodedToken = new URLSearchParams();
+          const urlencodedToken = new URLSearchParams();
           const card=paymentMethods?.data?.find((item: any)=>item?.card_type===payMethod)
           urlencodedToken.append("booking_id", data.data.data.id);
           urlencodedToken.append("card", card?.id);
           urlencodedToken.append("amount", String(Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))))
+          setIs3ds(true)
           const paymenttokenResp=await createPaymentToken(urlencodedToken)
           console.log(paymenttokenResp, 'paymenttokenResppaymenttokenResp')
           const { status, error } = await window.NI.handlePaymentResponse(
@@ -219,20 +222,22 @@ const CheckoutDetails = () => {
           const urlencodedStatus = new URLSearchParams();
           urlencodedStatus.append("reference", paymenttokenResp?.data?.data?.orderReference);
           urlencodedStatus.append("booking_id", data.data.data.id);
+          setIs3ds(false)
           await createPaymentStatus(urlencodedStatus)
           console.log(status, error, 'statusstatus')
-          handleRedirect(data.data.data.id)
+          handleRedirect(data.data.data.id, payMethod, status)
           return
         }
         if (showCard && !payMethod) {
+          console.log(window.NI, 'window.NI')
           const response = await window.NI.generateSessionId();
-
           if (response?.session_id) {
-                        const urlencoded = new URLSearchParams();
+            const urlencoded = new URLSearchParams();
             urlencoded.append("session", response?.session_id);
             urlencoded.append("booking_id", data.data.data.id);
             urlencoded.append("amount", String(Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))))
-
+            
+            setIs3ds(true)
             const paymentResponse = await createPayment(urlencoded)
             console.log(paymentResponse, 'paymentResponsepaymentResponse')
             console.log(document.getElementById("3ds_iframe"), '3ds_iframe3ds_iframe')
@@ -242,6 +247,7 @@ const CheckoutDetails = () => {
                 mountId: '3ds_iframe',
               }
             );
+            setIs3ds(false)
             const urlencodedStatus = new URLSearchParams();
             urlencodedStatus.append("reference", paymentResponse?.data?.data?.orderReference);
             urlencodedStatus.append("booking_id", data.data.data.id);
@@ -250,42 +256,33 @@ const CheckoutDetails = () => {
             
             console.log(status, error, 'statusstatus')
             console.log(statusResponse, 'statusResponsestatusResponse')
+            handleRedirect(data.data.data.id, payMethod, status)
           }
 
-          handleRedirect(data.data.data.id)
         } else {
           toast.error("Invalid Session!");
           setLoading(false)
         }
-
-
-        // if (payMethod === 'Online Payment') {
-        //   const urlencoded = new URLSearchParams();
-        //   urlencoded.append("amount", String(grandTotal));
-        //   const resp = await createOrder(urlencoded)
-        //   if (resp?.error) {
-        //     toast.error("Please Try Again!");
-        //   } else {
-        //     dispatch(setBookingID(data.data.data.id));
-        //     dispatch(setReferenceNum(resp.data.data.reference));
-        //     router.push(resp?.data?.data?.payment_url);
-        //   }
-        // } else {
-        //   dispatch(setBookingID(data.data.data.id));
-        //   clearCheckout();
-        //   router.push("/thank-you");
-        // }
       }
     } catch (err) {
       console.log(err, 'errerr')
+      setLoading(false)
       toast.error("Please Try Again!");
     }
   };
 
-  const handleRedirect = (id: number) => {
+  const handleRedirect = (id: number, payMethod: string, status?: string) => {
     dispatch(setBookingID(id));
     clearCheckout()
-    window.location.href="/thank-you"
+    if(payMethod === 'Card on Delivery' || payMethod === 'Cash on Delivery'){
+      window.location.href="/thank-you"
+      return
+    }
+    if(status==='CAPTURED'){
+      window.location.href="/payment-successfull"
+    }else{
+      window.location.href="/payment-failed"
+    }
   }
 
   useEffect(() => {
@@ -302,7 +299,7 @@ const CheckoutDetails = () => {
 
   return (
     <>
-
+    {((isLoading || loading) && !is3ds) &&<Loader/>}
       <GoogleAnalytics />
       <TimeSlotDrawer
         slots={slots}
@@ -370,7 +367,7 @@ const CheckoutDetails = () => {
       />
       <CancellationModal open={openCancelModal} setOpen={setOpenCancelModal} />
       <div className="w-full flex flex-col items-center justify-center gap-5 px-5 md:px-0 pt-7 sm:pt-14 pb-20 mt-[69px] md:mt-[108px] sm:bg-gray-100">
-        <div id="3ds_iframe"></div>
+        {is3ds ? <div id="3ds_iframe" className="bg-white w-full md:w-[90%] lg:max-w-[1440px] mx-auto rounded-xl min-h-[100px] flex flex-col items-center justify-center pt-28"></div>:
         <div className="w-full md:w-[90%] lg:max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5 -mt-5">
           <div className="col-span-1 sm:col-span-2 lg:col-span-3 relative w-full flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
             <h1 className="w-full text-left text-xl flex font-bold sm:font-semibold mb-2.5 items-center justify-start">
@@ -764,7 +761,7 @@ const CheckoutDetails = () => {
             cardValidStatus={cardValidStatus}
             paymentMethods={paymentMethods}
           />
-        </div>
+        </div>}
       </div>
       <div className={cn("w-full fixed z-20 bottom-0 left-0 p-2.5 bg-white flex sm:hidden border-t",
         isMenuVisible && 'bottom-[68px]'

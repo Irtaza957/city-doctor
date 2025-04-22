@@ -102,22 +102,26 @@ const PaymentSidebar = ({
                     Order Summary
                 </h1>
                 {showCard &&
-                <p className="w-full text-left text-sm md:text-base flex font-semibold mb-2.5 items-center justify-start">
+                <p className="w-full text-left text-sm md:text-base flex font-semibold mt-2 mb-2.5 items-center justify-start">
                     Card Information
                 </p>}
                 <div id="mount-id" className={cn("w-full space-y-2.5 h-[300px] overflow-hidden mt-1", showCard ? 'block' : 'hidden')}></div>
                 {paymentMethods?.data?.length ? (
-                    <div className="md:-mt-1 w-full mb-6">
+                    <div className={cn(
+                        "w-full mb-6",
+                        !showCard ? 'mt-2.5' : 'mt-[-20px]'
+                        )}>
                         <div className="flex items-center justify-between w-full">
                             <h1 className="w-full text-sm lg:text-base text-left font-bold">
                                 Saved Cards
                             </h1>
+                            {!showCard &&
                             <button
                                 className="text-xs whitespace-nowrap text-[#006FAC]"
                                 onClick={() => setShowCard(!showCard)}
                             >
                                 + Add Card
-                            </button>
+                            </button>}
                         </div>
                         <div className="space-y-2 w-full mt-2">
                             {paymentMethods?.data?.map((item: any) => (
