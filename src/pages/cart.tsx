@@ -375,53 +375,51 @@ const Checkout = () => {
                   >
                     Proceed to Checkout
                   </div>
-                  <div>
-                    <div id="TabbyPromo"></div>
-                    <style jsx>{`
-                      body {
-                        font-family: "Segoe UI", Tahoma, Geneva, Verdana,
-                          sans-serif;
-                        padding: 40px;
-                        background-color: #f4f4f4;
-                        color: #333;
-                      }
+                  <div id="TabbyPromo" className="relative z-20"></div>
+                  <style jsx>{`
+                    body {
+                      font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+                        sans-serif;
+                      padding: 40px;
+                      background-color: #f4f4f4;
+                      color: #333;
+                    }
 
-                      .product-card {
-                        background: #fff;
-                        padding: 30px;
-                        max-width: 400px;
-                        margin: 0 auto;
-                        border-radius: 10px;
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                      }
+                    .product-card {
+                      background: #fff;
+                      padding: 30px;
+                      max-width: 400px;
+                      margin: 0 auto;
+                      border-radius: 10px;
+                      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                    }
 
-                      .product-title {
-                        font-size: 22px;
-                        margin-bottom: 10px;
-                      }
+                    .product-title {
+                      font-size: 22px;
+                      margin-bottom: 10px;
+                    }
 
-                      .price {
-                        font-size: 24px;
-                        font-weight: bold;
-                        color: #2b8f43;
-                        margin-bottom: 10px;
-                      }
+                    .price {
+                      font-size: 24px;
+                      font-weight: bold;
+                      color: #2b8f43;
+                      margin-bottom: 10px;
+                    }
 
-                      #TabbyPromo {
-                        font-size: 14px !important;
-                        background-color: #e8f5e9;
-                        padding: 10px;
-                        border-radius: 6px;
-                        color: #1b5e20 !important;
-                      }
-                    `}</style>
-                  </div>
+                    #TabbyPromo {
+                      font-size: 14px !important;
+                      background-color: #e8f5e9;
+                      padding: 10px;
+                      border-radius: 6px;
+                      color: #1b5e20 !important;
+                    }
+                  `}</style>
                 </div>
               </div>
             </div>
           </div>
         )}
-        <div className="hidden sm:flex w-full md:w-[90%] lg:max-w-[1440px] mx-auto flex-col items-center justify-center gap-5 sm:py-20 sm:!pt-[155px]">
+        <div className="hidden sm:flex w-full bg-red-500 md:w-[90%] lg:max-w-[1440px] mx-auto flex-col items-center justify-center gap-5 sm:py-20 sm:!pt-[155px]">
           <h1 className="w-full text-left text-xl font-bold px-5 md:px-0">
             {cart.length === 0 ? "Services You Might Like" : "Related Services"}
           </h1>

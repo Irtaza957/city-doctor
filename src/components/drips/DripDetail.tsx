@@ -162,6 +162,31 @@ const DripDetailPage = ({
       };
     }
   }, [data]);
+  
+  useEffect(() => {
+    if (data) {
+      // Load Tabby Promo script after the component mounts
+      const script = document.createElement("script");
+      script.src = "https://checkout.tabby.ai/tabby-promo.js";
+      script.async = true;
+      script.onload = () => {
+        new window.TabbyPromo({
+          selector: "#TabbyPromo2",
+          currency: "AED",
+          price: data?.price ? String(Math.round(Number(data?.price))) : "0",
+          installmentsCount: 4,
+          lang: "en",
+          source: "product",
+        });
+      };
+      document.body.appendChild(script);
+
+      // Clean up the script when the component is unmounted
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  }, [data]);
   return (
     <>
       <LoginModal open={openLogin} setOpen={setOpenLogin} />
@@ -730,7 +755,7 @@ const DripDetailPage = ({
                 </p>
               </div>
               <div className="mb-5 md:w-3/6 xl:w-3/6">
-                <div id="TabbyPromo"></div>
+                <div id="TabbyPromo2"></div>
                 <style jsx>{`
                   body {
                     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -760,7 +785,7 @@ const DripDetailPage = ({
                     margin-bottom: 10px;
                   }
 
-                  #TabbyPromo {
+                  #TabbyPromo2 {
                     font-size: 14px !important;
                     background-color: #e8f5e9;
                     padding: 10px;
