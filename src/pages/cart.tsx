@@ -24,7 +24,15 @@ import ChevronRightIcon from "@/assets/icons/ChevronRightIcon";
 import { useApplyPromoMutation } from "@/store/services/booking";
 import BestSellingCard from "@/components/cards/BestSellingCard";
 import { addToCart, removeFromCart, setCart, setPromo } from "@/store/global";
-import { calculateDiscount, calculateDiscountValue, calculateVAT, calculateWithoutVAT, cn, getSlug, imageBase } from "@/utils/helpers";
+import {
+  calculateDiscount,
+  calculateDiscountValue,
+  calculateVAT,
+  calculateWithoutVAT,
+  cn,
+  getSlug,
+  imageBase,
+} from "@/utils/helpers";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 import Footer from "@/components/Footer";
 
@@ -65,7 +73,9 @@ const Checkout = () => {
       if (item.quantity === 1) {
         dispatch(removeFromCart(item.id));
       } else {
-        const updatedCart = cart.map(i => i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i);
+        const updatedCart = cart.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i
+        );
         dispatch(setCart(updatedCart));
       }
     }
@@ -105,27 +115,60 @@ const Checkout = () => {
     }
   }, [promo]);
 
-  const getNavLink = (name: string, category_name: string='') => {
+  const getNavLink = (name: string, category_name: string = "") => {
     return `/related-services/${getSlug(category_name)}/${getSlug(name)}`;
   };
+
+  const getLink = (name: string) => {
+    return `/home/cart/${getSlug(name)}`;
+  };
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      // Load Tabby Promo script after the component mounts
+      const script = document.createElement("script");
+      script.src = "https://checkout.tabby.ai/tabby-promo.js";
+      script.async = true;
+      script.onload = () => {
+        new window.TabbyPromo({
+          selector: "#TabbyPromo",
+          currency: "AED",
+          price: Math.round(
+            calculateVAT(cart) +
+              (calculateWithoutVAT(cart) - calculateDiscountValue(cart))
+          ),
+          installmentsCount: 4,
+          lang: "en",
+          source: "product",
+        });
+      };
+      document.body.appendChild(script);
+
+      // Clean up the script when the component is unmounted
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  }, [cart]);
 
   return (
     <>
       <GoogleAnalytics />
       <LoginDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
       <LoginModal open={open} setOpen={setOpen} />
-      <div className={cn(
-        "w-full flex flex-col items-center justify-center sm:bg-gray-100 gap-5 mt-[50px] md:mt-[108px]",
-        cart.length === 0 ? 'mt-5': ''
-        )}>
+      <div
+        className={cn(
+          "w-full flex flex-col items-center justify-center sm:bg-gray-100 gap-5 mt-[50px] md:mt-[108px]",
+          cart.length === 0 ? "mt-5" : ""
+        )}
+      >
         {cart.length === 0 ? (
           <div className="w-full h-[calc(100vh-76px)] overflow-hidden flex flex-col items-center justify-center">
             <p className="w-full text-center text-2xl sm:text-[30px] font-bold mb-1">
               Your Cart is Empty!
             </p>
             <p className="w-[300px] md:w-[400px] text-center font-medium text-sm sm:text-base text-[#555555] mb-4">
-            Looks like you haven’t added anything yet.
-            Let’s get you started!
+              Looks like you haven’t added anything yet. Let’s get you started!
             </p>
             <Image src={EmptyCart} alt="empty-wishlist" className="size-44 " />
             <Link
@@ -151,14 +194,19 @@ const Checkout = () => {
                       key={idx}
                       className="w-full py-3 flex sm:hidden items-start justify-center border-b"
                     >
-                      <Image
-                        src={imageBase(item.thumbnail!)}
-                        alt="card"
-                        width={500}
-                        height={500}
-                        className="size-16 rounded-md object-cover"
-                      />
-                      <div className="w-full flex items-center justify-center">
+                      <Link href={getLink(item.name)}>
+                        <Image
+                          src={imageBase(item.thumbnail!)}
+                          alt="card"
+                          width={500}
+                          height={500}
+                          className="size-16 rounded-md object-cover"
+                        />
+                      </Link>
+                      <Link
+                        href={getLink(item.name)}
+                        className="w-full flex items-center justify-center"
+                      >
                         <div className="w-[70%] xs:w-[75%] flex flex-col items-center justify-center gap-1 pl-3">
                           <span className="w-full text-left text-sm font-semibold break-words">
                             {item.name}
@@ -180,7 +228,9 @@ const Checkout = () => {
                             >
                               <FaMinus className="size-full" />
                             </span>
-                            <span className="text-sm font-bold">{item.quantity}</span>
+                            <span className="text-sm font-bold">
+                              {item.quantity}
+                            </span>
                             <span
                               onClick={() => {
                                 add(item);
@@ -191,13 +241,16 @@ const Checkout = () => {
                             </span>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     </div>
                     <div
                       key={idx}
                       className="w-full hidden sm:flex items-center justify-around space-x-4 py-3 border-b"
                     >
-                      <div className="w-[50%] lg:w-[45%] flex items-center justify-start gap-4">
+                      <Link
+                        href={getLink(item.name)}
+                        className="w-[50%] lg:w-[45%] flex items-center justify-start gap-4"
+                      >
                         <Image
                           src={imageBase(item.thumbnail!)}
                           alt="card"
@@ -208,7 +261,7 @@ const Checkout = () => {
                         <span className="text-left text-sm font-semibold overflow-hidden truncate w-full md:w-[1300px]">
                           {item.name}
                         </span>
-                      </div>
+                      </Link>
                       <div className="w-full text-left text-sm">
                         Qty: {item.quantity}
                       </div>
@@ -253,7 +306,7 @@ const Checkout = () => {
                     className={cn(
                       `bg-transparent font-semibold`,
                       promo ? "text-[#FF2727]" : "text-primary",
-                      !promoCode?.length && 'text-[#AFAFAF]'
+                      !promoCode?.length && "text-[#AFAFAF]"
                     )}
                   >
                     {isLoading ? (
@@ -301,9 +354,13 @@ const Checkout = () => {
                       AED&nbsp;
                       {prices.discounted_total !== 0
                         ? new Intl.NumberFormat().format(
-                          prices.discounted_total
-                        )
-                        : Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))}
+                            prices.discounted_total
+                          )
+                        : Math.round(
+                            calculateVAT(cart) +
+                              (calculateWithoutVAT(cart) -
+                                calculateDiscountValue(cart))
+                          )}
                     </span>
                   </div>
                   <div
@@ -318,12 +375,53 @@ const Checkout = () => {
                   >
                     Proceed to Checkout
                   </div>
+                  <div>
+                    <div id="TabbyPromo"></div>
+                    <style jsx>{`
+                      body {
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+                          sans-serif;
+                        padding: 40px;
+                        background-color: #f4f4f4;
+                        color: #333;
+                      }
+
+                      .product-card {
+                        background: #fff;
+                        padding: 30px;
+                        max-width: 400px;
+                        margin: 0 auto;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                      }
+
+                      .product-title {
+                        font-size: 22px;
+                        margin-bottom: 10px;
+                      }
+
+                      .price {
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: #2b8f43;
+                        margin-bottom: 10px;
+                      }
+
+                      #TabbyPromo {
+                        font-size: 14px !important;
+                        background-color: #e8f5e9;
+                        padding: 10px;
+                        border-radius: 6px;
+                        color: #1b5e20 !important;
+                      }
+                    `}</style>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
-        <div className="hidden sm:flex w-full md:w-[90%] lg:max-w-[1440px] mx-auto flex-col items-center justify-center gap-5 sm:py-20">
+        <div className="hidden sm:flex w-full md:w-[90%] lg:max-w-[1440px] mx-auto flex-col items-center justify-center gap-5 sm:py-20 sm:!pt-[155px]">
           <h1 className="w-full text-left text-xl font-bold px-5 md:px-0">
             {cart.length === 0 ? "Services You Might Like" : "Related Services"}
           </h1>
@@ -350,7 +448,13 @@ const Checkout = () => {
                       key={idx}
                       className={`${startSlide && i === 0 ? "ml-5" : ""}`}
                     >
-                      <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
+                      <BestSellingCard
+                        drip={drip}
+                        navLink={getNavLink(
+                          drip.name || "",
+                          drip?.category_name
+                        )}
+                      />
                     </SwiperSlide>
                   ))
                 )}
@@ -385,7 +489,13 @@ const Checkout = () => {
                 .map((drip, idx) =>
                   drip.section_data.map((drip) => (
                     <SwiperSlide key={idx}>
-                      <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
+                      <BestSellingCard
+                        drip={drip}
+                        navLink={getNavLink(
+                          drip.name || "",
+                          drip?.category_name
+                        )}
+                      />
                     </SwiperSlide>
                   ))
                 )}
@@ -420,7 +530,13 @@ const Checkout = () => {
                 .map((drip, idx) =>
                   drip.section_data.map((drip) => (
                     <SwiperSlide key={idx}>
-                      <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
+                      <BestSellingCard
+                        drip={drip}
+                        navLink={getNavLink(
+                          drip.name || "",
+                          drip?.category_name
+                        )}
+                      />
                     </SwiperSlide>
                   ))
                 )}
@@ -455,7 +571,13 @@ const Checkout = () => {
                 .map((drip, idx) =>
                   drip.section_data.map((drip) => (
                     <SwiperSlide key={idx}>
-                      <BestSellingCard drip={drip} navLink={getNavLink(drip.name || '', drip?.category_name)} />
+                      <BestSellingCard
+                        drip={drip}
+                        navLink={getNavLink(
+                          drip.name || "",
+                          drip?.category_name
+                        )}
+                      />
                     </SwiperSlide>
                   ))
                 )}

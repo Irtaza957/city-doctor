@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  FaStar,
-  FaPlus,
-  FaMinus,
-  FaRegClock,
-} from "react-icons/fa6";
+import { FaStar, FaPlus, FaMinus, FaRegClock } from "react-icons/fa6";
 import dayjs from "dayjs";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -15,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-
+import tabbyCheckout from "@/assets/icons/tabbyCheckout.svg";
 import "swiper/css";
 import { RootState } from "@/store";
 import { cn, imageBase } from "@/utils/helpers";
@@ -34,7 +29,13 @@ import SizeIcon from "@/assets/icons/size.svg";
 import avatar from "@/assets/icons/avatar.svg";
 import { usePathname } from "next/navigation";
 
-const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData?: () => void }) => {
+const DripDetailPage = ({
+  data,
+  getData,
+}: {
+  data: DRIP_DETAIL_RESPONSE;
+  getData?: () => void;
+}) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [wishlist, setWishlist] = useState(false);
@@ -42,10 +43,18 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
   const [startSlide, setStartSlide] = useState(true);
   const [addToWishlist] = useAddToWishlistMutation();
   const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
-  const [tab, setTab] = useState<string>(data?.sections?.[0]?.name);
-  const { user, cart, isMenuVisible } = useSelector((state: RootState) => state.global);
-  const [selectedBundle, setSelectedBundle] = useState<number | null>(null)
-  const pathname=usePathname()
+  const [tab, setTab] = useState<string>("");
+  const { user, cart, isMenuVisible } = useSelector(
+    (state: RootState) => state.global
+  );
+  const [selectedBundle, setSelectedBundle] = useState<number | null>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (data?.sections?.length) {
+      setTab(data?.sections?.[0]?.name);
+    }
+  }, [data]);
 
   const handleSidebar = () => {
     dispatch(toggleSidebar());
@@ -94,7 +103,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
         toast.error(response.error.data.error);
       } else {
         if (getData) {
-          await getData()
+          await getData();
         }
         if (data?.wishlist_id) {
           toast.success("Removed from Wishlist!");
@@ -128,7 +137,31 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
       }
     }
   }, [data]);
-  console.log(data, 'datadata')
+
+  useEffect(() => {
+    if (data) {
+      // Load Tabby Promo script after the component mounts
+      const script = document.createElement("script");
+      script.src = "https://checkout.tabby.ai/tabby-promo.js";
+      script.async = true;
+      script.onload = () => {
+        new window.TabbyPromo({
+          selector: "#TabbyPromo",
+          currency: "AED",
+          price: data?.price ? String(Math.round(Number(data?.price))) : "0",
+          installmentsCount: 4,
+          lang: "en",
+          source: "product",
+        });
+      };
+      document.body.appendChild(script);
+
+      // Clean up the script when the component is unmounted
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  }, [data]);
   return (
     <>
       <LoginModal open={openLogin} setOpen={setOpenLogin} />
@@ -146,7 +179,9 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
         />
         <div className="w-full flex flex-col items-center justify-center space-y-3 mt-5">
           <div className="w-full flex items-center justify-between px-5">
-            <h1 className="text-left font-bold text-xl">{data?.service_name}</h1>
+            <h1 className="text-left font-bold text-xl">
+              {data?.service_name}
+            </h1>
             <div className="flex items-center justify-end space-x-4">
               <IoShareSocialOutline className="size-6" />
               <button
@@ -159,9 +194,11 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                   }
                 }}
               >
-                {data?.wishlist_id ?
-                  <HeartIcon fillColor="#38ADA0" className="text-secondary" /> :
-                  <HeartIcon className="size-6" />}
+                {data?.wishlist_id ? (
+                  <HeartIcon fillColor="#38ADA0" className="text-secondary" />
+                ) : (
+                  <HeartIcon className="size-6" />
+                )}
               </button>
             </div>
           </div>
@@ -169,12 +206,14 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
             {data?.description}
           </p>
           <div className="w-full flex items-center justify-start space-x-5 px-5">
-            {data?.size &&
+            {data?.size && (
               <div className="flex items-center justify-center space-x-1.5">
                 <Image src={SizeIcon} alt="size" className="w-4 h-4" />
-                <span className="text-[#535763] text-sm sm:text-base">{data?.size}ml</span>
+                <span className="text-[#535763] text-sm sm:text-base">
+                  {data?.size}ml
+                </span>
               </div>
-            }
+            )}
             <div className="flex items-center justify-center space-x-1.5">
               <FaRegClock className="w-4 h-4 text-primary" />
               <span className="text-[#535763] text-sm sm:text-base">
@@ -182,22 +221,34 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
               </span>
             </div>
           </div>
-          <p className="w-full text-[18px] px-5 text-left font-bold text-xl">
-            AED {data?.price ? Math.round(Number(data?.price)) : '-'}
-          </p>
-          {data?.bundles?.length ?
+          <div className="w-full flex items-center gap-2">
+            <p className="text-[18px] px-5 text-left font-bold text-xl">
+              AED {data?.price ? Math.round(Number(data?.price)) : "-"}
+            </p>
+            <Image
+              src={tabbyCheckout}
+              alt="Tabby Checkout"
+              className="w-[45px] h-5"
+            />
+          </div>
+          {data?.bundles?.length ? (
             <div className="space-y-2.5 w-full px-5">
               {data?.bundles?.map((item, index) => (
-                <div key={index} onClick={() => setSelectedBundle(index)} className="flex items-center justify-between cursor-pointer h-[54px] px-4 bg-[#F7F7F7] border border-[#DEDEDE] rounded-[10px] w-full">
+                <div
+                  key={index}
+                  onClick={() => setSelectedBundle(index)}
+                  className="flex items-center justify-between cursor-pointer h-[54px] px-4 bg-[#F7F7F7] border border-[#DEDEDE] rounded-[10px] w-full"
+                >
                   <div className="flex items-center gap-4 w-full">
-                    {selectedBundle !== index ?
-                      <div className="border border-[#DEDEDE] rounded-full h-[22px] w-[22px]" /> :
+                    {selectedBundle !== index ? (
+                      <div className="border border-[#DEDEDE] rounded-full h-[22px] w-[22px]" />
+                    ) : (
                       <div
                         className={`rounded-full border border-primary p-[3px] size-[22px] flex`}
                       >
                         <div className="rounded-full bg-primary w-full h-full" />
                       </div>
-                    }
+                    )}
                     <p className="text-black text-sm">{item?.bundle}</p>
                   </div>
                   <div className="flex items-center gap-4">
@@ -205,21 +256,75 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                       AED 0.00
                     </span>
                     <span className="w-full text-left text-xs sm:text-sm sm:font-semibold xl:font-bold whitespace-nowrap">
-                      AED {Math.round(Number(item.price_without_vat || item.price_with_vat))}
+                      AED{" "}
+                      {Math.round(
+                        Number(item.price_without_vat || item.price_with_vat)
+                      )}
                     </span>
                   </div>
                 </div>
               ))}
-            </div> : null}
-          {data?.sections?.length ?
+            </div>
+          ) : null}
+          <div className="px-5">
+            <div id="TabbyPromo"></div>
+          </div>
+          <style jsx>{`
+            body {
+              font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+              padding: 40px;
+              background-color: #f4f4f4;
+              color: #333;
+            }
+
+            .product-card {
+              background: #fff;
+              padding: 30px;
+              max-width: 400px;
+              margin: 0 auto;
+              border-radius: 10px;
+              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .product-title {
+              font-size: 22px;
+              margin-bottom: 10px;
+            }
+
+            .price {
+              font-size: 24px;
+              font-weight: bold;
+              color: #2b8f43;
+              margin-bottom: 10px;
+            }
+
+            #TabbyPromo {
+              font-size: 14px !important;
+              background-color: #e8f5e9;
+              padding: 10px;
+              border-radius: 6px;
+              color: #1b5e20 !important;
+            }
+          `}</style>
+          {data?.sections?.length ? (
             <div className="flex flex-col gap-1.5 !mb-2.5 !mt-5 pl-5 pr-10">
-              <p className="text-black text-left text-lg md:text-xl font-medium">{data?.sections?.[0]?.name}</p>
-              <p className="text-[#535763] text-sm font-medium" dangerouslySetInnerHTML={{ __html: he.decode(data?.sections?.[0]?.description || '') }} />
-            </div> : null}
+              <p className="text-black text-left text-lg md:text-xl font-medium">
+                {data?.sections?.[0]?.name}
+              </p>
+              <p
+                className="text-[#535763] text-sm font-medium"
+                dangerouslySetInnerHTML={{
+                  __html: he.decode(data?.sections?.[0]?.description || ""),
+                }}
+              />
+            </div>
+          ) : null}
           <div className="w-full flex flex-col items-center justify-center space-y-2.5 px-5">
-            {data?.sections?.filter((_, index) => index !== 0)?.map((section, idx) => (
-              <Accordion section={section} key={idx} index={idx} />
-            ))}
+            {data?.sections
+              ?.filter((_, index) => index !== 0)
+              ?.map((section, idx) => (
+                <Accordion section={section} key={idx} index={idx} />
+              ))}
             {/* <Accordion section={{ name: 'Service Ratings & Reviews' }} >
               <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 mb-3">
                 <h1 className="w-full text-left text-lg md:text-xl font-bold">
@@ -302,7 +407,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
               ))}
             </Accordion> */}
           </div>
-          {data?.reviews?.length ?
+          {data?.reviews?.length ? (
             <div className="w-full mt-2 !mb-4">
               <div className="w-full flex flex-col items-center justify-center space-y-3 px-5 my-3">
                 <h1 className="w-full text-left text-lg md:text-xl font-medium">
@@ -364,7 +469,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                       key={idx}
                       className={cn(
                         "flex flex-col items-center justify-center space-x-5 px-5 bg-[#FAFAFA] rounded-md gap-3 py-3.5 ml-4",
-                        idx === data?.reviews?.length - 1 ? 'mr-4' : '',
+                        idx === data?.reviews?.length - 1 ? "mr-4" : ""
                       )}
                     >
                       <div className="w-full flex items-center justify-start space-x-4">
@@ -377,11 +482,18 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                         />
                         <div className="w-full flex flex-col items-center justify-start space-y-1">
                           <div className="w-full flex items-center justify-between">
-                            <p className="text-left md:text-xl font-medium">{review.customer}</p>
+                            <p className="text-left md:text-xl font-medium">
+                              {review.customer}
+                            </p>
                             <div className="flex items-center w-[35%] justify-center space-x-1.5">
-                              {[...Array(parseInt(review.review || "0"))].map((_, idx) => (
-                                <FaStar key={idx} className="text-accent size-4" />
-                              ))}
+                              {[...Array(parseInt(review.review || "0"))].map(
+                                (_, idx) => (
+                                  <FaStar
+                                    key={idx}
+                                    className="text-accent size-4"
+                                  />
+                                )
+                              )}
                             </div>
                           </div>
                           {/* <span className="w-full text-left text-xs text-gray-400">
@@ -396,7 +508,8 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                   </SwiperSlide>
                 ))}
               </Swiper>
-            </div> : null}
+            </div>
+          ) : null}
           {/* {data?.reviews?.map((review, idx) => (
             <div
               key={idx}
@@ -438,7 +551,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
               className="rounded-lg w-full"
             />
           </div> */}
-          {data?.similar_services?.length ?
+          {data?.similar_services?.length ? (
             <div className="w-full mt-5 lg:mt-10">
               <h1 className="w-full text-left text-xl font-bold mb-5 px-5">
                 Customers Also Viewed
@@ -467,8 +580,9 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                   ))}
                 </Swiper>
               </div>
-            </div> : null}
-          {data?.faqs?.length ?
+            </div>
+          ) : null}
+          {data?.faqs?.length ? (
             <div className="w-full flex flex-col items-center justify-center space-y-5 px-5 pb-36">
               <h1 className="w-full text-left text-xl font-medium">FAQs</h1>
               <div className="w-full flex flex-col items-center justify-center space-y-2.5">
@@ -476,17 +590,22 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                   <Accordion section={section} key={idx} />
                 ))}
               </div>
-            </div> : null}
-          <div className={cn(
-            `fixed w-full bottom-0 z-20 left-0 p-3 bg-white border-t`,
-            cart?.length > 0 && 'pb-[85px]',
-            isMenuVisible && 'bottom-[68px]',
-            pathname?.split('/')?.length===4 && 'pb-[10px]'
-          )}>
+            </div>
+          ) : null}
+          <div
+            className={cn(
+              `fixed w-full bottom-0 z-20 left-0 p-3 bg-white border-t`,
+              cart?.length > 0 && "pb-[85px]",
+              isMenuVisible && "bottom-[68px]",
+              pathname?.split("/")?.length === 4 && "pb-[10px]"
+            )}
+          >
             {quantity === 0 ? (
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[18px] font-bold">AED {data?.price ? Math.round(Number(data?.price)) : '-'}</p>
+                  <p className="text-[18px] font-bold">
+                    AED {data?.price ? Math.round(Number(data?.price)) : "-"}
+                  </p>
                   <div className="flex items-center justify-center space-x-2.5">
                     <FaRegClock className="w-4 h-4 text-primary" />
                     <span className="text-[#A3A3A3] font-medium text-sm">
@@ -504,7 +623,9 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
             ) : (
               <div className="flex items-center justify-between w-full">
                 <div className="w-full">
-                  <p className="text-[18px] font-bold">AED {data?.price ? Math.round(Number(data?.price)) : '-'}</p>
+                  <p className="text-[18px] font-bold">
+                    AED {data?.price ? Math.round(Number(data?.price)) : "-"}
+                  </p>
                   <div className="flex items-center justify space-x-2.5">
                     <FaRegClock className="w-4 h-4 text-primary" />
                     <span className="text-[#A3A3A3] font-medium text-sm">
@@ -542,135 +663,182 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
               className="bg-top bg-cover w-full h-[375px] md:h-[500px] rounded-lg"
             />
           </div>
-          <div className="w-3/5 xl:w-2/3 flex flex-col items-start justify-start gap-y-1.5">
-            <h1 className="w-full text-left font-bold text-2xl xl:text-4xl">
-              {data?.service_name}
-            </h1>
-            <div className="w-full flex items-center justify-start gap-1">
-              {[...Array(parseInt(data?.rating || "0"))].map((_, idx) => (
-                <FaStar key={idx} className="size-4 text-accent" />
-              ))}
-              {[...Array(5 - parseInt(data?.rating || "0"))].map((_, idx) => (
-                <FaStar key={idx} className="size-4 text-gray-300" />
-              ))}
-            </div>
-            <div className="w-full flex items-center justify-start space-x-10 mt-1.5">
-              {data?.size &&
-                <div className="flex items-center justify-center space-x-2.5">
-                  <DropletIcon
-                    fillColor="#006FAC"
-                    className="w-4 h-4 text-transparent"
-                  />
-                  <span className="text-[#A3A3A3] font-medium text-sm">
-                    {data?.size}ml
-                  </span>
-                </div>}
-              <div className="flex items-center justify-center space-x-2.5">
-                <FaRegClock className="w-4 h-4 text-primary" />
-                <span className="text-[#A3A3A3] font-medium text-sm">
-                  {data?.response_time}
-                </span>
+          <div className="w-3/5 xl:w-2/3 flex flex-col items-start justify-between h-full gap-y-1.5 py-4">
+            <div className="w-full">
+              <h1 className="w-full text-left font-bold text-2xl xl:text-4xl">
+                {data?.service_name}
+              </h1>
+              <div className="w-full flex items-center justify-start gap-1">
+                {[...Array(parseInt(data?.rating || "0"))].map((_, idx) => (
+                  <FaStar key={idx} className="size-4 text-accent" />
+                ))}
+                {[...Array(5 - parseInt(data?.rating || "0"))].map((_, idx) => (
+                  <FaStar key={idx} className="size-4 text-gray-300" />
+                ))}
               </div>
-            </div>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: he.decode(data?.description || ""),
-              }}
-              className="w-full text-left text-[#535763] text-sm font-medium my-6"
-            />
-            <div className="w-full flex items-center justify-start space-x-10 mb-4">
-              <p className="text-left text-lg text-[#A3A3A3] font-medium line-through">
-                AED&nbsp;
-                {isNaN(
-                  Math.round(
-                    priceCalculator(
-                      data?.discount_type,
-                      data?.price,
-                      data?.discount_value
-                    )
-                  )
-                )
-                  ? "0"
-                  : Math.round(
-                    priceCalculator(
-                      data?.discount_type,
-                      data?.price,
-                      data?.discount_value
-                    )
-                  )}
-                .00
-              </p>
-              <p className="text-left text-xl font-semibold">
-                AED {data?.price ? Math.round(Number(data?.price)) : '-'}
-              </p>
-            </div>
-            <div className="w-full md:w-3/6 xl:w-3/6 gap-2.5 flex items-center justify-center">
-              <div className="w-full flex-1">
-                {quantity === 0 ? (
-                  <button
-                    onClick={() => {
-                      handleIncrement();
-                      handleSidebar();
-                    }}
-                    className="w-full h-[46px] rounded-md bg-primary border border-primary text-white font-medium"
-                  >
-                    Add to Cart
-                  </button>
-                ) : (
-                  <div className="w-full flex items-center justify-start gap-5">
-                    <span
-                      onClick={handleDecrement}
-                      className="size-[46px] px-2 rounded-lg text-primary border border-primary hover:bg-primary hover:text-white flex items-center justify-center cursor-pointer"
-                    >
-                      <FaMinus />
-                    </span>
-                    <span className="text-lg font-bold">{quantity}</span>
-                    <span
-                      onClick={handleIncrement}
-                      className="size-[46px] px-2 rounded-lg text-primary border border-primary hover:bg-primary hover:text-white flex items-center justify-center cursor-pointer"
-                    >
-                      <FaPlus />
+              <div className="w-full flex items-center justify-start space-x-10 mt-1.5">
+                {data?.size && (
+                  <div className="flex items-center justify-center space-x-2.5">
+                    <DropletIcon
+                      fillColor="#006FAC"
+                      className="w-4 h-4 text-transparent"
+                    />
+                    <span className="text-[#A3A3A3] font-medium text-sm">
+                      {data?.size}ml
                     </span>
                   </div>
                 )}
+                <div className="flex items-center justify-center space-x-2.5">
+                  <FaRegClock className="w-4 h-4 text-primary" />
+                  <span className="text-[#A3A3A3] font-medium text-sm">
+                    {data?.response_time}
+                  </span>
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  if (user) {
-                    like();
-                  } else {
-                    setOpenLogin(true);
-                  }
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: he.decode(data?.description || ""),
                 }}
-                className="bg-[#F5F5F5] rounded-lg flex items-center justify-center size-[46px] p-2.5"
-              >
-                <HeartIcon
-                  fillColor={wishlist ? "#006FAC" : "transparent"}
-                  className={`size-full ${!wishlist ? "text-primary" : "text-transparent"
+                className="w-full text-left text-[#535763] text-sm font-medium my-6"
+              />
+            </div>
+            <div className="w-full">
+              <div className="w-full flex items-center justify-start space-x-10 mb-4">
+                <p className="text-left text-lg text-[#A3A3A3] font-medium line-through">
+                  AED&nbsp;
+                  {isNaN(
+                    Math.round(
+                      priceCalculator(
+                        data?.discount_type,
+                        data?.price,
+                        data?.discount_value
+                      )
+                    )
+                  )
+                    ? "0"
+                    : Math.round(
+                        priceCalculator(
+                          data?.discount_type,
+                          data?.price,
+                          data?.discount_value
+                        )
+                      )}
+                  .00
+                </p>
+                <p className="text-left text-xl font-semibold">
+                  AED {data?.price ? Math.round(Number(data?.price)) : "-"}
+                </p>
+              </div>
+              <div className="mb-5 md:w-3/6 xl:w-3/6">
+                <div id="TabbyPromo"></div>
+                <style jsx>{`
+                  body {
+                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                    padding: 40px;
+                    background-color: #f4f4f4;
+                    color: #333;
+                  }
+
+                  .product-card {
+                    background: #fff;
+                    padding: 30px;
+                    max-width: 400px;
+                    margin: 0 auto;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                  }
+
+                  .product-title {
+                    font-size: 22px;
+                    margin-bottom: 10px;
+                  }
+
+                  .price {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #2b8f43;
+                    margin-bottom: 10px;
+                  }
+
+                  #TabbyPromo {
+                    font-size: 14px !important;
+                    background-color: #e8f5e9;
+                    padding: 10px;
+                    border-radius: 6px;
+                    color: #1b5e20 !important;
+                  }
+                `}</style>
+              </div>
+              <div className="w-full md:w-3/6 xl:w-3/6 gap-2.5 flex items-center justify-center">
+                <div className="w-full flex-1">
+                  {quantity === 0 ? (
+                    <button
+                      onClick={() => {
+                        handleIncrement();
+                        handleSidebar();
+                      }}
+                      className="w-full h-[46px] rounded-md bg-primary border border-primary text-white font-medium"
+                    >
+                      Add to Cart
+                    </button>
+                  ) : (
+                    <div className="w-full flex items-center justify-start gap-5">
+                      <span
+                        onClick={handleDecrement}
+                        className="size-[46px] px-2 rounded-lg text-primary border border-primary hover:bg-primary hover:text-white flex items-center justify-center cursor-pointer"
+                      >
+                        <FaMinus />
+                      </span>
+                      <span className="text-lg font-bold">{quantity}</span>
+                      <span
+                        onClick={handleIncrement}
+                        className="size-[46px] px-2 rounded-lg text-primary border border-primary hover:bg-primary hover:text-white flex items-center justify-center cursor-pointer"
+                      >
+                        <FaPlus />
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (user) {
+                      like();
+                    } else {
+                      setOpenLogin(true);
+                    }
+                  }}
+                  className="bg-[#F5F5F5] rounded-lg flex items-center justify-center size-[46px] p-2.5"
+                >
+                  <HeartIcon
+                    fillColor={wishlist ? "#006FAC" : "transparent"}
+                    className={`size-full ${
+                      !wishlist ? "text-primary" : "text-transparent"
                     }`}
-                />
-              </button>
-              <button
-                type="button"
-                className="bg-[#F5F5F5] rounded-lg flex items-center justify-center size-[46px] p-2.5"
-              >
-                <IoShareSocialOutline className="size-full text-primary" />
-              </button>
+                  />
+                </button>
+                <button
+                  type="button"
+                  className="bg-[#F5F5F5] rounded-lg flex items-center justify-center size-[46px] p-2.5"
+                >
+                  <IoShareSocialOutline className="size-full text-primary" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        {(data?.sections?.length || data?.rating) ?
+        {data?.sections?.length || data?.rating ? (
           <div className="w-full flex flex-col items-center justify-center mt-10 space-y-5">
             <div className="w-full flex space-x-2.5 bg-[#F5F5F5] p-4 rounded-lg">
               {data?.sections?.map((section, idx) => (
                 <p
                   key={idx}
                   onClick={() => setTab(section.name)}
-                  className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === section.name
-                    ? "bg-primary text-white"
-                    : "bg-[#DDDDDD] text-[#555555]"
-                    }`}
+                  className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${
+                    tab === section.name
+                      ? "bg-primary text-white"
+                      : "bg-[#DDDDDD] text-[#555555]"
+                  }`}
                 >
                   {section.name}
                 </p>
@@ -678,10 +846,11 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
               {/* {data?.rating && */}
               <p
                 onClick={() => setTab("Reviews")}
-                className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${tab === "Reviews"
-                  ? "bg-primary text-white"
-                  : "bg-[#DDDDDD] text-[#555555]"
-                  }`}
+                className={`text-center px-9 py-2.5 cursor-pointer rounded-full font-semibold text-xs md:text-sm ${
+                  tab === "Reviews"
+                    ? "bg-primary text-white"
+                    : "bg-[#DDDDDD] text-[#555555]"
+                }`}
               >
                 Reviews
               </p>
@@ -697,7 +866,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                   }}
                 />
               ))}
-            {tab === 'Reviews' &&
+            {tab === "Reviews" && (
               <div className="w-full grid grid-cols-2 gap-5 px-4">
                 <h1 className="col-span-2 w-full text-left text-xl font-bold">
                   Service Ratings & Reviews
@@ -705,18 +874,25 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                 <div className="col-span-1 w-full grid grid-cols-2 gap-2.5 divide-x divide-gray-400">
                   <div className="col-span-1 w-full flex flex-col items-center justify-center space-y-2.5">
                     <p className="w-full text-left text-2xl font-bold">
-                      {data?.rating || '0'}
+                      {data?.rating || "0"}
                       <span className="text-[#67767E] text-lg font-medium">
                         &nbsp;/ 5.0
                       </span>
                     </p>
                     <div className="w-full flex items-center justify-start gap-1.5">
-                      {[...Array(parseInt(data?.rating || '0'))].map((id, idx) => (
-                        <FaStar key={idx} className="w-6 h-6 text-accent" />
-                      ))}
-                      {[...Array(5 - parseInt(data?.rating || '0'))].map((id, idx) => (
-                        <FaStar key={idx} className="w-6 h-6 text-[#DDDDDD]" />
-                      ))}
+                      {[...Array(parseInt(data?.rating || "0"))].map(
+                        (id, idx) => (
+                          <FaStar key={idx} className="w-6 h-6 text-accent" />
+                        )
+                      )}
+                      {[...Array(5 - parseInt(data?.rating || "0"))].map(
+                        (id, idx) => (
+                          <FaStar
+                            key={idx}
+                            className="w-6 h-6 text-[#DDDDDD]"
+                          />
+                        )
+                      )}
                     </div>
                     <p className="w-full text-left text-2xl font-bold">
                       {data?.total_reviews}&nbsp;
@@ -727,9 +903,14 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                   </div>
                   <div className="col-span-1 w-full flex flex-col pl-2.5">
                     {[...Array(5)].map((_, idx) => (
-                      <div key={idx} className="w-full grid grid-cols-12 gap-x-2">
+                      <div
+                        key={idx}
+                        className="w-full grid grid-cols-12 gap-x-2"
+                      >
                         <div className="col-span-1 w-full flex items-center justify-center">
-                          <span className="font-extrabold pt-0.5">{5 - idx}</span>
+                          <span className="font-extrabold pt-0.5">
+                            {5 - idx}
+                          </span>
                         </div>
                         <div className="col-span-2 w-full flex items-center justify-center">
                           <FaStar className="text-amber-500 size-4" />
@@ -762,18 +943,22 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                           <div className="w-full flex items-center justify-start space-x-10">
                             <p className="font-bold">{review.customer}</p>
                             <div className="flex items-center justify-center gap-0.5">
-                              {[...Array(parseInt(review?.review || "0"))].map((id, idx) => (
-                                <FaStar key={idx} className="text-accent" />
-                              ))}
-                              {[...Array(5 - parseInt(review?.review || "0"))].map(
+                              {[...Array(parseInt(review?.review || "0"))].map(
                                 (id, idx) => (
-                                  <FaStar key={idx} className="text-gray-300" />
+                                  <FaStar key={idx} className="text-accent" />
                                 )
                               )}
+                              {[
+                                ...Array(5 - parseInt(review?.review || "0")),
+                              ].map((id, idx) => (
+                                <FaStar key={idx} className="text-gray-300" />
+                              ))}
                             </div>
                           </div>
                           <span className="w-full text-left text-xs text-gray-400">
-                            {dayjs(review?.created_at).format("ddd DD MMM, YYYY")}
+                            {dayjs(review?.created_at).format(
+                              "ddd DD MMM, YYYY"
+                            )}
                           </span>
                         </div>
                       </div>
@@ -783,8 +968,10 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                     </div>
                   ))}
                 </div>
-              </div>}
-          </div> : null}
+              </div>
+            )}
+          </div>
+        ) : null}
         {/* <Image
           src={`${imageBase(data?.cover_image)}`}
           alt="cover-image"
@@ -919,7 +1106,7 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
             </div>
           </div>
         )}
-        {data?.faqs?.length ?
+        {data?.faqs?.length ? (
           <div className="w-full flex flex-col items-center space-y-5 mt-5 lg:mt-10">
             <h1 className="col-span-2 w-full text-left text-xl font-bold">
               FAQs
@@ -929,7 +1116,8 @@ const DripDetailPage = ({ data, getData }: { data: DRIP_DETAIL_RESPONSE, getData
                 <Accordion section={section} key={idx} />
               ))}
             </div>
-          </div> : null}
+          </div>
+        ) : null}
       </div>
     </>
   );

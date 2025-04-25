@@ -2,7 +2,12 @@ import { RootState } from "@/store";
 import LoginModal from "./modals/LoginModal";
 import EmptyCart from "@/assets/icons/empty-cart.svg";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-import { addToCart, toggleSidebar, removeFromCart, setCart } from "@/store/global";
+import {
+  addToCart,
+  toggleSidebar,
+  removeFromCart,
+  setCart,
+} from "@/store/global";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -10,7 +15,7 @@ import { useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { calculateVAT, imageBase } from "@/utils/helpers";
+import { calculateVAT, getSlug, imageBase } from "@/utils/helpers";
 import { calculateDiscountValue, calculateWithoutVAT } from "@/utils/helpers";
 
 const CartBar = () => {
@@ -39,10 +44,12 @@ const CartBar = () => {
 
   const remove = (item: CART) => {
     if (item) {
-      if(item.quantity === 1){
+      if (item.quantity === 1) {
         dispatch(removeFromCart(item.id));
-      }else{
-        const updatedCart = cart.map(i => i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i);
+      } else {
+        const updatedCart = cart.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i
+        );
         dispatch(setCart(updatedCart));
       }
     }
@@ -56,17 +63,22 @@ const CartBar = () => {
 
   useOnClickOutside(cartRef, closeBar);
 
+  const getNavLink = (name: string) => {
+    return `/home/cart/${getSlug(name)}`;
+  };
   return (
     <>
       <LoginModal open={open} setOpen={setOpen} />
       <div
-        className={`w-full h-full transition-[width] fixed top-0 left-0 z-50 bg-black/30 ${!sidebarToggle && "hidden"
-          }`}
+        className={`w-full h-full transition-[width] fixed top-0 left-0 z-50 bg-black/30 ${
+          !sidebarToggle && "hidden"
+        }`}
       />
       <div
         ref={cartRef}
-        className={`${sidebarToggle ? "w-[350px] xl:w-[400px]" : "w-0"
-          } transition-all duration-150 ease-linear h-full overflow-auto custom-scrollbar fixed top-0 right-0 z-50 flex flex-col items-start justify-start bg-white shadow-2xl`}
+        className={`${
+          sidebarToggle ? "w-[350px] xl:w-[400px]" : "w-0"
+        } transition-all duration-150 ease-linear h-full overflow-auto custom-scrollbar fixed top-0 right-0 z-50 flex flex-col items-start justify-start bg-white shadow-2xl`}
       >
         <div className="w-full flex items-center justify-center bg-primary text-white py-5 px-5">
           <h1 className="w-full text-left text-xl font-semibold">
@@ -100,14 +112,19 @@ const CartBar = () => {
                 key={idx}
                 className="w-full flex items-center justify-between space-x-2 py-4 border-b border-[#DEDEDE]"
               >
-                <Image
-                  src={imageBase(item.thumbnail!)}
-                  alt="card"
-                  width={500}
-                  height={500}
-                  className="size-14 rounded-full object-cover"
-                />
-                <div className="flex w-6/12 flex-col items-center justify-center space-y-0.5">
+                <Link href={getNavLink(item.name || "")}>
+                  <Image
+                    src={imageBase(item.thumbnail!)}
+                    alt="card"
+                    width={500}
+                    height={500}
+                    className="size-14 rounded-full object-cover"
+                  />
+                </Link>
+                <Link
+                  href={getNavLink(item.name || "")}
+                  className="flex w-6/12 flex-col items-center justify-center space-y-0.5"
+                >
                   <span className="w-full text-left text-sm font-semibold overflow-hidden truncate">
                     {item.name}
                   </span>
@@ -117,7 +134,7 @@ const CartBar = () => {
                   <span className="w-full text-left text-xs text-[#555555] font-medium">
                     AED {item.price}
                   </span>
-                </div>
+                </Link>
                 <div className="w-3/12 h-full flex items-center justify-end space-x-2.5 cursor-pointer">
                   <button
                     type="button"
@@ -164,7 +181,10 @@ const CartBar = () => {
               <span>Grand Total</span>
               <span>
                 AED&nbsp;
-                {Math.round(calculateVAT(cart) + (calculateWithoutVAT(cart) - calculateDiscountValue(cart)))}
+                {Math.round(
+                  calculateVAT(cart) +
+                    (calculateWithoutVAT(cart) - calculateDiscountValue(cart))
+                )}
               </span>
             </div>
           </div>
@@ -172,8 +192,9 @@ const CartBar = () => {
         <div className="absolute bottom-2.5 left-0 z-10 w-full grid grid-cols-2 gap-1.5 px-5 pb-3 pt-4 bg-white border-t border-[#DEDEDE]">
           <button
             onClick={closeBar}
-            className={`${cart.length === 0 ? "col-span-2" : "col-span-1"
-              } w-full bg-[#DEDEDE] text-[#0A314A] rounded-lg text-xs font-bold py-3 place-self-end`}
+            className={`${
+              cart.length === 0 ? "col-span-2" : "col-span-1"
+            } w-full bg-[#DEDEDE] text-[#0A314A] rounded-lg text-xs font-bold py-3 place-self-end`}
           >
             Continue Shopping
           </button>
