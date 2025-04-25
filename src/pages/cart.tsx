@@ -419,7 +419,7 @@ const Checkout = () => {
             </div>
           </div>
         )}
-        <div className="hidden sm:flex w-full bg-red-500 md:w-[90%] lg:max-w-[1440px] mx-auto flex-col items-center justify-center gap-5 sm:py-20 sm:!pt-[155px]">
+        <div className="hidden sm:flex w-full md:w-[90%] lg:max-w-[1440px] mx-auto flex-col items-center justify-center gap-5 sm:py-20 sm:!pt-[155px]">
           <h1 className="w-full text-left text-xl font-bold px-5 md:px-0">
             {cart.length === 0 ? "Services You Might Like" : "Related Services"}
           </h1>

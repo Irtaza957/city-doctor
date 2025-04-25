@@ -1,13 +1,13 @@
 import { Fragment } from "react/jsx-runtime";
 import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
 
-const Modal = ({ cn, width, toggle, children, setToggle }: MODAL_PROPS) => {
+const Modal = ({ cn, width, toggle, children, setToggle, shouldCloseOutsideClick =true }: MODAL_PROPS) => {
   return (
     <Transition appear show={toggle} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
-        onClose={() => setToggle(false)}
+        onClose={() => shouldCloseOutsideClick ? setToggle(false) : {}}
       >
         <TransitionChild
           as={Fragment}

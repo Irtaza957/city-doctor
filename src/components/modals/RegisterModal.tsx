@@ -138,6 +138,7 @@ const RegisterModal = ({
       cn="flex items-center justify-center"
       toggle={open}
       setToggle={setOpen}
+      shouldCloseOutsideClick={false}
       width="w-[75%] md:w-[55%] lg:w-[40%] xl:w-[27.5%] 3xl:w-[20%]"
     >
       <div className="relative w-full h-full bg-white px-16 py-8 rounded-xl flex flex-col items-center justify-center">

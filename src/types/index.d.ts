@@ -141,6 +141,7 @@ declare type MODAL_PROPS = {
   toggle: boolean;
   children: React.ReactNode;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
+  shouldCloseOutsideClick?: boolean;
 };
 
 declare type COUNTRIES = {

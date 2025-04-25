@@ -172,6 +172,7 @@ const LoginModal = ({
         cn="flex items-center justify-center"
         toggle={openVerify}
         setToggle={setOpenVerify}
+        shouldCloseOutsideClick={false}
         width="w-[75%] md:w-[55%] lg:w-[40%] xl:w-[30%] 3xl:w-[20%]"
       >
         <div className="relative w-full h-full bg-white px-16 py-8 rounded-xl flex flex-col items-center justify-center">
@@ -262,6 +263,7 @@ const LoginModal = ({
         cn="flex items-center justify-center"
         toggle={open}
         setToggle={setOpen}
+        shouldCloseOutsideClick={false}
         width="w-[60%] md:w-[45%] lg:w-[35%] xl:w-[25%] 3xl:w-[15%]"
       >
         <div className="relative w-full h-full bg-white px-16 py-8 rounded-xl flex flex-col items-center justify-center">
