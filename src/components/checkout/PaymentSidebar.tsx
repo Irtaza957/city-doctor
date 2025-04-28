@@ -70,22 +70,23 @@ const PaymentSidebar = ({
     console.log("Payment Failed:", error);
   };
 
-  const onSubmit=()=>{
-    if(!cvv && selectedSavedCard!==null){
+  const onSubmit = () => {
+    if (!cvv && selectedSavedCard !== null) {
       toast.error("CVV is required");
       return;
     }
-    handleSubmit()
-  }
+    handleSubmit();
+  };
 
   useEffect(() => {
     if (
       payMethod === "Card on Delivery" ||
       payMethod === "Card on Delivery" ||
-      payMethod === "Tabby"
+      payMethod === "Tabby" ||
+      showCard
     ) {
       setSelectedSavedCard(null);
-      setCvv("")
+      setCvv("");
     }
   }, [payMethod]);
 
@@ -169,17 +170,20 @@ const PaymentSidebar = ({
                   }}
                 >
                   <div className="flex items-center justify-center gap-5">
-                    <div className="flex items-center gap-3">
-                      <Image
-                        src={
-                          item?.card_type === "MASTERCARD" ? mastercard : visa
-                        }
-                        alt="home"
-                        className="object-cover rounded-[2px]"
-                        width={36}
-                        height={20}
-                      />
-                      {selectedSavedCard === index && (
+                    <Image
+                      src={item?.card_type === "MASTERCARD" ? mastercard : visa}
+                      alt="home"
+                      className="object-cover rounded-[2px]"
+                      width={36}
+                      height={20}
+                    />
+                   
+                      <p className="text-xs font-medium">{item?.masked_pan}</p>
+
+                   
+                  </div>
+                   <div className="flex items-center gap-3">
+                   {selectedSavedCard === index && (
                         <input
                           placeholder="CVV"
                           type="number"
@@ -193,9 +197,6 @@ const PaymentSidebar = ({
                           }}
                         />
                       )}
-                    </div>
-                    <p className="text-xs font-medium">{item?.masked_pan}</p>
-                  </div>
                   <div
                     className={`rounded-full border  p-[3px] size-4 ${
                       payMethod === item?.card_type
@@ -209,6 +210,7 @@ const PaymentSidebar = ({
                         payMethod === item?.card_type ? "flex" : "hidden"
                       )}
                     />
+                  </div>
                   </div>
                 </div>
               ))}

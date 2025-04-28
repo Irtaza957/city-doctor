@@ -139,6 +139,13 @@ export const bookingApi = api.injectEndpoints({
         body: formData,
       }),
     }),
+    createTabbyCheckout: build.mutation({
+      query: (formData) => ({
+        url: "/payment/tabby_checkout_session",
+        method: "POST",
+        body: formData,
+      }),
+    }),
     paymentCheck: build.query({
       query: ({reference, booking_id}) => ({
         url: `/payment/return?reference=${reference}&booking_id=${booking_id}`,
@@ -177,4 +184,5 @@ export const {
   useCreateTokenOrderMutation,
   useCreatePaymentStatusMutation,
   useCreatePaymentTokenMutation,
+  useCreateTabbyCheckoutMutation
 } = bookingApi;

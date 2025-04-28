@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import tabbyCheckout from "@/assets/icons/tabbyCheckout.svg";
+// import tabbyCheckout from "@/assets/icons/tabbyCheckout.svg";
 import "swiper/css";
 import { RootState } from "@/store";
 import { cn, imageBase } from "@/utils/helpers";
@@ -250,11 +250,15 @@ const DripDetailPage = ({
             <p className="text-[18px] px-5 text-left font-bold text-xl">
               AED {data?.price ? Math.round(Number(data?.price)) : "-"}
             </p>
-            <Image
-              src={tabbyCheckout}
-              alt="Tabby Checkout"
-              className="w-[45px] h-5"
-            />
+            <svg xmlns="http://www.w3.org/2000/svg" width="46.287" height="19.091" viewBox="0 0 46.287 19.091">
+              <g id="_384578_2_" data-name="384578 (2)" transform="translate(0 0)">
+                <path id="Path_3718" data-name="Path 3718" d="M65.223,91.691H30.864A5.962,5.962,0,0,1,24.9,85.727V78.564A5.962,5.962,0,0,1,30.864,72.6H65.223a5.962,5.962,0,0,1,5.964,5.964v7.163A5.962,5.962,0,0,1,65.223,91.691Z" transform="translate(-24.9 -72.6)" fill="#5afeae"/>
+                <g id="Group_4259" data-name="Group 4259" transform="translate(3.767 3.881)">
+                  <path id="Path_3719" data-name="Path 3719" d="M74.932,88.454,72.563,97.5v.029h1.855l2.369-9.046H74.932ZM45.653,93.591a1.912,1.912,0,0,1-.885.2c-.656,0-1.027-.114-1.084-.656V90.2h0V88.512l-1.655.2a2.046,2.046,0,0,0,1.741-1.969V86.2H41.914v2.54l-.114.029v4.68a2.118,2.118,0,0,0,2.34,2.112,3.636,3.636,0,0,0,1.484-.314h0l.029-1.655Z" transform="translate(-40.744 -86.2)" fill="#292929"/>
+                  <path id="Path_3720" data-name="Path 3720" d="M43.294,88.755l-5.194.8v1.313l5.194-.8Zm0,1.941-5.194.8V92.75l5.194-.8Zm5.822.6a2.3,2.3,0,0,0-2.483-2.34,2.505,2.505,0,0,0-2.055.97,5.117,5.117,0,0,0,0,5.308,2.482,2.482,0,0,0,2.055.942,2.285,2.285,0,0,0,2.483-2.34v2.2H50.97V89.126l-1.855.285v1.883Zm.114,1.284c0,1.284-.685,2.14-1.741,2.14-1.084,0-1.741-.8-1.741-2.14s.656-2.14,1.741-2.14a1.583,1.583,0,0,1,1.284.6,2.536,2.536,0,0,1,.457,1.541Zm7.134-3.624a2.285,2.285,0,0,0-2.483,2.34V87.1l-1.855.285v8.647h1.855v-2.2a2.285,2.285,0,0,0,2.483,2.34c1.741,0,2.8-1.341,2.8-3.6S58.1,88.955,56.364,88.955Zm-.828,5.765c-1.056,0-1.741-.828-1.741-2.14a2.536,2.536,0,0,1,.457-1.541,1.545,1.545,0,0,1,1.284-.6c1.084,0,1.741.8,1.741,2.14s-.656,2.14-1.741,2.14Zm8.647-5.765a2.285,2.285,0,0,0-2.483,2.34V87.1l-1.855.285v8.647H61.7v-2.2a2.285,2.285,0,0,0,2.483,2.34c1.741,0,2.8-1.341,2.8-3.6s-1.056-3.624-2.8-3.624Zm-.828,5.765c-1.056,0-1.741-.828-1.741-2.14a2.536,2.536,0,0,1,.457-1.541,1.545,1.545,0,0,1,1.284-.6c1.084,0,1.741.8,1.741,2.14s-.656,2.14-1.741,2.14ZM66.98,89.1h1.969l1.6,6.935H68.777Zm8.675.713v-.542h-.228v-.114h.6v.114H75.8v.542Zm.4,0v-.685h.228l.114.314c.029.086.057.114.057.143,0-.029.029-.057.057-.143l.114-.314h.228v.685h-.143v-.542l-.2.542h-.143l-.171-.542v.542Z" transform="translate(-38.1 -86.843)" fill="#292929"/>
+                </g>
+              </g>
+            </svg>
           </div>
           {data?.bundles?.length ? (
             <div className="space-y-2.5 w-full px-5">
