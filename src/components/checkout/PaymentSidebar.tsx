@@ -59,7 +59,7 @@ const PaymentSidebar = ({
   cardValidStatus,
   paymentMethods,
   setIsSamsungPay,
-  isSamsungPay
+  isSamsungPay,
 }: any) => {
   const [selectedSavedCard, setSelectedSavedCard] = useState<any>(null);
   const [cvv, setCvv] = useState("");
@@ -93,7 +93,7 @@ const PaymentSidebar = ({
   }, [payMethod]);
 
   function enableMakePaymentButton() {
-    setIsSamsungPay(true)
+    setIsSamsungPay(true);
   }
 
   return (
@@ -115,8 +115,9 @@ const PaymentSidebar = ({
                 successUrl: "https://yourdomain.com/payment/success",
                 cancelUrl: "https://yourdomain.com/payment/cancel",
                 amount: {
-                  currencyCode: "AED",
-                  value: 1000,
+                  amount: 100, // Number: Transaction amount
+                  currency: "AED", // String: Currency code
+                  formattedAmount: "1.00",
                 },
                 emailAddress: "test@example.com",
                 billingAddress: {
@@ -179,9 +180,6 @@ const PaymentSidebar = ({
         }}
       />
       <div className="col-span-1 w-full h-fit flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
-        <div id="wallet_modal">
-          <div id="wallet_iframe"></div>
-        </div>
         <h1 className="w-full text-left md:text-xl flex font-semibold mb-2.5 items-center justify-start">
           Order Summary
         </h1>
@@ -197,6 +195,9 @@ const PaymentSidebar = ({
             showCard ? "block" : "hidden"
           )}
         ></div>
+        <div id="wallet_modal">
+          <div id="wallet_iframe"></div>
+        </div>
         {paymentMethods?.data?.length ? (
           <div className={cn("w-full mb-6", !showCard ? "mt-2.5" : "mt-5")}>
             <div className="flex items-center justify-between w-full">
@@ -383,7 +384,8 @@ const PaymentSidebar = ({
               disabled={
                 isLoading ||
                 isOrderLoading ||
-                (showCard && !isSamsungPay &&
+                (showCard &&
+                  !isSamsungPay &&
                   cardValidStatus &&
                   Object.values(cardValidStatus).some((isValid) => !isValid))
               }
@@ -391,7 +393,8 @@ const PaymentSidebar = ({
               className={cn(
                 "w-full rounded-md py-2 !mt-6 text-sm items-center justify-center hidden sm:flex",
                 showCard &&
-                  cardValidStatus && !isSamsungPay &&
+                  cardValidStatus &&
+                  !isSamsungPay &&
                   Object.values(cardValidStatus).some((isValid) => !isValid)
                   ? "bg-gray-200 text-gray-400"
                   : "bg-primary text-white"
