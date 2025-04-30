@@ -57,6 +57,7 @@ const CheckoutDetails = () => {
   const [payMethod, setPayMethod] = useState("Cash on Delivery");
   const [postBooking, { isLoading }] = usePostBookingMutation();
   const [openCancelModal, setOpenCancelModal] = useState(false);
+  const [isSamsungPay, setIsSamsungPay] = useState(false);
   const [openAddressModal, setOpenAddressModal] = useState(false);
   const { cart, user, isMenuVisible } = useSelector(
     (state: RootState) => state.global
@@ -139,6 +140,21 @@ const CheckoutDetails = () => {
   };
 
   const handleSubmit = async () => {
+    // try {
+    //   const response = await window.NI.generateSessionId({
+    //    mountId: 'wallet_iframe',
+    //    containerId: 'wallet_modal',
+    //   });
+    //   console.log(response)
+    //     if(!response?.session_id){
+    //       toast.error("Payment Failed!");
+    //       return
+    //     }
+
+    // } catch (err) {
+    //   console.error(err, 'errerrerr');
+    // }
+    //  return
     const noErrors = handleErrors();
 
     if (noErrors) {
@@ -216,12 +232,12 @@ const CheckoutDetails = () => {
           tabbyUrlencodedToken.append("booking_id", data.data.data.id);
           const response = await createTabbyCheckout(tabbyUrlencodedToken);
           console.log(response, "createTabbyCheckoutcreateTabbyCheckout");
-          if(response?.error){
+          if (response?.error) {
             // window.location.href = "/payment-failed";
-            return
+            return;
           }
           // window.location.href = response?.data?.data?.url;
-          return
+          return;
         }
         if (
           payMethod === "Card on Delivery" ||
@@ -275,7 +291,15 @@ const CheckoutDetails = () => {
         }
         if (showCard && !payMethod) {
           console.log(window.NI, "window.NI");
-          const response = await window.NI.generateSessionId();
+          let response;
+          if (isSamsungPay) {
+            response = await window.NI.generateSessionId({
+              mountId: "wallet_iframe",
+              containerId: "wallet_modal",
+            });
+          } else {
+            response = await window.NI.generateSessionId();
+          }
           if (response?.session_id) {
             const urlencoded = new URLSearchParams();
             urlencoded.append("session", response?.session_id);
@@ -316,6 +340,9 @@ const CheckoutDetails = () => {
             console.log(status, error, "statusstatus");
             console.log(statusResponse, "statusResponsestatusResponse");
             handleRedirect(data.data.data.id, payMethod, status);
+          } else {
+            toast.error("Invalid Session!");
+            setLoading(false);
           }
         } else {
           toast.error("Invalid Session!");
@@ -838,6 +865,8 @@ const CheckoutDetails = () => {
               setCardValidStatus={setCardValidStatus}
               cardValidStatus={cardValidStatus}
               paymentMethods={paymentMethods}
+              setIsSamsungPay={setIsSamsungPay}
+              isSamsungPay={isSamsungPay}
             />
           </div>
         )}

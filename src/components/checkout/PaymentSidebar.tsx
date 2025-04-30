@@ -58,6 +58,8 @@ const PaymentSidebar = ({
   setCardValidStatus,
   cardValidStatus,
   paymentMethods,
+  setIsSamsungPay,
+  isSamsungPay
 }: any) => {
   const [selectedSavedCard, setSelectedSavedCard] = useState<any>(null);
   const [cvv, setCvv] = useState("");
@@ -90,6 +92,10 @@ const PaymentSidebar = ({
     }
   }, [payMethod]);
 
+  function enableMakePaymentButton() {
+    setIsSamsungPay(true)
+  }
+
   return (
     <>
       <Script
@@ -101,6 +107,52 @@ const PaymentSidebar = ({
               style: style,
               apiKey: apiKey,
               outletRef: outletRef,
+              supportedPaymentMethods: ["CARD", "APPLE_PAY", "SAMSUNG_PAY"],
+              multiplePaymentMethods: true, // Enables card + digital wallets like Samsung Pay, Apple Pay
+
+              // Required when `multiplePaymentMethods` is true
+              orderDetails: {
+                successUrl: "https://yourdomain.com/payment/success",
+                cancelUrl: "https://yourdomain.com/payment/cancel",
+                amount: {
+                  currencyCode: "AED",
+                  value: 1000,
+                },
+                emailAddress: "test@example.com",
+                billingAddress: {
+                  firstName: "John",
+                  lastName: "Doe",
+                  address1: "Test Street",
+                  city: "Dubai",
+                  countryCode: "AE",
+                },
+                merchantAttributes: {
+                  redirectUrl: "https://yourdomain.com/payment/success",
+                  cancelUrl: "https://yourdomain.com/payment/cancel",
+                },
+              },
+              // Called when the user switches between payment methods
+              onChangePaymentMethod: ({
+                selectedPaymentType,
+                selectedDigitalPayment,
+              }: any) => {
+                console.log(
+                  "Payment method changed:",
+                  selectedPaymentType,
+                  selectedDigitalPayment
+                );
+
+                if (
+                  selectedPaymentType === "DIGITAL_PAYMENTS" &&
+                  selectedDigitalPayment
+                ) {
+                  console.log("Samsung Pay selected!");
+                  // Optional: enable Samsung Pay-specific UI changes
+                  enableMakePaymentButton(); // your custom logic
+                } else if (selectedPaymentType === "CARD") {
+                  console.log("Card selected");
+                }
+              },
               onSuccess: onSuccess,
               onFail: onFail,
               onChangeValidStatus: function (_ref: {
@@ -127,6 +179,9 @@ const PaymentSidebar = ({
         }}
       />
       <div className="col-span-1 w-full h-fit flex flex-col items-start justify-start bg-white rounded-xl sm:p-5">
+        <div id="wallet_modal">
+          <div id="wallet_iframe"></div>
+        </div>
         <h1 className="w-full text-left md:text-xl flex font-semibold mb-2.5 items-center justify-start">
           Order Summary
         </h1>
@@ -143,9 +198,7 @@ const PaymentSidebar = ({
           )}
         ></div>
         {paymentMethods?.data?.length ? (
-          <div
-            className={cn("w-full mb-6", !showCard ? "mt-2.5" : "mt-[-20px]")}
-          >
+          <div className={cn("w-full mb-6", !showCard ? "mt-2.5" : "mt-5")}>
             <div className="flex items-center justify-between w-full">
               <h1 className="w-full text-sm lg:text-base text-left font-bold">
                 Saved Cards
@@ -177,40 +230,38 @@ const PaymentSidebar = ({
                       width={36}
                       height={20}
                     />
-                   
-                      <p className="text-xs font-medium">{item?.masked_pan}</p>
 
-                   
+                    <p className="text-xs font-medium">{item?.masked_pan}</p>
                   </div>
-                   <div className="flex items-center gap-3">
-                   {selectedSavedCard === index && (
-                        <input
-                          placeholder="CVV"
-                          type="number"
-                          className="max-w-[70px] py-2.5 px-3 rounded-lg !bg-white text-sm text-[#535763]"
-                          value={cvv}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (value.length <= 3) {
-                              setCvv(value);
-                            }
-                          }}
-                        />
-                      )}
-                  <div
-                    className={`rounded-full border  p-[3px] size-4 ${
-                      payMethod === item?.card_type
-                        ? "border-primary"
-                        : "border-[#C7C7C7]"
-                    }`}
-                  >
+                  <div className="flex items-center gap-3">
+                    {selectedSavedCard === index && (
+                      <input
+                        placeholder="CVV"
+                        type="number"
+                        className="max-w-[70px] py-2.5 px-3 rounded-lg !bg-white text-sm text-[#535763]"
+                        value={cvv}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value.length <= 3) {
+                            setCvv(value);
+                          }
+                        }}
+                      />
+                    )}
                     <div
-                      className={cn(
-                        "rounded-full bg-primary w-full h-full",
-                        payMethod === item?.card_type ? "flex" : "hidden"
-                      )}
-                    />
-                  </div>
+                      className={`rounded-full border  p-[3px] size-4 ${
+                        payMethod === item?.card_type
+                          ? "border-primary"
+                          : "border-[#C7C7C7]"
+                      }`}
+                    >
+                      <div
+                        className={cn(
+                          "rounded-full bg-primary w-full h-full",
+                          payMethod === item?.card_type ? "flex" : "hidden"
+                        )}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -332,7 +383,7 @@ const PaymentSidebar = ({
               disabled={
                 isLoading ||
                 isOrderLoading ||
-                (showCard &&
+                (showCard && !isSamsungPay &&
                   cardValidStatus &&
                   Object.values(cardValidStatus).some((isValid) => !isValid))
               }
@@ -340,7 +391,7 @@ const PaymentSidebar = ({
               className={cn(
                 "w-full rounded-md py-2 !mt-6 text-sm items-center justify-center hidden sm:flex",
                 showCard &&
-                  cardValidStatus &&
+                  cardValidStatus && !isSamsungPay &&
                   Object.values(cardValidStatus).some((isValid) => !isValid)
                   ? "bg-gray-200 text-gray-400"
                   : "bg-primary text-white"
