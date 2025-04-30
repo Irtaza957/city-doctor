@@ -142,16 +142,18 @@ const PaymentSidebar = ({
                   selectedPaymentType,
                   selectedDigitalPayment
                 );
+                console.log(selectedPaymentType, 'selectedPaymentType')
 
                 if (
                   selectedPaymentType === "DIGITAL_PAYMENTS" &&
                   selectedDigitalPayment
                 ) {
-                  console.log("Samsung Pay selected!");
+                  console.log(selectedDigitalPayment, 'selectedDigitalPaymentselectedDigitalPayment');
                   // Optional: enable Samsung Pay-specific UI changes
                   enableMakePaymentButton(); // your custom logic
                 } else if (selectedPaymentType === "CARD") {
                   console.log("Card selected");
+                  setIsSamsungPay(false);
                 }
               },
               onSuccess: onSuccess,
