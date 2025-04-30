@@ -292,14 +292,14 @@ const CheckoutDetails = () => {
         if (showCard && !payMethod) {
           console.log(window.NI, "window.NI");
           let response;
-          if (isSamsungPay) {
-            response = await window.NI.generateSessionId({
-              mountId: "wallet_iframe",
-              containerId: "wallet_modal",
-            });
-          } else {
-            response = await window.NI.generateSessionId();
-          }
+          response = await window.NI.generateSessionId({
+            mountId: "wallet_iframe",
+            containerId: "wallet_modal",
+          });
+          // if (isSamsungPay) {
+          // } else {
+          //   response = await window.NI.generateSessionId();
+          // }
           if (response?.session_id) {
             const urlencoded = new URLSearchParams();
             urlencoded.append("session", response?.session_id);
@@ -339,7 +339,7 @@ const CheckoutDetails = () => {
 
             console.log(status, error, "statusstatus");
             console.log(statusResponse, "statusResponsestatusResponse");
-            handleRedirect(data.data.data.id, payMethod, status);
+            // handleRedirect(data.data.data.id, payMethod, status);
           } else {
             toast.error("Invalid Session!");
             setLoading(false);
